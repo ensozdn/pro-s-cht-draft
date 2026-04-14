@@ -69,7 +69,7 @@ onMounted(async () => {
   cube = new THREE.Mesh(geometry, material)
   scene.add(cube)
 
-  // Render loop (sadece render - otomatik rotasyon yok)
+  // Render loop
   const animate = () => {
     animationId = requestAnimationFrame(animate)
     renderer.render(scene, camera)
@@ -77,7 +77,9 @@ onMounted(async () => {
   animate()
 
   // GSAP ScrollTrigger - scroll ile küpü döndür
-  gsap.to(cube.rotation, {
+  const rotationData = { x: 0, y: 0 }
+  
+  gsap.to(rotationData, {
     x: Math.PI * 2,
     y: Math.PI * 2,
     scrollTrigger: {
@@ -85,7 +87,11 @@ onMounted(async () => {
       start: 'top top',
       end: 'bottom bottom',
       scrub: 1,
-      markers: true // Debug için - sonra kaldıracağız
+      markers: true,
+      onUpdate: () => {
+        cube.rotation.x = rotationData.x
+        cube.rotation.y = rotationData.y
+      }
     }
   })
   
