@@ -256,12 +256,28 @@ let lenis: any
 let beltMaterial: THREE.MeshStandardMaterial
 let rollerMaterial: THREE.MeshStandardMaterial
 
+// Mouse parallax değişkenleri
+const mouse = { x: 0, y: 0 }
+const targetRotation = { x: 0, y: 0 }
+const currentRotation = { x: 0, y: 0 }
+
 // Resize handler
 const handleResize = () => {
   if (!camera || !renderer) return
   camera.aspect = window.innerWidth / window.innerHeight
   camera.updateProjectionMatrix()
   renderer.setSize(window.innerWidth, window.innerHeight)
+}
+
+// Mouse move handler - Parallax efekti
+const handleMouseMove = (event: MouseEvent) => {
+  // Fare koordinatlarını normalize et (-1 ile 1 arası)
+  mouse.x = (event.clientX / window.innerWidth) * 2 - 1
+  mouse.y = -(event.clientY / window.innerHeight) * 2 + 1
+  
+  // Hedef rotasyonu hafif bir şekilde ayarla
+  targetRotation.x = mouse.y * 0.15
+  targetRotation.y = mouse.x * 0.15
 }
 
 onMounted(async () => {
@@ -448,12 +464,24 @@ onMounted(async () => {
   const animate = () => {
     animationId = requestAnimationFrame(animate)
     
-    // Scroll progress'e göre X ekseninde döndür
-    conveyorGroup.rotation.x = scrollProgress.value * Math.PI * 2
+    // Lerp (Linear Interpolation) - Yumuşak geçiş
+    const lerpFactor = 0.05
+    currentRotation.x += (targetRotation.x - currentRotation.x) * lerpFactor
+    currentRotation.y += (targetRotation.y - currentRotation.y) * lerpFactor
+    
+    // Scroll progress'e göre base rotasyonu ayarla
+    const baseRotationX = scrollProgress.value * Math.PI * 2
+    
+    // Base rotasyon + Mouse parallax
+    conveyorGroup.rotation.x = baseRotationX + currentRotation.x
+    conveyorGroup.rotation.y = currentRotation.y
     
     renderer.render(scene, camera)
   }
   animate()
+
+  // Mouse parallax event listener ekle
+  window.addEventListener('mousemove', handleMouseMove)
 
   // Metin Animasyonları
   const sections = [section1.value, section2.value, section3.value]
@@ -570,7 +598,9 @@ onUnmounted(async () => {
     // ignore
   }
   
+  // Event listener'ları temizle
   window.removeEventListener('resize', handleResize)
+  window.removeEventListener('mousemove', handleMouseMove)
 })
 </script>
 
