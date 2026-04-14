@@ -128,6 +128,92 @@
       </div>
     </section>
 
+    <!-- İletişim Bölümü -->
+    <section ref="contactSection" class="contact-section">
+      <div class="contact-container">
+        <div class="contact-content">
+          <div class="contact-info">
+            <h2 class="contact-title">
+              Üretiminizi <span class="text-gradient">Yapay Zeka</span> İle Dönüştürün
+            </h2>
+            <p class="contact-description">
+              ProSicht ile kalite kontrolünüzü yeni nesil teknolojiye taşıyın. 
+              Ücretsiz demo için hemen iletişime geçin.
+            </p>
+            <div class="contact-details">
+              <div class="contact-item">
+                <span class="contact-icon">📧</span>
+                <span>info@prosicht.com</span>
+              </div>
+              <div class="contact-item">
+                <span class="contact-icon">📞</span>
+                <span>+90 (212) 555 00 00</span>
+              </div>
+              <div class="contact-item">
+                <span class="contact-icon">📍</span>
+                <span>İstanbul, Türkiye</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="contact-form-wrapper">
+            <form class="contact-form">
+              <div class="form-group">
+                <input 
+                  type="text" 
+                  placeholder="Adınız Soyadınız" 
+                  class="form-input"
+                />
+              </div>
+              <div class="form-group">
+                <input 
+                  type="email" 
+                  placeholder="E-posta Adresiniz" 
+                  class="form-input"
+                />
+              </div>
+              <div class="form-group">
+                <input 
+                  type="tel" 
+                  placeholder="Telefon Numaranız" 
+                  class="form-input"
+                />
+              </div>
+              <div class="form-group">
+                <textarea 
+                  placeholder="Mesajınız" 
+                  rows="4" 
+                  class="form-input"
+                ></textarea>
+              </div>
+              <button type="submit" class="form-button">
+                Demo Talebinde Bulun
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="footer-content">
+        <div class="footer-left">
+          <span class="footer-logo">ProSicht</span>
+          <span class="footer-copyright">© 2026 Tüm hakları saklıdır.</span>
+        </div>
+        <div class="footer-links">
+          <a href="#privacy" class="footer-link">Gizlilik Politikası</a>
+          <a href="#terms" class="footer-link">Kullanım Şartları</a>
+        </div>
+        <div class="footer-social">
+          <a href="#" class="social-link">🔗</a>
+          <a href="#" class="social-link">📘</a>
+          <a href="#" class="social-link">🐦</a>
+        </div>
+      </div>
+    </footer>
+
     <!-- Scroll area -->
     <div ref="scrollAreaRef" class="scroll-area"></div>
   </div>
@@ -145,6 +231,7 @@ const section3 = ref<HTMLElement | null>(null)
 const statsSection = ref<HTMLElement | null>(null)
 const sectorsSection = ref<HTMLElement | null>(null)
 const sectorsContainer = ref<HTMLDivElement | null>(null)
+const contactSection = ref<HTMLElement | null>(null)
 
 let scene: THREE.Scene
 let camera: THREE.PerspectiveCamera
@@ -345,6 +432,28 @@ onMounted(async () => {
         anticipatePin: 1
       }
     })
+  }
+
+  // İletişim Bölümü Fade-Up Animasyonu
+  if (contactSection.value) {
+    gsap.fromTo(
+      contactSection.value.querySelector('.contact-content'),
+      {
+        opacity: 0,
+        y: 80
+      },
+      {
+        opacity: 1,
+        y: 0,
+        duration: 1.2,
+        ease: 'power3.out',
+        scrollTrigger: {
+          trigger: contactSection.value,
+          start: 'top 70%',
+          once: true
+        }
+      }
+    )
   }
   
   window.addEventListener('resize', handleResize)
@@ -647,6 +756,198 @@ canvas {
   line-height: 1.6;
 }
 
+/* İletişim Bölümü */
+.contact-section {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fafafa;
+  padding: 6rem 2rem;
+}
+
+.contact-container {
+  max-width: 1200px;
+  width: 100%;
+}
+
+.contact-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: start;
+}
+
+.contact-info {
+  padding: 2rem 0;
+}
+
+.contact-title {
+  font-size: 3rem;
+  font-weight: 700;
+  color: #1e293b;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  margin-bottom: 1.5rem;
+}
+
+.contact-description {
+  font-size: 1.25rem;
+  color: rgba(30, 41, 59, 0.7);
+  line-height: 1.6;
+  margin-bottom: 3rem;
+}
+
+.contact-details {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.contact-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-size: 1.125rem;
+  color: #1e293b;
+}
+
+.contact-icon {
+  font-size: 1.5rem;
+}
+
+.contact-form-wrapper {
+  backdrop-filter: blur(16px) saturate(180%);
+  background: rgba(255, 255, 255, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 2rem;
+  padding: 3rem 2.5rem;
+  box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.1);
+}
+
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-input {
+  width: 100%;
+  padding: 1rem 1.5rem;
+  font-size: 1rem;
+  background: rgba(255, 255, 255, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 0.75rem;
+  outline: none;
+  transition: all 0.3s ease;
+  font-family: 'Space Grotesk', sans-serif;
+  color: #1e293b;
+}
+
+.form-input::placeholder {
+  color: rgba(30, 41, 59, 0.5);
+}
+
+.form-input:focus {
+  background: rgba(255, 255, 255, 0.7);
+  border-color: #06b6d4;
+  box-shadow: 0 0 0 3px rgba(6, 182, 212, 0.1);
+  transform: translateY(-1px);
+}
+
+.form-button {
+  width: 100%;
+  padding: 1.125rem 2.5rem;
+  background: linear-gradient(135deg, #06b6d4 0%, #3b82f6 100%);
+  color: white;
+  font-weight: 600;
+  font-size: 1.125rem;
+  border: none;
+  border-radius: 0.75rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 10px 25px -5px rgba(6, 182, 212, 0.3);
+  letter-spacing: 0.01em;
+}
+
+.form-button:hover {
+  transform: scale(1.02) translateY(-2px);
+  box-shadow: 0 20px 35px -5px rgba(6, 182, 212, 0.5);
+}
+
+/* Footer */
+.footer {
+  background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+  padding: 2rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.footer-content {
+  max-width: 1400px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+}
+
+.footer-left {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+.footer-logo {
+  font-size: 1.25rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, #06b6d4 0%, #3b82f6 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.footer-copyright {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.875rem;
+}
+
+.footer-links {
+  display: flex;
+  gap: 2rem;
+}
+
+.footer-link {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.9rem;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.footer-link:hover {
+  color: #06b6d4;
+}
+
+.footer-social {
+  display: flex;
+  gap: 1rem;
+}
+
+.social-link {
+  font-size: 1.5rem;
+  text-decoration: none;
+  transition: transform 0.3s ease;
+}
+
+.social-link:hover {
+  transform: translateY(-3px);
+}
+
 @media (max-width: 768px) {
   .nav-menu {
     display: none;
@@ -714,6 +1015,38 @@ canvas {
   .sectors-container {
     gap: 2rem;
     padding: 0 2rem;
+  }
+
+  .contact-content {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+
+  .contact-title {
+    font-size: 2rem;
+  }
+
+  .contact-description {
+    font-size: 1rem;
+  }
+
+  .contact-form-wrapper {
+    padding: 2rem 1.5rem;
+  }
+
+  .footer-content {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .footer-left {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .footer-links {
+    flex-direction: column;
+    gap: 1rem;
   }
 }
 </style>
