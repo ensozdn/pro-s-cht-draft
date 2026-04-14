@@ -142,5 +142,6 @@ canvas {
   position: relative;
   z-index: 1;
   pointer-events: none;
+  height: 300vh; /* Tailwind yerine CSS */
 }
 </style>
