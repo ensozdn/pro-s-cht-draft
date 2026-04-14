@@ -238,6 +238,7 @@ let camera: THREE.PerspectiveCamera
 let renderer: THREE.WebGLRenderer
 let conveyorGroup: THREE.Group
 let animationId: number
+let lenis: any
 
 // Resize handler
 const handleResize = () => {
@@ -254,6 +255,24 @@ onMounted(async () => {
   const { gsap } = await import('gsap')
   const { ScrollTrigger } = await import('gsap/ScrollTrigger')
   gsap.registerPlugin(ScrollTrigger)
+
+  // Lenis Smooth Scroll başlat
+  const Lenis = (await import('lenis')).default
+  lenis = new Lenis({
+    duration: 1.2,
+    easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+    smooth: true,
+    smoothTouch: false
+  })
+
+  // Lenis ve GSAP ScrollTrigger senkronizasyonu
+  lenis.on('scroll', ScrollTrigger.update)
+
+  gsap.ticker.add((time) => {
+    lenis.raf(time * 1000)
+  })
+
+  gsap.ticker.lagSmoothing(0)
 
   // Sahne oluştur
   scene = new THREE.Scene()
@@ -462,6 +481,11 @@ onMounted(async () => {
 onUnmounted(async () => {
   if (animationId) {
     cancelAnimationFrame(animationId)
+  }
+  
+  // Lenis'i durdur
+  if (lenis) {
+    lenis.destroy()
   }
   
   // ScrollTrigger'ı temizle
