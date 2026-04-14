@@ -94,7 +94,40 @@
         </div>
       </section>
     </div>
-    
+
+    <!-- Yatay Kaydırma - Sektörler -->
+    <section ref="sectorsSection" class="sectors-wrapper">
+      <div class="sectors-title-container">
+        <h2 class="sectors-main-title">Uygulama <span class="text-gradient">Alanlarımız</span></h2>
+      </div>
+      
+      <div ref="sectorsContainer" class="sectors-container">
+        <div class="sector-card">
+          <div class="sector-icon">🏭</div>
+          <h3 class="sector-title">Metal ve Çelik</h3>
+          <p class="sector-description">
+            Yüksek hassasiyetli yüzey kontrolü ve kaynak kalitesi tespiti
+          </p>
+        </div>
+
+        <div class="sector-card">
+          <div class="sector-icon">👔</div>
+          <h3 class="sector-title">Tekstil ve Deri</h3>
+          <p class="sector-description">
+            Kumaş hataları, renk uyumsuzlukları ve dikiş kalitesi analizi
+          </p>
+        </div>
+
+        <div class="sector-card">
+          <div class="sector-icon">🚗</div>
+          <h3 class="sector-title">Otomotiv</h3>
+          <p class="sector-description">
+            Parça uyumu, montaj doğruluğu ve boyama kalitesi kontrolü
+          </p>
+        </div>
+      </div>
+    </section>
+
     <!-- Scroll area -->
     <div ref="scrollAreaRef" class="scroll-area"></div>
   </div>
@@ -110,6 +143,8 @@ const section1 = ref<HTMLElement | null>(null)
 const section2 = ref<HTMLElement | null>(null)
 const section3 = ref<HTMLElement | null>(null)
 const statsSection = ref<HTMLElement | null>(null)
+const sectorsSection = ref<HTMLElement | null>(null)
+const sectorsContainer = ref<HTMLDivElement | null>(null)
 
 let scene: THREE.Scene
 let camera: THREE.PerspectiveCamera
@@ -289,6 +324,26 @@ onMounted(async () => {
           stat.textContent = Math.round(counter.value).toString()
         }
       })
+    })
+  }
+
+  // Yatay Kaydırma Animasyonu
+  if (sectorsSection.value && sectorsContainer.value) {
+    const containerWidth = sectorsContainer.value.scrollWidth
+    const viewportWidth = window.innerWidth
+    const scrollDistance = containerWidth - viewportWidth
+
+    gsap.to(sectorsContainer.value, {
+      x: -scrollDistance,
+      ease: 'none',
+      scrollTrigger: {
+        trigger: sectorsSection.value,
+        start: 'top top',
+        end: () => `+=${scrollDistance}`,
+        scrub: 1,
+        pin: true,
+        anticipatePin: 1
+      }
     })
   }
   
@@ -527,6 +582,71 @@ canvas {
   letter-spacing: 0.01em;
 }
 
+/* Yatay Kaydırma - Sektörler */
+.sectors-wrapper {
+  position: relative;
+  height: 100vh;
+  overflow: hidden;
+  background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+}
+
+.sectors-title-container {
+  position: absolute;
+  top: 6rem;
+  left: 0;
+  right: 0;
+  z-index: 10;
+  text-align: center;
+}
+
+.sectors-main-title {
+  font-size: 3rem;
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: -0.02em;
+}
+
+.sectors-container {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+  display: flex;
+  gap: 4rem;
+  padding: 0 4rem;
+  will-change: transform;
+}
+
+.sector-card {
+  min-width: 400px;
+  backdrop-filter: blur(16px) saturate(180%);
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  border-radius: 2rem;
+  padding: 3rem 2.5rem;
+  text-align: center;
+}
+
+.sector-icon {
+  font-size: 4rem;
+  margin-bottom: 1.5rem;
+}
+
+.sector-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 1rem;
+  letter-spacing: -0.01em;
+}
+
+.sector-description {
+  font-size: 1.125rem;
+  color: rgba(255, 255, 255, 0.8);
+  line-height: 1.6;
+}
+
 @media (max-width: 768px) {
   .nav-menu {
     display: none;
@@ -568,6 +688,32 @@ canvas {
 
   .stats-card {
     padding: 2.5rem 2rem;
+  }
+
+  .sectors-main-title {
+    font-size: 1.75rem;
+  }
+
+  .sector-card {
+    min-width: 300px;
+    padding: 2rem 1.5rem;
+  }
+
+  .sector-icon {
+    font-size: 3rem;
+  }
+
+  .sector-title {
+    font-size: 1.5rem;
+  }
+
+  .sector-description {
+    font-size: 1rem;
+  }
+
+  .sectors-container {
+    gap: 2rem;
+    padding: 0 2rem;
   }
 }
 </style>
