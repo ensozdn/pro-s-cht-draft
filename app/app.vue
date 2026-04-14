@@ -1,5 +1,16 @@
 <template>
   <div class="bg-slate-50">
+    <!-- Premium Preloader -->
+    <div ref="preloader" class="preloader">
+      <div class="preloader-content">
+        <h1 class="preloader-logo">ProSicht</h1>
+        <div class="preloader-bar-wrapper">
+          <div ref="preloaderBar" class="preloader-bar"></div>
+        </div>
+        <p ref="preloaderText" class="preloader-text">0%</p>
+      </div>
+    </div>
+
     <!-- Premium Header -->
     <header class="header-bar">
       <div class="header-content">
@@ -232,6 +243,9 @@ const statsSection = ref<HTMLElement | null>(null)
 const sectorsSection = ref<HTMLElement | null>(null)
 const sectorsContainer = ref<HTMLDivElement | null>(null)
 const contactSection = ref<HTMLElement | null>(null)
+const preloader = ref<HTMLDivElement | null>(null)
+const preloaderBar = ref<HTMLDivElement | null>(null)
+const preloaderText = ref<HTMLParagraphElement | null>(null)
 
 let scene: THREE.Scene
 let camera: THREE.PerspectiveCamera
@@ -239,6 +253,8 @@ let renderer: THREE.WebGLRenderer
 let conveyorGroup: THREE.Group
 let animationId: number
 let lenis: any
+let beltMaterial: THREE.MeshStandardMaterial
+let rollerMaterial: THREE.MeshStandardMaterial
 
 // Resize handler
 const handleResize = () => {
@@ -255,6 +271,60 @@ onMounted(async () => {
   const { gsap } = await import('gsap')
   const { ScrollTrigger } = await import('gsap/ScrollTrigger')
   gsap.registerPlugin(ScrollTrigger)
+
+  // Preloader Animasyonu
+  const loadingProgress = { value: 0 }
+  
+  gsap.to(loadingProgress, {
+    value: 100,
+    duration: 2,
+    ease: 'power2.inOut',
+    onUpdate: () => {
+      const progress = Math.round(loadingProgress.value)
+      if (preloaderBar.value) {
+        preloaderBar.value.style.width = `${progress}%`
+      }
+      if (preloaderText.value) {
+        preloaderText.value.textContent = `${progress}%`
+      }
+    },
+    onComplete: () => {
+      // Preloader'ı kaldır
+      gsap.to(preloader.value, {
+        y: '-100%',
+        duration: 0.8,
+        ease: 'power3.inOut',
+        onComplete: () => {
+          if (preloader.value) {
+            preloader.value.style.display = 'none'
+          }
+          
+          // Hero giriş animasyonları
+          if (section1.value) {
+            const heroElements = section1.value.querySelectorAll('.content-title, .content-description, .cta-button')
+            gsap.fromTo(
+              heroElements,
+              { opacity: 0, y: 30 },
+              { 
+                opacity: 1, 
+                y: 0, 
+                duration: 1,
+                stagger: 0.2,
+                ease: 'power3.out'
+              }
+            )
+          }
+          
+          // 3D model fade-in
+          gsap.to([beltMaterial, rollerMaterial], {
+            opacity: 1,
+            duration: 1.2,
+            ease: 'power2.out'
+          })
+        }
+      })
+    }
+  })
 
   // Lenis Smooth Scroll başlat
   const Lenis = (await import('lenis')).default
@@ -314,16 +384,20 @@ onMounted(async () => {
   conveyorGroup = new THREE.Group()
 
   // Premium Materyal Ayarları
-  const beltMaterial = new THREE.MeshStandardMaterial({
+  beltMaterial = new THREE.MeshStandardMaterial({
     color: 0x2a2a2a,
     metalness: 0.7,
-    roughness: 0.3
+    roughness: 0.3,
+    transparent: true,
+    opacity: 0
   })
 
-  const rollerMaterial = new THREE.MeshStandardMaterial({
+  rollerMaterial = new THREE.MeshStandardMaterial({
     color: 0x555555,
     metalness: 0.7,
-    roughness: 0.3
+    roughness: 0.3,
+    transparent: true,
+    opacity: 0
   })
 
   // Ana konveyör kasası (uzun ince kutu)
@@ -501,6 +575,59 @@ onUnmounted(async () => {
 </script>
 
 <style scoped>
+/* Preloader */
+.preloader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background: #fafafa;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.preloader-content {
+  text-align: center;
+}
+
+.preloader-logo {
+  font-size: 4rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, #06b6d4 0%, #3b82f6 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: -0.02em;
+  margin-bottom: 3rem;
+}
+
+.preloader-bar-wrapper {
+  width: 300px;
+  height: 4px;
+  background: rgba(6, 182, 212, 0.1);
+  border-radius: 2px;
+  overflow: hidden;
+  margin: 0 auto 1.5rem;
+}
+
+.preloader-bar {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, #06b6d4 0%, #3b82f6 100%);
+  border-radius: 2px;
+  transition: width 0.1s ease;
+}
+
+.preloader-text {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #1e293b;
+  opacity: 0.6;
+}
+
 /* Header */
 .header-bar {
   position: fixed;
