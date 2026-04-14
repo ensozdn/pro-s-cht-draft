@@ -60,6 +60,39 @@
           </button>
         </div>
       </section>
+
+      <!-- İstatistikler Bölümü -->
+      <section ref="statsSection" class="content-section">
+        <div class="glass-card stats-card">
+          <h2 class="stats-title">Sayılarla <span class="text-gradient">ProSicht</span></h2>
+          
+          <div class="stats-grid">
+            <div class="stat-item">
+              <div class="stat-value">
+                <span class="stat-number" data-target="99">0</span>
+                <span class="stat-symbol">%</span>
+              </div>
+              <div class="stat-label">Doğruluk Oranı</div>
+            </div>
+
+            <div class="stat-item">
+              <div class="stat-value">
+                <span class="stat-number" data-target="15">0</span>
+                <span class="stat-symbol">ms</span>
+              </div>
+              <div class="stat-label">Yanıt Süresi</div>
+            </div>
+
+            <div class="stat-item">
+              <div class="stat-value">
+                <span class="stat-number" data-target="1000">0</span>
+                <span class="stat-symbol">+</span>
+              </div>
+              <div class="stat-label">Dakikada Parça</div>
+            </div>
+          </div>
+        </div>
+      </section>
     </div>
     
     <!-- Scroll area -->
@@ -76,6 +109,7 @@ const scrollAreaRef = ref<HTMLDivElement | null>(null)
 const section1 = ref<HTMLElement | null>(null)
 const section2 = ref<HTMLElement | null>(null)
 const section3 = ref<HTMLElement | null>(null)
+const statsSection = ref<HTMLElement | null>(null)
 
 let scene: THREE.Scene
 let camera: THREE.PerspectiveCamera
@@ -233,6 +267,30 @@ onMounted(async () => {
       }
     )
   })
+
+  // İstatistik Counter Animasyonları
+  if (statsSection.value) {
+    const statNumbers = statsSection.value.querySelectorAll('.stat-number')
+    
+    statNumbers.forEach((stat) => {
+      const target = parseInt(stat.getAttribute('data-target') || '0')
+      const counter = { value: 0 }
+      
+      gsap.to(counter, {
+        value: target,
+        duration: 2,
+        ease: 'power2.out',
+        scrollTrigger: {
+          trigger: statsSection.value,
+          start: 'top center',
+          once: true
+        },
+        onUpdate: () => {
+          stat.textContent = Math.round(counter.value).toString()
+        }
+      })
+    })
+  }
   
   window.addEventListener('resize', handleResize)
 })
@@ -414,6 +472,61 @@ canvas {
   height: 0;
 }
 
+/* İstatistikler */
+.stats-card {
+  max-width: 1100px;
+  padding: 4rem 3rem;
+}
+
+.stats-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #1e293b;
+  text-align: center;
+  margin-bottom: 3rem;
+  letter-spacing: -0.02em;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 3rem;
+}
+
+.stat-item {
+  text-align: center;
+}
+
+.stat-value {
+  font-size: 4rem;
+  font-weight: 700;
+  line-height: 1;
+  margin-bottom: 1rem;
+  background: linear-gradient(135deg, #06b6d4 0%, #3b82f6 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.stat-number {
+  display: inline-block;
+  min-width: 2ch;
+  text-align: center;
+}
+
+.stat-symbol {
+  font-size: 2.5rem;
+  margin-left: 0.25rem;
+  opacity: 0.8;
+}
+
+.stat-label {
+  font-size: 1.125rem;
+  font-weight: 500;
+  color: rgba(30, 41, 59, 0.7);
+  letter-spacing: 0.01em;
+}
+
 @media (max-width: 768px) {
   .nav-menu {
     display: none;
@@ -434,6 +547,27 @@ canvas {
   .cta-button {
     padding: 0.875rem 2rem;
     font-size: 0.9rem;
+  }
+
+  .stats-grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .stats-title {
+    font-size: 1.75rem;
+  }
+
+  .stat-value {
+    font-size: 3rem;
+  }
+
+  .stat-symbol {
+    font-size: 2rem;
+  }
+
+  .stats-card {
+    padding: 2.5rem 2rem;
   }
 }
 </style>
