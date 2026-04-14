@@ -69,31 +69,36 @@ onMounted(async () => {
   cube = new THREE.Mesh(geometry, material)
   scene.add(cube)
 
-  // Render loop
-  const animate = () => {
-    animationId = requestAnimationFrame(animate)
-    renderer.render(scene, camera)
-  }
-  animate()
+  // Scroll progress objesi
+  const scrollProgress = { value: 0 }
 
-  // GSAP ScrollTrigger - scroll ile küpü döndür
-  const rotationData = { x: 0, y: 0 }
-  
-  gsap.to(rotationData, {
-    x: Math.PI * 2,
-    y: Math.PI * 2,
+  // GSAP ScrollTrigger - scroll progress'i takip et
+  gsap.to(scrollProgress, {
+    value: 1,
+    ease: 'none',
     scrollTrigger: {
       trigger: scrollAreaRef.value,
       start: 'top top',
       end: 'bottom bottom',
       scrub: 1,
       markers: true,
-      onUpdate: () => {
-        cube.rotation.x = rotationData.x
-        cube.rotation.y = rotationData.y
+      onUpdate: (self) => {
+        console.log('Scroll progress:', self.progress)
       }
     }
   })
+
+  // Render loop - scroll progress'e göre küpü döndür
+  const animate = () => {
+    animationId = requestAnimationFrame(animate)
+    
+    // Scroll progress'e göre rotasyonu ayarla
+    cube.rotation.x = scrollProgress.value * Math.PI * 2
+    cube.rotation.y = scrollProgress.value * Math.PI * 2
+    
+    renderer.render(scene, camera)
+  }
+  animate()
   
   window.addEventListener('resize', handleResize)
 })
