@@ -6,20 +6,16 @@
     </div>
     
     <!-- Scroll area -->
-    <div class="scroll-area h-[300vh]"></div>
+    <div ref="scrollAreaRef" class="scroll-area h-[300vh]"></div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted } from 'vue'
 import * as THREE from 'three'
-import { gsap } from 'gsap'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
-
-// GSAP ScrollTrigger'ı kaydet
-gsap.registerPlugin(ScrollTrigger)
 
 const canvasRef = ref<HTMLCanvasElement | null>(null)
+const scrollAreaRef = ref<HTMLDivElement | null>(null)
 
 let scene: THREE.Scene
 let camera: THREE.PerspectiveCamera
@@ -35,8 +31,13 @@ const handleResize = () => {
   renderer.setSize(window.innerWidth, window.innerHeight)
 }
 
-onMounted(() => {
+onMounted(async () => {
   if (!canvasRef.value) return
+
+  // GSAP'i client-side import et
+  const { gsap } = await import('gsap')
+  const { ScrollTrigger } = await import('gsap/ScrollTrigger')
+  gsap.registerPlugin(ScrollTrigger)
 
   // Sahne oluştur
   scene = new THREE.Scene()
@@ -80,21 +81,30 @@ onMounted(() => {
     x: Math.PI * 2,
     y: Math.PI * 2,
     scrollTrigger: {
-      trigger: 'body',
+      trigger: scrollAreaRef.value,
       start: 'top top',
       end: 'bottom bottom',
-      scrub: true
+      scrub: 1,
+      markers: true // Debug için - sonra kaldıracağız
     }
   })
   
   window.addEventListener('resize', handleResize)
 })
 
-onUnmounted(() => {
+onUnmounted(async () => {
   if (animationId) {
     cancelAnimationFrame(animationId)
   }
-  ScrollTrigger.getAll().forEach(trigger => trigger.kill())
+  
+  // ScrollTrigger'ı temizle
+  try {
+    const { ScrollTrigger } = await import('gsap/ScrollTrigger')
+    ScrollTrigger.getAll().forEach(trigger => trigger.kill())
+  } catch (e) {
+    // ignore
+  }
+  
   window.removeEventListener('resize', handleResize)
 })
 </script>
