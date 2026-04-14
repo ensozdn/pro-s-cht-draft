@@ -18,6 +18,13 @@ export default defineNuxtConfig({
         extend: {
           fontFamily: {
             sans: ['Space Grotesk', 'sans-serif']
+          },
+          colors: {
+            primary: '#4F46E5',      // Derin İndigo
+            'primary-dark': '#4338CA', // Koyu İndigo
+            accent: '#06B6D4',        // Premium Turkuaz
+            'accent-light': '#22D3EE', // Açık Turkuaz
+            'accent-dark': '#0891B2'   // Koyu Turkuaz
           }
         }
       }
