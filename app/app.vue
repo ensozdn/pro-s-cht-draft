@@ -80,11 +80,7 @@ onMounted(async () => {
       trigger: scrollAreaRef.value,
       start: 'top top',
       end: 'bottom bottom',
-      scrub: 1,
-      markers: true,
-      onUpdate: (self) => {
-        console.log('Scroll progress:', self.progress)
-      }
+      scrub: 1
     }
   })
 
