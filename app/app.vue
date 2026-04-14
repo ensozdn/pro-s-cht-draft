@@ -158,7 +158,7 @@ onMounted(async () => {
     value: 1,
     ease: 'none',
     scrollTrigger: {
-      trigger: scrollAreaRef.value,
+      trigger: '.content-wrapper',
       start: 'top top',
       end: 'bottom bottom',
       scrub: 1
