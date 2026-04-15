@@ -120,35 +120,50 @@
       </section>
     </div>
 
-    <!-- Yatay Kaydırma - Sektörler -->
-    <section ref="sectorsSection" class="sectors-wrapper">
-      <div class="sectors-title-container">
-        <h2 class="sectors-main-title">Uygulama <span class="text-gradient">Alanlarımız</span></h2>
-      </div>
-      
-      <div ref="sectorsContainer" class="sectors-container">
-        <div class="sector-card">
-          <div class="sector-icon">🏭</div>
-          <h3 class="sector-title">Metal ve Çelik</h3>
-          <p class="sector-description">
-            Yüksek hassasiyetli yüzey kontrolü ve kaynak kalitesi tespiti
-          </p>
+    <!-- Uygulama Alanlarımız - Tab Yapısı -->
+    <section ref="sectorsSection" class="applications-section">
+      <div class="applications-container">
+        <!-- Başlık -->
+        <h2 class="applications-title">Uygulama <span class="text-gradient">Alanlarımız</span></h2>
+        
+        <!-- Tab Butonları -->
+        <div class="tabs-wrapper">
+          <button
+            v-for="category in categories"
+            :key="category.id"
+            @click="activeTab = category.id"
+            :class="['tab-button', { active: activeTab === category.id }]"
+          >
+            {{ category.title }}
+          </button>
         </div>
 
-        <div class="sector-card">
-          <div class="sector-icon">👔</div>
-          <h3 class="sector-title">Tekstil ve Deri</h3>
-          <p class="sector-description">
-            Kumaş hataları, renk uyumsuzlukları ve dikiş kalitesi analizi
-          </p>
-        </div>
+        <!-- İçerik Alanı -->
+        <div class="tab-content">
+          <div class="content-grid">
+            <!-- Sol: Açıklama -->
+            <div class="content-left">
+              <h3 class="content-title">{{ activeCategory?.title }}</h3>
+              <p class="content-description">{{ activeCategory?.description }}</p>
+            </div>
 
-        <div class="sector-card">
-          <div class="sector-icon">🚗</div>
-          <h3 class="sector-title">Otomotiv</h3>
-          <p class="sector-description">
-            Parça uyumu, montaj doğruluğu ve boyama kalitesi kontrolü
-          </p>
+            <!-- Sağ: Görsel Alanı -->
+            <div class="content-right">
+              <div class="image-placeholder">
+                <img 
+                  v-if="activeCategory?.image" 
+                  :src="activeCategory.image" 
+                  :alt="activeCategory.title"
+                  class="category-image"
+                />
+                <div v-else class="placeholder-icon">
+                  <svg class="w-24 h-24 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                  </svg>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -245,8 +260,57 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted } from 'vue'
+import { ref, onMounted, onUnmounted, computed } from 'vue'
 import * as THREE from 'three'
+
+// Categories Data
+const categories = ref([
+  {
+    id: 'metal-celik',
+    title: 'Metal-Çelik',
+    description: 'Yüksek hassasiyetli yüzey kontrolü, kaynak kalitesi tespiti ve çatlak analizi ile üretim süreçlerinizde maksimum güvenilirlik sağlıyoruz.',
+    image: ''
+  },
+  {
+    id: 'deri',
+    title: 'Deri',
+    description: 'Deri ürünlerinde renk tutarlılığı, yüzey kusurları ve dikiş kalitesi kontrolü ile premium standartları garanti ediyoruz.',
+    image: ''
+  },
+  {
+    id: 'tekstil',
+    title: 'Tekstil',
+    description: 'Kumaş hataları, renk uyumsuzlukları, desen bozuklukları ve dikiş kalitesi analizinde yapay zeka destekli çözümler sunuyoruz.',
+    image: ''
+  },
+  {
+    id: 'mobilya',
+    title: 'Mobilya',
+    description: 'Ahşap yüzey kalitesi, birleştirme noktaları, boya-vernik uygulamaları ve montaj doğruluğu kontrolünde sektörün öncüsüyüz.',
+    image: ''
+  },
+  {
+    id: 'mermer',
+    title: 'Mermer',
+    description: 'Mermer ve doğal taş ürünlerde damar deseni, renk tonları, yüzey işleme kalitesi ve boyut hassasiyeti kontrolü yapıyoruz.',
+    image: ''
+  },
+  {
+    id: 'cam',
+    title: 'Cam',
+    description: 'Cam ürünlerde hava kabarcıkları, çizikler, şeffaflık kontrolü ve kenar işleme kalitesi analizinde uzmanız.',
+    image: ''
+  },
+  {
+    id: 'son-kalite',
+    title: 'Son Kalite Kontrol',
+    description: 'Tüm sektörlerde üretim hattının son aşamasında, ürünlerinizin piyasaya çıkmadan önce mükemmel standartta olmasını sağlıyoruz.',
+    image: ''
+  }
+])
+
+const activeTab = ref('metal-celik')
+const activeCategory = computed(() => categories.value.find(c => c.id === activeTab.value))
 
 const canvasRef = ref<HTMLCanvasElement | null>(null)
 const scrollAreaRef = ref<HTMLDivElement | null>(null)
@@ -549,22 +613,16 @@ onMounted(async () => {
     })
   }
 
-  // Yatay Kaydırma Animasyonu
-  if (sectorsSection.value && sectorsContainer.value) {
-    const containerWidth = sectorsContainer.value.scrollWidth
-    const viewportWidth = window.innerWidth
-    const scrollDistance = containerWidth - viewportWidth
-
-    gsap.to(sectorsContainer.value, {
-      x: -scrollDistance,
-      ease: 'none',
+  // Uygulama Alanları bölümü için basit fade-in animasyonu
+  if (sectorsSection.value) {
+    gsap.from(sectorsSection.value.querySelectorAll('.tab-button'), {
+      opacity: 0,
+      y: 20,
+      stagger: 0.1,
+      duration: 0.6,
       scrollTrigger: {
         trigger: sectorsSection.value,
-        start: 'top top',
-        end: () => `+=${scrollDistance}`,
-        scrub: 1,
-        pin: true,
-        anticipatePin: 1
+        start: 'top 80%'
       }
     })
   }
@@ -723,7 +781,7 @@ onUnmounted(async () => {
 }
 
 .logo-img {
-  height: 60px;
+  height: 110px;
   width: auto;
   transition: all 0.3s ease;
   cursor: pointer;
@@ -1035,69 +1093,142 @@ canvas {
   letter-spacing: 0.01em;
 }
 
-/* Yatay Kaydırma - Sektörler */
-.sectors-wrapper {
+/* Uygulama Alanları - Tab Yapısı */
+.applications-section {
   position: relative;
-  height: 100vh;
-  overflow: hidden;
+  min-height: 100vh;
   background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+  padding: 6rem 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.sectors-title-container {
-  position: absolute;
-  top: 6rem;
-  left: 0;
-  right: 0;
-  z-index: 10;
-  text-align: center;
+.applications-container {
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto;
 }
 
-.sectors-main-title {
+.applications-title {
   font-size: 3rem;
   font-weight: 700;
   color: #1e293b;
+  text-align: center;
+  margin-bottom: 3rem;
   letter-spacing: -0.02em;
 }
 
-.sectors-container {
-  position: absolute;
-  top: 50%;
-  left: 0;
-  transform: translateY(-50%);
+.tabs-wrapper {
   display: flex;
-  gap: 4rem;
-  padding: 0 4rem;
-  will-change: transform;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+  margin-bottom: 4rem;
 }
 
-.sector-card {
-  min-width: 400px;
-  backdrop-filter: blur(16px) saturate(180%);
-  background: rgba(255, 255, 255, 0.9);
+.tab-button {
+  padding: 0.75rem 1.5rem;
+  font-size: 0.95rem;
+  font-weight: 500;
+  border: none;
+  border-radius: 0.75rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background: rgba(255, 255, 255, 0.5);
+  color: #1e293b;
   border: 1px solid rgba(61, 186, 162, 0.2);
-  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.1);
-  border-radius: 2rem;
-  padding: 3rem 2.5rem;
-  text-align: center;
 }
 
-.sector-icon {
-  font-size: 4rem;
-  margin-bottom: 1.5rem;
+.tab-button:hover {
+  background: rgba(61, 186, 162, 0.1);
+  border-color: rgba(61, 186, 162, 0.4);
+  transform: translateY(-2px);
 }
 
-.sector-title {
-  font-size: 2rem;
+.tab-button.active {
+  background: linear-gradient(135deg, #0D7C6C 0%, #3DBAA2 100%);
+  color: white;
+  border-color: transparent;
+  box-shadow: 0 8px 20px rgba(13, 124, 108, 0.3);
+}
+
+.tab-content {
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}
+
+.content-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: center;
+}
+
+.content-left {
+  animation: fadeInLeft 0.5s ease;
+}
+
+.content-title {
+  font-size: 2.5rem;
   font-weight: 700;
   color: #1e293b;
-  margin-bottom: 1rem;
-  letter-spacing: -0.01em;
+  margin-bottom: 1.5rem;
+  letter-spacing: -0.02em;
 }
 
-.sector-description {
+.content-description {
   font-size: 1.125rem;
   color: rgba(30, 41, 59, 0.8);
-  line-height: 1.6;
+  line-height: 1.8;
+}
+
+.content-right {
+  animation: fadeInRight 0.5s ease;
+}
+
+.image-placeholder {
+  aspect-ratio: 4/3;
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(61, 186, 162, 0.2);
+  border-radius: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+}
+
+.category-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.placeholder-icon {
+  color: rgba(61, 186, 162, 0.3);
+}
+
+@keyframes fadeInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fadeInRight {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
 
 /* İletişim Bölümü */
@@ -1355,30 +1486,30 @@ canvas {
     padding: 2.5rem 2rem;
   }
 
-  .sectors-main-title {
+  .applications-title {
     font-size: 1.75rem;
   }
 
-  .sector-card {
-    min-width: 300px;
-    padding: 2rem 1.5rem;
+  .tabs-wrapper {
+    gap: 0.5rem;
   }
 
-  .sector-icon {
-    font-size: 3rem;
+  .tab-button {
+    padding: 0.625rem 1rem;
+    font-size: 0.85rem;
   }
 
-  .sector-title {
-    font-size: 1.5rem;
-  }
-
-  .sector-description {
-    font-size: 1rem;
-  }
-
-  .sectors-container {
+  .content-grid {
+    grid-template-columns: 1fr;
     gap: 2rem;
-    padding: 0 2rem;
+  }
+
+  .content-title {
+    font-size: 1.75rem;
+  }
+
+  .content-description {
+    font-size: 1rem;
   }
 
   .contact-content {
