@@ -120,6 +120,38 @@
       </section>
     </div>
 
+    <!-- Neden Biz? Bölümü -->
+    <section class="why-us-section">
+      <div class="why-us-container">
+        <h2 class="why-us-title">Neden <span class="text-gradient">Biz?</span></h2>
+        
+        <div class="why-us-grid">
+          <div
+            v-for="feature in whyUsFeatures"
+            :key="feature.title"
+            class="feature-card"
+          >
+            <div class="feature-icon">
+              <svg v-if="feature.icon === 'Rocket'" class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+              </svg>
+              <svg v-else-if="feature.icon === 'BrainCircuit'" class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+              </svg>
+              <svg v-else-if="feature.icon === 'Users'" class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+              </svg>
+              <svg v-else-if="feature.icon === 'Activity'" class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+              </svg>
+            </div>
+            <h3 class="feature-title">{{ feature.title }}</h3>
+            <p class="feature-description">{{ feature.desc }}</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- Uygulama Alanlarımız - Tab Yapısı -->
     <section ref="sectorsSection" class="applications-section">
       <div class="applications-container">
@@ -133,6 +165,7 @@
             :key="category.id"
             @click="activeTab = category.id"
             :class="['tab-button', { active: activeTab === category.id }]"
+            :style="getButtonStyle(category.id)"
           >
             {{ category.title }}
           </button>
@@ -269,48 +302,88 @@ const categories = ref([
     id: 'metal-celik',
     title: 'Metal-Çelik',
     description: 'Yüksek hassasiyetli yüzey kontrolü, kaynak kalitesi tespiti ve çatlak analizi ile üretim süreçlerinizde maksimum güvenilirlik sağlıyoruz.',
-    image: ''
+    image: '/images/metal-celik.png'
   },
   {
     id: 'deri',
     title: 'Deri',
     description: 'Deri ürünlerinde renk tutarlılığı, yüzey kusurları ve dikiş kalitesi kontrolü ile premium standartları garanti ediyoruz.',
-    image: ''
+    image: '/images/deri.png'
   },
   {
     id: 'tekstil',
     title: 'Tekstil',
     description: 'Kumaş hataları, renk uyumsuzlukları, desen bozuklukları ve dikiş kalitesi analizinde yapay zeka destekli çözümler sunuyoruz.',
-    image: ''
+    image: '/images/tekstil.png'
   },
   {
     id: 'mobilya',
     title: 'Mobilya',
     description: 'Ahşap yüzey kalitesi, birleştirme noktaları, boya-vernik uygulamaları ve montaj doğruluğu kontrolünde sektörün öncüsüyüz.',
-    image: ''
+    image: '/images/mobilya.png'
   },
   {
     id: 'mermer',
     title: 'Mermer',
     description: 'Mermer ve doğal taş ürünlerde damar deseni, renk tonları, yüzey işleme kalitesi ve boyut hassasiyeti kontrolü yapıyoruz.',
-    image: ''
+    image: '/images/mermer.png'
   },
   {
     id: 'cam',
     title: 'Cam',
     description: 'Cam ürünlerde hava kabarcıkları, çizikler, şeffaflık kontrolü ve kenar işleme kalitesi analizinde uzmanız.',
-    image: ''
+    image: '/images/cam.png'
   },
   {
     id: 'son-kalite',
     title: 'Son Kalite Kontrol',
     description: 'Tüm sektörlerde üretim hattının son aşamasında, ürünlerinizin piyasaya çıkmadan önce mükemmel standartta olmasını sağlıyoruz.',
-    image: ''
+    image: '/images/son-kalite.png'
+  }
+])
+
+// Neden Biz? Features
+const whyUsFeatures = ref([
+  {
+    title: 'Hızlı Kurulum',
+    desc: 'Sistemimiz, hat yapısını bozmadan hızlı kurulum ile sisteme entegre olur. Üretim hattınızı ve iş akışınızı bozmadan devreye alınabilir.',
+    icon: 'Rocket'
+  },
+  {
+    title: 'Otonom Karar Sistemi',
+    desc: 'Yapay zeka destekli sistem, otomatik ve bağımsız kararlar alarak verimliliği artırır, insan müdahalesini minimuma indirir.',
+    icon: 'BrainCircuit'
+  },
+  {
+    title: 'İşçi Kazancı',
+    desc: 'Verimlilik artışı ve hızlı kusur tespiti, işçi performansını iyileştirir, iş gücü kaynaklarının daha verimli kullanılmasını sağlar.',
+    icon: 'Users'
+  },
+  {
+    title: 'Kalite Takibi',
+    desc: 'Sistem, sürekli olarak ürünlerin kalitesini izler ve takip eder, bu da ürün kalitesinde sürekli gelişimi sağlar.',
+    icon: 'Activity'
   }
 ])
 
 const activeTab = ref('metal-celik')
 const activeCategory = computed(() => categories.value.find(c => c.id === activeTab.value))
+
+// Buton pozisyonları - her butonu ayrı ayarla
+const getButtonStyle = (buttonId: string) => {
+  const positions: Record<string, string> = {
+    'metal-celik': '0px',    // Metal-Çelik
+    'deri': '0px',           // Deri
+    'tekstil': '2px',        // Tekstil (şu an 2px aşağıda)
+    'mobilya': '0px',        // Mobilya
+    'mermer': '0px',         // Mermer
+    'cam': '0px',            // Cam
+    'son-kalite': '0px'      // Son Kalite Kontrol
+  }
+  
+  const translateY = positions[buttonId] || '0px'
+  return { transform: `translateY(${translateY})` }
+}
 
 const canvasRef = ref<HTMLCanvasElement | null>(null)
 const scrollAreaRef = ref<HTMLDivElement | null>(null)
@@ -1093,6 +1166,99 @@ canvas {
   letter-spacing: 0.01em;
 }
 
+/* Neden Biz? Bölümü */
+.why-us-section {
+  position: relative;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+  padding: 6rem 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.why-us-container {
+  max-width: 1400px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.why-us-title {
+  font-size: 3rem;
+  font-weight: 700;
+  color: #1e293b;
+  text-align: center;
+  margin-bottom: 4rem;
+  letter-spacing: -0.02em;
+}
+
+.why-us-grid {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: 2rem;
+}
+
+@media (min-width: 768px) {
+  .why-us-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .why-us-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.feature-card {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(226, 232, 240, 0.8);
+  border-radius: 1.5rem;
+  padding: 2.5rem 2rem;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  text-align: center;
+}
+
+.feature-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 
+    0 25px 50px -12px rgba(0, 0, 0, 0.15),
+    0 0 30px rgba(61, 186, 162, 0.1);
+  border-color: rgba(61, 186, 162, 0.3);
+}
+
+.feature-icon {
+  width: 64px;
+  height: 64px;
+  margin: 0 auto 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, rgba(13, 124, 108, 0.1) 0%, rgba(61, 186, 162, 0.1) 100%);
+  border-radius: 1rem;
+  color: #3DBAA2;
+}
+
+.feature-icon .icon {
+  width: 32px;
+  height: 32px;
+}
+
+.feature-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #1e293b;
+  margin-bottom: 1rem;
+  letter-spacing: -0.01em;
+}
+
+.feature-description {
+  font-size: 1rem;
+  color: rgba(30, 41, 59, 0.7);
+  line-height: 1.7;
+}
+
 /* Uygulama Alanları - Tab Yapısı */
 .applications-section {
   position: relative;
@@ -1105,9 +1271,10 @@ canvas {
 }
 
 .applications-container {
-  max-width: 1200px;
+  max-width: 1400px;
   width: 100%;
   margin: 0 auto;
+  overflow: visible;
 }
 
 .applications-title {
@@ -1124,33 +1291,101 @@ canvas {
   flex-wrap: wrap;
   gap: 1rem;
   justify-content: center;
-  margin-bottom: 4rem;
+  align-items: stretch;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto 4rem;
+  padding: 0 2rem;
+  overflow: visible;
+  position: relative;
+  z-index: 10;
+}
+
+@media (max-width: 1024px) {
+  .tabs-wrapper {
+    gap: 0.75rem;
+    padding: 0 1rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .tabs-wrapper {
+    gap: 0.5rem;
+    flex-direction: column;
+  }
 }
 
 .tab-button {
-  padding: 0.75rem 1.5rem;
-  font-size: 0.95rem;
-  font-weight: 500;
-  border: none;
+  padding: 1rem 2rem;
+  font-size: 1rem;
+  font-weight: 600;
+  border: 2px solid #3DBAA2;
   border-radius: 0.75rem;
   cursor: pointer;
-  transition: all 0.3s ease;
-  background: rgba(255, 255, 255, 0.5);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  background: white;
   color: #1e293b;
-  border: 1px solid rgba(61, 186, 162, 0.2);
+  box-shadow: 
+    0 4px 15px rgba(0, 0, 0, 0.1),
+    0 2px 6px rgba(61, 186, 162, 0.15);
+  white-space: nowrap;
+  text-align: center;
+  position: relative;
+  overflow: visible;
+  backdrop-filter: blur(10px);
+  z-index: 1;
+  opacity: 1 !important;
+  visibility: visible !important;
+  flex: 0 0 auto;
+  min-width: 160px;
+  height: auto;
+  align-self: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tab-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, rgba(13, 124, 108, 0.05) 0%, rgba(61, 186, 162, 0.05) 100%);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.tab-button:hover::before {
+  opacity: 1;
 }
 
 .tab-button:hover {
-  background: rgba(61, 186, 162, 0.1);
-  border-color: rgba(61, 186, 162, 0.4);
-  transform: translateY(-2px);
+  background: rgba(255, 255, 255, 1);
+  border-color: #3DBAA2;
+  transform: scale(1.05) translateY(-3px);
+  box-shadow: 
+    0 12px 30px rgba(61, 186, 162, 0.25),
+    0 4px 15px rgba(0, 0, 0, 0.1),
+    0 0 20px rgba(61, 186, 162, 0.15);
+  color: #0D7C6C;
 }
 
 .tab-button.active {
   background: linear-gradient(135deg, #0D7C6C 0%, #3DBAA2 100%);
   color: white;
+  font-weight: 700;
   border-color: transparent;
-  box-shadow: 0 8px 20px rgba(13, 124, 108, 0.3);
+  box-shadow: 
+    0 15px 40px rgba(13, 124, 108, 0.4),
+    0 8px 20px rgba(61, 186, 162, 0.3),
+    0 0 30px rgba(61, 186, 162, 0.2);
+  transform: scale(1.08) translateY(-4px);
+}
+
+.tab-button.active::before {
+  opacity: 0;
 }
 
 .tab-content {
@@ -1189,20 +1424,36 @@ canvas {
 
 .image-placeholder {
   aspect-ratio: 4/3;
-  background: rgba(255, 255, 255, 0.9);
-  border: 1px solid rgba(61, 186, 162, 0.2);
-  border-radius: 2rem;
+  background: rgba(255, 255, 255, 0.95);
+  border: 2px solid rgba(61, 186, 162, 0.3);
+  border-radius: 1.5rem;
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+  box-shadow: 
+    0 20px 50px rgba(0, 0, 0, 0.12),
+    0 8px 20px rgba(61, 186, 162, 0.15);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.image-placeholder:hover {
+  transform: scale(1.02);
+  box-shadow: 
+    0 25px 60px rgba(0, 0, 0, 0.15),
+    0 10px 25px rgba(61, 186, 162, 0.2);
+  border-color: rgba(61, 186, 162, 0.5);
 }
 
 .category-image {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.image-placeholder:hover .category-image {
+  transform: scale(1.05);
 }
 
 .placeholder-icon {
