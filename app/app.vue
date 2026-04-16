@@ -290,6 +290,104 @@
       </div>
     </section>
 
+    <!-- Bize Ulaşın Formu -->
+    <section class="contact-form-section">
+      <div class="form-outer-container">
+        <div class="form-glass-card">
+          <h2 class="form-main-title">Bize <span class="text-gradient">Ulaşın</span></h2>
+          
+          <form @submit.prevent="handleSubmit" class="premium-form">
+            <!-- İsim ve Soyisim -->
+            <div class="form-grid-row">
+              <div class="form-field">
+                <input
+                  v-model="form.firstName"
+                  type="text"
+                  placeholder="Adınız"
+                  class="form-elite-input"
+                  required
+                />
+              </div>
+              <div class="form-field">
+                <input
+                  v-model="form.lastName"
+                  type="text"
+                  placeholder="Soyadınız"
+                  class="form-elite-input"
+                  required
+                />
+              </div>
+            </div>
+
+            <!-- E-posta ve Telefon -->
+            <div class="form-grid-row">
+              <div class="form-field">
+                <input
+                  v-model="form.email"
+                  type="email"
+                  placeholder="E-posta Adresiniz"
+                  class="form-elite-input"
+                  required
+                />
+              </div>
+              <div class="form-field">
+                <input
+                  v-model="form.phone"
+                  type="tel"
+                  placeholder="Telefon Numaranız"
+                  class="form-elite-input"
+                  required
+                />
+              </div>
+            </div>
+
+            <!-- Uygulama Alanı -->
+            <div class="form-grid-full">
+              <div class="form-field">
+                <select
+                  v-model="form.applicationArea"
+                  class="form-elite-input form-select"
+                  required
+                >
+                  <option value="" disabled selected>Uygulama Alanı Seçiniz</option>
+                  <option
+                    v-for="area in applicationAreas"
+                    :key="area.value"
+                    :value="area.value"
+                  >
+                    {{ area.label }}
+                  </option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Mesaj -->
+            <div class="form-grid-full">
+              <div class="form-field">
+                <textarea
+                  v-model="form.message"
+                  placeholder="Mesajınız..."
+                  rows="5"
+                  class="form-elite-input form-textarea"
+                  required
+                ></textarea>
+              </div>
+            </div>
+
+            <!-- Gönder Butonu -->
+            <div class="form-submit-wrapper">
+              <button type="submit" class="form-premium-button">
+                <span class="button-text">Gönder</span>
+                <svg class="button-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                </svg>
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+
     <!-- Eski Form Bölümü (Yedek) -->
     <section class="old-contact-form-section" style="display: none;">
       <div class="contact-container">
@@ -516,6 +614,42 @@ const contactInfo = ref([
     text: 'info@prosicht.com'
   }
 ])
+
+// Bize Ulaşın Formu
+const form = ref({
+  firstName: '',
+  lastName: '',
+  email: '',
+  phone: '',
+  applicationArea: '',
+  message: ''
+})
+
+const applicationAreas = ref([
+  { value: 'metal-celik', label: 'Metal-Çelik' },
+  { value: 'deri', label: 'Deri' },
+  { value: 'tekstil', label: 'Tekstil' },
+  { value: 'mobilya', label: 'Mobilya' },
+  { value: 'mermer', label: 'Mermer' },
+  { value: 'cam', label: 'Cam' },
+  { value: 'son-kalite', label: 'Son Kalite Kontrol' }
+])
+
+const handleSubmit = () => {
+  console.log('Form gönderildi:', form.value)
+  // Form submit logic buraya eklenebilir
+  alert('Mesajınız başarıyla gönderildi!')
+  
+  // Form reset
+  form.value = {
+    firstName: '',
+    lastName: '',
+    email: '',
+    phone: '',
+    applicationArea: '',
+    message: ''
+  }
+}
 
 const activeTab = ref('metal-celik')
 const activeCategory = computed(() => categories.value.find(c => c.id === activeTab.value))
@@ -2025,6 +2159,196 @@ canvas {
   box-shadow: 
     0 20px 35px -5px rgba(13, 124, 108, 0.5),
     0 0 30px rgba(61, 186, 162, 0.3);
+}
+
+/* Bize Ulaşın Formu */
+.contact-form-section {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+  padding: 6rem 2rem;
+}
+
+.form-outer-container {
+  max-width: 56rem;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.form-glass-card {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(226, 232, 240, 0.8);
+  border-radius: 2rem;
+  padding: 3rem 2.5rem;
+  box-shadow: 
+    0 20px 50px rgba(0, 0, 0, 0.08),
+    0 8px 20px rgba(0, 0, 0, 0.04);
+}
+
+.form-main-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #1e293b;
+  text-align: center;
+  margin-bottom: 3rem;
+  letter-spacing: -0.02em;
+}
+
+.premium-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.form-grid-row {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .form-grid-row {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.form-grid-full {
+  display: grid;
+  grid-template-columns: 1fr;
+}
+
+.form-field {
+  width: 100%;
+}
+
+.form-elite-input {
+  width: 100%;
+  padding: 1rem 1.5rem;
+  font-size: 1rem;
+  font-family: 'Space Grotesk', sans-serif;
+  background: rgba(248, 250, 252, 0.5);
+  border: 1px solid rgba(226, 232, 240, 1);
+  border-radius: 0.75rem;
+  color: #1e293b;
+  outline: none;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.form-elite-input::placeholder {
+  color: rgba(100, 116, 139, 0.5);
+}
+
+.form-elite-input:focus {
+  background: rgba(255, 255, 255, 0.9);
+  border-color: #3DBAA2;
+  box-shadow: 0 0 0 3px rgba(61, 186, 162, 0.1);
+  transform: translateY(-1px);
+}
+
+.form-select {
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+  background-position: right 0.75rem center;
+  background-repeat: no-repeat;
+  background-size: 1.5em 1.5em;
+  padding-right: 3rem;
+}
+
+.form-textarea {
+  resize: vertical;
+  min-height: 130px;
+  line-height: 1.6;
+}
+
+.form-submit-wrapper {
+  display: flex;
+  justify-content: flex-start;
+  margin-top: 1rem;
+}
+
+.form-premium-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem 2.5rem;
+  background: #0D7C6C;
+  color: white;
+  font-weight: 600;
+  font-size: 1.05rem;
+  font-family: 'Space Grotesk', sans-serif;
+  border: none;
+  border-radius: 0.75rem;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 15px rgba(13, 124, 108, 0.3);
+  position: relative;
+  overflow: hidden;
+}
+
+.form-premium-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #3DBAA2;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.3s ease;
+  z-index: 0;
+}
+
+.form-premium-button:hover::before {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+.form-premium-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 
+    0 8px 25px rgba(61, 186, 162, 0.4),
+    0 4px 12px rgba(13, 124, 108, 0.2);
+}
+
+.button-text,
+.button-icon {
+  position: relative;
+  z-index: 1;
+}
+
+.button-icon {
+  width: 20px;
+  height: 20px;
+  transition: transform 0.3s ease;
+}
+
+.form-premium-button:hover .button-icon {
+  transform: translateX(4px);
+}
+
+@media (max-width: 640px) {
+  .form-glass-card {
+    padding: 2rem 1.5rem;
+  }
+  
+  .form-main-title {
+    font-size: 2rem;
+  }
+  
+  .form-premium-button {
+    width: 100%;
+    justify-content: center;
+  }
+  
+  .form-submit-wrapper {
+    justify-content: stretch;
+  }
 }
 
 /* Footer */
