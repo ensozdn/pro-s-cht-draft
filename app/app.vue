@@ -926,79 +926,90 @@ onMounted(async () => {
   // Hero Kartları Referansları
   const heroSections = [section1.value, section2.value, section3.value]
   
-  // BAŞLANGIÇ POZİSYONU: Kart solda, 3D sağda
-  gsap.set(conveyorGroup.position, { x: 3 }) // 3D nesne sağ tarafta başlasın
+  // BAŞLANGIÇ POZİSYONU: Kart sol-orta, 3D sağda (dengeli kompozisyon)
+  gsap.set(conveyorGroup.position, { x: 3, z: 0 }) // 3D nesne sağda ama çok değil
   
   // STEP 1: İlk Kart → İkinci Kart Geçişi (3D Sahne MERKEZE gelir)
   if (section1.value && section2.value) {
-    // İlk kartı solda başlat (görünür)
-    gsap.set(section1.value, { opacity: 1, x: -150 })
-    gsap.set(section2.value, { opacity: 0, x: -150 })
+    // İlk kartı dengeli pozisyonda + hafif 3D ile başlat
+    gsap.set(section1.value, { 
+      opacity: 1, 
+      x: -280,  // Hafif solda (merkeze yakın)
+      rotateY: 2,  // ÇOK hafif perspektif (daha dik)
+      transformPerspective: 1200,
+      transformStyle: 'preserve-3d'
+    })
+    gsap.set(section2.value, { opacity: 0, x: 280, rotateY: 2 })  // Sağda başlar, Kart 1 ile aynı duruş
     
     // 3D sahneyi ve kartları senkronize et
     const timeline1 = gsap.timeline({
       scrollTrigger: {
         trigger: section1.value,
         start: 'top top',
-        end: '+=100%',
-        scrub: true,
+        end: '+=70%',           // Daha kısa süre (100% → 70%)
+        scrub: 1.2,             // Yumuşak geçiş
         pin: false
       }
     })
     
-    // 3D Sahne MERKEZE kayar (sağdan merkeze)
+    // 3D Sahne SOLA kayar (ROL DEĞİŞİMİ!)
     timeline1.to(conveyorGroup.position, {
-      x: 0,
-      ease: 'power1.inOut'
+      x: -4,  // TAM SOLA kayar
+      z: 0,   // Derinlik düz
+      ease: 'power2.inOut'  // Daha yumuşak
     }, 0)
     
-    // İlk kart solda kalır (hafifçe merkeze kayar)
+    // İlk kart hafif kayarak kaybolur
     timeline1.to(section1.value, {
       opacity: 0,
-      x: -50,
-      ease: 'power1.inOut'
+      x: -120,
+      rotateY: 4,  // Hafif rotasyon (dik kalır)
+      ease: 'power2.inOut'  // Daha yumuşak
     }, 0)
     
-    // İkinci kart soldan belirerek ortaya çıkar
+    // İkinci kart SAĞA kayarak belirer (ROL DEĞİŞİMİ!)
     timeline1.to(section2.value, {
       opacity: 1,
-      x: -150,
-      ease: 'power1.inOut'
+      x: 280,  // TAM SAĞA kayar
+      rotateY: 2,  // Kart 1 ile aynı duruş (sağa dönük)
+      ease: 'power2.inOut'  // Daha yumuşak
     }, 0)
   }
   
-  // STEP 2: İkinci Kart → Üçüncü Kart Geçişi (3D Sahne SOLA kayar)
+  // STEP 2: İkinci Kart → Üçüncü Kart Geçişi (3D Sahne SAĞA kayar)
   if (section2.value && section3.value) {
-    gsap.set(section3.value, { opacity: 0, x: -150 })
+    gsap.set(section3.value, { opacity: 0, x: -280, rotateY: 2 })  // Solda başlar
     
     const timeline2 = gsap.timeline({
       scrollTrigger: {
         trigger: section2.value,
-        start: 'center top',
-        end: '+=100%',
-        scrub: true,
+        start: 'top top',        // Daha erken başlar
+        end: '+=70%',            // Daha kısa sürede biter (100% → 70%)
+        scrub: 1.2,              // Hafif yumuşatma ekledik (true → 1.2)
         pin: false
       }
     })
     
-    // 3D Sahne SOLA kayar (merkezden sola)
+    // 3D Sahne SAĞA kayar (2. ROL DEĞİŞİMİ!)
     timeline2.to(conveyorGroup.position, {
-      x: -3,
-      ease: 'power1.inOut'
+      x: 4,  // TAM SAĞA kayar
+      ease: 'power2.inOut'  // Daha yumuşak easing (power1 → power2)
     }, 0)
     
     // İkinci kart kaybolur
     timeline2.to(section2.value, {
       opacity: 0,
-      x: -50,
-      ease: 'power1.inOut'
+      x: 320,
+      rotateY: 4,  // Kart 1'in kaybolma gibi (rotateY: 4)
+      ease: 'power2.inOut'  // Daha yumuşak
     }, 0)
     
-    // Üçüncü kart belirerek ortaya çıkar (solda)
+    // Üçüncü kart SOLDA belirerek ortaya çıkar (2. ROL DEĞİŞİMİ!)
     timeline2.to(section3.value, {
       opacity: 1,
-      x: -150,
-      ease: 'power1.inOut'
+      x: -280,  // TAM SOLDA
+      rotateY: 2,  // Sağa dönük (3D'ye bakıyor)
+      ease: 'power2.inOut'  // Daha yumuşak
     }, 0)
   }
   
@@ -1339,6 +1350,7 @@ canvas {
   z-index: 10;
   pointer-events: none;
   padding-top: 80px;
+  perspective: 1500px; /* LOKMA 21: 3D perspektif container */
 }
 
 .content-section {
@@ -1349,6 +1361,7 @@ canvas {
   pointer-events: auto;
   padding: 2rem;
   position: relative; /* LOKMA 21: Kartların overlap için */
+  transform-style: preserve-3d; /* LOKMA 21: 3D transform korunur */
 }
 
 .glass-card {
@@ -1362,6 +1375,7 @@ canvas {
   text-align: center;
   transition: all 0.4s ease;
   will-change: transform, opacity; /* LOKMA 21: Performans optimizasyonu */
+  transform-style: preserve-3d; /* LOKMA 21: 3D derinlik */
 }
 
 .glass-card:hover {
