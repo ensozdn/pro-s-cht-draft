@@ -244,6 +244,55 @@
     <!-- İletişim Bölümü -->
     <section ref="contactSection" class="contact-section">
       <div class="contact-container">
+        <h2 class="contact-main-title">İletişim</h2>
+        
+        <div class="contact-grid">
+          <!-- Sol: Harita -->
+          <div class="map-wrapper">
+            <div class="map-frame">
+              <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3023.1234567890!2d30.123456!3d40.789012!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2sSakarya%20Teknokent!5e0!3m2!1str!2str!4v1234567890"
+                class="map-iframe"
+                :allowfullscreen="true"
+                loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade"
+              ></iframe>
+            </div>
+          </div>
+
+          <!-- Sağ: İletişim Bilgileri -->
+          <div class="contact-info-wrapper">
+            <h3 class="contact-info-title">İletişim Bilgileri</h3>
+            
+            <div class="contact-list">
+              <div
+                v-for="(contact, index) in contactInfo"
+                :key="index"
+                class="contact-info-item"
+              >
+                <div class="contact-icon-wrapper">
+                  <svg v-if="contact.icon === 'MapPin'" class="contact-svg-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                  </svg>
+                  <svg v-else-if="contact.icon === 'Phone'" class="contact-svg-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                  </svg>
+                  <svg v-else-if="contact.icon === 'Mail'" class="contact-svg-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                  </svg>
+                </div>
+                <p class="contact-info-text">{{ contact.text }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Eski Form Bölümü (Yedek) -->
+    <section class="old-contact-form-section" style="display: none;">
+      <div class="contact-container">
         <div class="contact-content">
           <div class="contact-info">
             <h2 class="contact-title">
@@ -437,6 +486,34 @@ const contributions = ref([
     title: 'Veri ve Analiz İmkanı',
     desc: 'Kusur tespiti sistemi, ürünlerin üretim süreci hakkında veri toplar ve analiz eder. Bu veriler, üretim süreçlerini optimize etmek ve gelecekteki geliştirmeler için kullanılabilir.',
     icon: 'BarChart'
+  }
+])
+
+// İletişim Bilgileri
+const contactInfo = ref([
+  {
+    icon: 'MapPin',
+    text: 'TR - Sakarya Teknokent - Esentepe Mah. Akademiyolu Sk. Teknoloji Geliştirme Bölgeleri Sitesi B Blok No: 10b İç Kapı No: Z05 Serdivan / Sakarya'
+  },
+  {
+    icon: 'MapPin',
+    text: 'TR - Bilişim Vadisi - Muallimköy Mahallesi, Deniz Cd. No:143-5, 41400 Gebze/Kocaeli'
+  },
+  {
+    icon: 'Phone',
+    text: '+90 549 202 90 44'
+  },
+  {
+    icon: 'MapPin',
+    text: 'GER - Wabestr. 8, 38122 Braunschweig / Germany'
+  },
+  {
+    icon: 'Phone',
+    text: '+49 176 32385710'
+  },
+  {
+    icon: 'Mail',
+    text: 'info@prosicht.com'
   }
 ])
 
@@ -1680,13 +1757,145 @@ canvas {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #fafafa;
+  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
   padding: 6rem 2rem;
 }
 
 .contact-container {
-  max-width: 1200px;
+  max-width: 1400px;
   width: 100%;
+}
+
+.contact-main-title {
+  font-size: 3rem;
+  font-weight: 700;
+  color: #1e293b;
+  text-align: center;
+  margin-bottom: 4rem;
+  letter-spacing: -0.02em;
+}
+
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 3rem;
+}
+
+@media (min-width: 1024px) {
+  .contact-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+  }
+}
+
+/* Harita */
+.map-wrapper {
+  width: 100%;
+  height: 100%;
+  min-height: 500px;
+}
+
+.map-frame {
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(226, 232, 240, 0.8);
+  border-radius: 1.5rem;
+  padding: 1rem;
+  box-shadow: 
+    0 20px 40px rgba(0, 0, 0, 0.08),
+    0 8px 16px rgba(0, 0, 0, 0.04);
+  overflow: hidden;
+}
+
+.map-iframe {
+  width: 100%;
+  height: 100%;
+  min-height: 480px;
+  border: none;
+  border-radius: 1rem;
+}
+
+/* İletişim Bilgileri */
+.contact-info-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.contact-info-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #1e293b;
+  margin-bottom: 1rem;
+  letter-spacing: -0.01em;
+}
+
+.contact-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.contact-info-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  padding: 1.25rem;
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(226, 232, 240, 0.8);
+  border-radius: 1rem;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+}
+
+.contact-info-item:hover {
+  transform: translateX(4px);
+  background: rgba(255, 255, 255, 0.9);
+  border-color: rgba(61, 186, 162, 0.3);
+  box-shadow: 
+    0 8px 20px rgba(0, 0, 0, 0.08),
+    0 0 15px rgba(61, 186, 162, 0.1);
+}
+
+.contact-icon-wrapper {
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, rgba(13, 124, 108, 0.1) 0%, rgba(61, 186, 162, 0.1) 100%);
+  border-radius: 0.75rem;
+  color: #0D7C6C;
+  transition: all 0.3s ease;
+}
+
+.contact-info-item:hover .contact-icon-wrapper {
+  background: linear-gradient(135deg, rgba(13, 124, 108, 0.15) 0%, rgba(61, 186, 162, 0.15) 100%);
+  color: #3DBAA2;
+  transform: scale(1.1);
+}
+
+.contact-svg-icon {
+  width: 22px;
+  height: 22px;
+  stroke-width: 2;
+}
+
+.contact-info-text {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: rgba(30, 41, 59, 0.8);
+  margin: 0;
+  flex: 1;
+}
+
+/* Eski İletişim Stilleri (Yedek) */
+.old-contact-form-section {
+  display: none;
 }
 
 .contact-content {
