@@ -919,33 +919,101 @@ onMounted(async () => {
   // Mouse parallax event listener ekle
   window.addEventListener('mousemove', handleMouseMove)
 
-  // Metin Animasyonları
-  const sections = [section1.value, section2.value, section3.value]
+  // ═══════════════════════════════════════════════════════════════
+  // LOKMA 21: PREMIUM 3D SAHNE + HERO KARTLARI SİNEMATİK DANSI 🎬
+  // ═══════════════════════════════════════════════════════════════
   
-  sections.forEach((section) => {
-    if (!section) return
+  // Hero Kartları Referansları
+  const heroSections = [section1.value, section2.value, section3.value]
+  
+  // BAŞLANGIÇ POZİSYONU: Kart solda, 3D sağda
+  gsap.set(conveyorGroup.position, { x: 3 }) // 3D nesne sağ tarafta başlasın
+  
+  // STEP 1: İlk Kart → İkinci Kart Geçişi (3D Sahne MERKEZE gelir)
+  if (section1.value && section2.value) {
+    // İlk kartı solda başlat (görünür)
+    gsap.set(section1.value, { opacity: 1, x: -150 })
+    gsap.set(section2.value, { opacity: 0, x: -150 })
     
-    const title = section.querySelector('.content-title')
-    
-    gsap.fromTo(
-      title,
-      {
-        opacity: 0,
-        y: 50
-      },
-      {
-        opacity: 1,
-        y: 0,
-        scrollTrigger: {
-          trigger: section,
-          start: 'top center',
-          end: 'bottom center',
-          scrub: 1,
-          toggleActions: 'play reverse play reverse'
-        }
+    // 3D sahneyi ve kartları senkronize et
+    const timeline1 = gsap.timeline({
+      scrollTrigger: {
+        trigger: section1.value,
+        start: 'top top',
+        end: '+=100%',
+        scrub: true,
+        pin: false
       }
-    )
-  })
+    })
+    
+    // 3D Sahne MERKEZE kayar (sağdan merkeze)
+    timeline1.to(conveyorGroup.position, {
+      x: 0,
+      ease: 'power1.inOut'
+    }, 0)
+    
+    // İlk kart solda kalır (hafifçe merkeze kayar)
+    timeline1.to(section1.value, {
+      opacity: 0,
+      x: -50,
+      ease: 'power1.inOut'
+    }, 0)
+    
+    // İkinci kart soldan belirerek ortaya çıkar
+    timeline1.to(section2.value, {
+      opacity: 1,
+      x: -150,
+      ease: 'power1.inOut'
+    }, 0)
+  }
+  
+  // STEP 2: İkinci Kart → Üçüncü Kart Geçişi (3D Sahne SOLA kayar)
+  if (section2.value && section3.value) {
+    gsap.set(section3.value, { opacity: 0, x: -150 })
+    
+    const timeline2 = gsap.timeline({
+      scrollTrigger: {
+        trigger: section2.value,
+        start: 'center top',
+        end: '+=100%',
+        scrub: true,
+        pin: false
+      }
+    })
+    
+    // 3D Sahne SOLA kayar (merkezden sola)
+    timeline2.to(conveyorGroup.position, {
+      x: -3,
+      ease: 'power1.inOut'
+    }, 0)
+    
+    // İkinci kart kaybolur
+    timeline2.to(section2.value, {
+      opacity: 0,
+      x: -50,
+      ease: 'power1.inOut'
+    }, 0)
+    
+    // Üçüncü kart belirerek ortaya çıkar (solda)
+    timeline2.to(section3.value, {
+      opacity: 1,
+      x: -150,
+      ease: 'power1.inOut'
+    }, 0)
+  }
+  
+  // STEP 3: Stats bölümüne gelince 3D sahneyi merkeze geri getir
+  if (statsSection.value) {
+    gsap.to(conveyorGroup.position, {
+      x: 0,
+      scrollTrigger: {
+        trigger: statsSection.value,
+        start: 'top center',
+        end: 'center center',
+        scrub: true
+      }
+    })
+  }
 
   // İstatistik Counter Animasyonları
   if (statsSection.value) {
@@ -1280,6 +1348,7 @@ canvas {
   justify-content: center;
   pointer-events: auto;
   padding: 2rem;
+  position: relative; /* LOKMA 21: Kartların overlap için */
 }
 
 .glass-card {
@@ -1292,6 +1361,7 @@ canvas {
   max-width: 900px;
   text-align: center;
   transition: all 0.4s ease;
+  will-change: transform, opacity; /* LOKMA 21: Performans optimizasyonu */
 }
 
 .glass-card:hover {
