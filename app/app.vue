@@ -1318,6 +1318,10 @@ onUnmounted(async () => {
   justify-content: center;
 }
 
+.dark .preloader {
+  background: #0f172a;
+}
+
 .preloader-content {
   text-align: center;
 }
@@ -1376,6 +1380,10 @@ onUnmounted(async () => {
   font-weight: 600;
   color: #1e293b;
   opacity: 0.6;
+}
+
+.dark .preloader-text {
+  color: #f1f5f9;
 }
 
 /* Header */
@@ -2179,6 +2187,12 @@ canvas {
   justify-content: center;
 }
 
+.dark .tab-button {
+  background: rgba(15, 23, 42, 0.8);
+  color: #e2e8f0;
+  border-color: rgba(61, 186, 162, 0.5);
+}
+
 .tab-button::before {
   content: '';
   position: absolute;
@@ -2204,6 +2218,11 @@ canvas {
     0 4px 15px rgba(0, 0, 0, 0.1),
     0 0 20px rgba(61, 186, 162, 0.15);
   color: #0D7C6C;
+}
+
+.dark .tab-button:hover {
+  background: rgba(15, 23, 42, 0.95);
+  color: #3DBAA2;
 }
 
 .tab-button.active {
@@ -2271,6 +2290,11 @@ canvas {
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+.dark .image-placeholder {
+  background: rgba(15, 23, 42, 0.6);
+  border-color: rgba(61, 186, 162, 0.4);
+}
+
 .image-placeholder:hover {
   transform: scale(1.02);
   box-shadow: 
@@ -2327,6 +2351,10 @@ canvas {
   padding: 6rem 2rem;
 }
 
+.dark .contact-section {
+  background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+}
+
 .contact-container {
   max-width: 1400px;
   width: 100%;
@@ -2339,6 +2367,10 @@ canvas {
   text-align: center;
   margin-bottom: 4rem;
   letter-spacing: -0.02em;
+}
+
+.dark .contact-main-title {
+  color: #f1f5f9;
 }
 
 .contact-grid {
@@ -2375,6 +2407,11 @@ canvas {
   overflow: hidden;
 }
 
+.dark .map-frame {
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid rgba(61, 186, 162, 0.2);
+}
+
 .map-iframe {
   width: 100%;
   height: 100%;
@@ -2398,6 +2435,10 @@ canvas {
   letter-spacing: -0.01em;
 }
 
+.dark .contact-info-title {
+  color: #f1f5f9;
+}
+
 .contact-list {
   display: flex;
   flex-direction: column;
@@ -2417,6 +2458,11 @@ canvas {
   cursor: pointer;
 }
 
+.dark .contact-info-item {
+  background: rgba(15, 23, 42, 0.5);
+  border: 1px solid rgba(61, 186, 162, 0.2);
+}
+
 .contact-info-item:hover {
   transform: translateX(4px);
   background: rgba(255, 255, 255, 0.9);
@@ -2424,6 +2470,11 @@ canvas {
   box-shadow: 
     0 8px 20px rgba(0, 0, 0, 0.08),
     0 0 15px rgba(61, 186, 162, 0.1);
+}
+
+.dark .contact-info-item:hover {
+  background: rgba(15, 23, 42, 0.7);
+  border-color: rgba(61, 186, 162, 0.4);
 }
 
 .contact-icon-wrapper {
@@ -2457,6 +2508,10 @@ canvas {
   color: rgba(30, 41, 59, 0.8);
   margin: 0;
   flex: 1;
+}
+
+.dark .contact-info-text {
+  color: rgba(226, 232, 240, 0.8);
 }
 
 /* Eski İletişim Stilleri (Yedek) */
@@ -3271,6 +3326,11 @@ canvas {
   border-top: 1px solid rgba(61, 186, 162, 0.2);
 }
 
+.dark .footer {
+  background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+  border-top: 1px solid rgba(61, 186, 162, 0.3);
+}
+
 .footer-content {
   max-width: 1400px;
   margin: 0 auto;
@@ -3300,6 +3360,10 @@ canvas {
   font-size: 0.875rem;
 }
 
+.dark .footer-copyright {
+  color: rgba(226, 232, 240, 0.6);
+}
+
 .footer-links {
   display: flex;
   gap: 2rem;
@@ -3310,6 +3374,10 @@ canvas {
   font-size: 0.9rem;
   text-decoration: none;
   transition: color 0.3s ease;
+}
+
+.dark .footer-link {
+  color: rgba(226, 232, 240, 0.7);
 }
 
 .footer-link:hover {
