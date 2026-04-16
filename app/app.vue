@@ -201,6 +201,46 @@
       </div>
     </section>
 
+    <!-- InspectAI'ın İşletmeye Katkıları -->
+    <section class="contributions-section">
+      <div class="contributions-container">
+        <h2 class="contributions-title">InspectAI Ürününün İşletmeye <span class="text-gradient">Katkıları</span></h2>
+        
+        <div class="contributions-grid">
+          <div
+            v-for="contribution in contributions"
+            :key="contribution.title"
+            class="contribution-card"
+          >
+            <div class="contribution-icon-wrapper">
+              <div class="contribution-icon">
+                <svg v-if="contribution.icon === 'CheckCircle'" class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                <svg v-else-if="contribution.icon === 'TrendingDown'" class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 17h8m0 0V9m0 8l-8-8-4 4-6-6" />
+                </svg>
+                <svg v-else-if="contribution.icon === 'Smile'" class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                <svg v-else-if="contribution.icon === 'ShieldAlert'" class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.618 5.984A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016zM12 9v2m0 4h.01" />
+                </svg>
+                <svg v-else-if="contribution.icon === 'Zap'" class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                </svg>
+                <svg v-else-if="contribution.icon === 'BarChart'" class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                </svg>
+              </div>
+            </div>
+            <h3 class="contribution-title">{{ contribution.title }}</h3>
+            <p class="contribution-description">{{ contribution.desc }}</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- İletişim Bölümü -->
     <section ref="contactSection" class="contact-section">
       <div class="contact-container">
@@ -363,6 +403,40 @@ const whyUsFeatures = ref([
     title: 'Kalite Takibi',
     desc: 'Sistem, sürekli olarak ürünlerin kalitesini izler ve takip eder, bu da ürün kalitesinde sürekli gelişimi sağlar.',
     icon: 'Activity'
+  }
+])
+
+// InspectAI'ın İşletmeye Katkıları
+const contributions = ref([
+  {
+    title: 'Kalite Kontrolünde Yüksek Hassasiyet',
+    desc: 'Yapay zeka, insan gözüne göre daha hassas bir şekilde kusurları tespit edebilir. Bu, ürünlerin daha yüksek kalitede ve hatasız olarak üretilmesini sağlar.',
+    icon: 'CheckCircle'
+  },
+  {
+    title: 'Üretim Sürecindeki Hataları Azaltma',
+    desc: 'Kusur tespiti sistemi, üretim hattındaki hataları erken aşamada tespit ederek hatalı ürünlerin üretime girmesini önler. Bu da maliyet tasarrufu sağlar.',
+    icon: 'TrendingDown'
+  },
+  {
+    title: 'Müşteri Memnuniyetini Artırma',
+    desc: 'Kaliteli ve hatasız ürünler, müşteri memnuniyetini artırır ve müşteri şikayetlerini azaltır. Bu da marka itibarını koruma açısından önemlidir.',
+    icon: 'Smile'
+  },
+  {
+    title: 'Geri Çağırma Maliyetlerini Azaltma',
+    desc: 'Kusursuz ürünlerin üretilmesi, geri çağırma maliyetlerini azaltır. Hatalı ürünlerin piyasadan çekilmesi veya yeniden üretilmesi gerekmeyeceği için maliyet tasarrufu sağlar.',
+    icon: 'ShieldAlert'
+  },
+  {
+    title: 'Verimliliği Artırma',
+    desc: 'Otomatik kusur tespiti, işçilik maliyetlerini azaltır ve üretim süreçlerini hızlandırır. Bu, üreticinin verimliliğini artırır.',
+    icon: 'Zap'
+  },
+  {
+    title: 'Veri ve Analiz İmkanı',
+    desc: 'Kusur tespiti sistemi, ürünlerin üretim süreci hakkında veri toplar ve analiz eder. Bu veriler, üretim süreçlerini optimize etmek ve gelecekteki geliştirmeler için kullanılabilir.',
+    icon: 'BarChart'
   }
 ])
 
@@ -1255,6 +1329,123 @@ canvas {
 
 .feature-description {
   font-size: 1rem;
+  color: rgba(30, 41, 59, 0.7);
+  line-height: 1.7;
+}
+
+/* InspectAI'ın İşletmeye Katkıları */
+.contributions-section {
+  position: relative;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+  padding: 6rem 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.contributions-container {
+  max-width: 1400px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.contributions-title {
+  font-size: 3rem;
+  font-weight: 700;
+  color: #1e293b;
+  text-align: center;
+  margin-bottom: 4rem;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+
+.contributions-grid {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: 2rem;
+}
+
+@media (min-width: 768px) {
+  .contributions-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .contributions-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.contribution-card {
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(226, 232, 240, 0.8);
+  border-radius: 1.5rem;
+  padding: 2.5rem 2rem;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.contribution-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #0D7C6C 0%, #3DBAA2 100%);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s ease;
+}
+
+.contribution-card:hover::before {
+  transform: scaleX(1);
+}
+
+.contribution-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 
+    0 10px 30px rgba(6, 182, 212, 0.15),
+    0 5px 15px rgba(0, 0, 0, 0.1);
+  border-color: rgba(61, 186, 162, 0.4);
+}
+
+.contribution-icon-wrapper {
+  margin-bottom: 1.5rem;
+}
+
+.contribution-icon {
+  width: 56px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, rgba(13, 124, 108, 0.1) 0%, rgba(61, 186, 162, 0.15) 100%);
+  border-radius: 1rem;
+  color: #0D7C6C;
+}
+
+.contribution-icon .icon {
+  width: 28px;
+  height: 28px;
+  stroke-width: 2.5;
+}
+
+.contribution-title {
+  font-size: 1.375rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin-bottom: 1rem;
+  letter-spacing: -0.01em;
+  line-height: 1.3;
+}
+
+.contribution-description {
+  font-size: 0.95rem;
   color: rgba(30, 41, 59, 0.7);
   line-height: 1.7;
 }
