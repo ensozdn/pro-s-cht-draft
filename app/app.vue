@@ -241,6 +241,33 @@
       </div>
     </section>
 
+    <!-- LOKMA 22: Partnerler ve İşbirlikleri -->
+    <section class="partners-section">
+      <div class="partners-container">
+        <!-- Başlık ve Alt Çizgi -->
+        <div class="partners-header">
+          <h2 class="partners-title">Partnerlerimiz ve İşbirliklerimiz</h2>
+          <div class="partners-divider"></div>
+        </div>
+
+        <!-- Partnerler Grid -->
+        <div class="partners-grid">
+          <div
+            v-for="partner in partners"
+            :key="partner.name"
+            class="partner-card"
+          >
+            <img
+              :src="partner.logo"
+              :alt="partner.name"
+              class="partner-logo"
+              :title="partner.name"
+            />
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- İletişim Bölümü -->
     <section ref="contactSection" class="contact-section">
       <div class="contact-container">
@@ -650,6 +677,21 @@ const handleSubmit = () => {
     message: ''
   }
 }
+
+// LOKMA 22: Partnerler ve İşbirlikleri
+const partners = ref([
+  { name: 'KOSGEB', logo: '/images/partners/kosgeb.png' },
+  { name: 'TÜBİTAK', logo: '/images/partners/tubitak.png' },
+  { name: 'BTM', logo: '/images/partners/btm.png' },
+  { name: 'Sakarya Uygulamalı Bilimler Üniversitesi', logo: '/images/partners/subu.png' },
+  { name: 'TOYOTA', logo: '/images/partners/toyota.png' },
+  { name: 'İTÜ Çekirdek', logo: '/images/partners/itu-cekirdek.png' },
+  { name: 'Ford', logo: '/images/partners/ford.png' },
+  { name: 'Sakarya Üniversitesi', logo: '/images/partners/sau.png' },
+  { name: 'Sakarya Teknokent', logo: '/images/partners/sakarya-teknokent.png' },
+  { name: 'NVIDIA Inception Program', logo: '/images/partners/nvidia.png' },
+  { name: 'Bilişim Vadisi', logo: '/images/partners/bilisim-vadisi.png' }
+])
 
 const activeTab = ref('metal-celik')
 const activeCategory = computed(() => categories.value.find(c => c.id === activeTab.value))
@@ -2432,6 +2474,135 @@ canvas {
   
   .form-submit-wrapper {
     justify-content: stretch;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════ */
+/* LOKMA 22: PARTNERLER VE İŞBİRLİKLERİ - PREMIUM GLASSMORPHISM */
+/* ═══════════════════════════════════════════════════════════════ */
+.partners-section {
+  position: relative;
+  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+  padding: 6rem 2rem;
+}
+
+.partners-container {
+  max-width: 1400px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+/* Başlık ve Alt Çizgi */
+.partners-header {
+  text-align: center;
+  margin-bottom: 4rem;
+}
+
+.partners-title {
+  font-size: 3rem;
+  font-weight: 700;
+  color: #1e293b;
+  margin-bottom: 1rem;
+  letter-spacing: -0.02em;
+}
+
+.partners-divider {
+  width: 80px;
+  height: 4px;
+  background: linear-gradient(90deg, #0D7C6C 0%, #3DBAA2 100%);
+  margin: 0 auto;
+  border-radius: 2px;
+}
+
+/* Grid Dizilimi */
+.partners-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);  /* Mobil: 2 kolon */
+  gap: 2rem;
+}
+
+@media (min-width: 640px) {
+  .partners-grid {
+    grid-template-columns: repeat(3, 1fr);  /* Tablet: 3 kolon */
+  }
+}
+
+@media (min-width: 1024px) {
+  .partners-grid {
+    grid-template-columns: repeat(4, 1fr);  /* Desktop: 4 kolon */
+    gap: 2.5rem;
+  }
+}
+
+@media (min-width: 1280px) {
+  .partners-grid {
+    grid-template-columns: repeat(5, 1fr);  /* Geniş ekran: 5 kolon */
+  }
+}
+
+/* Elite Glassmorphism Kart */
+.partner-card {
+  position: relative;
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(8px) saturate(180%);
+  border: 1px solid rgba(226, 232, 240, 0.5);
+  border-radius: 1.5rem;
+  padding: 2.5rem 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 140px;
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+}
+
+/* Hover Efekti */
+.partner-card:hover {
+  transform: translateY(-8px);
+  background: rgba(255, 255, 255, 0.85);
+  border-color: rgba(61, 186, 162, 0.3);
+  box-shadow: 
+    0 20px 40px -10px rgba(13, 124, 108, 0.15),
+    0 0 0 1px rgba(61, 186, 162, 0.1);
+}
+
+/* Logo Stili - GRAYSCALE Efekti */
+.partner-logo {
+  width: 100%;
+  height: auto;
+  max-width: 160px;
+  max-height: 80px;
+  object-fit: contain;
+  filter: grayscale(100%);
+  opacity: 0.7;
+  transition: all 0.5s ease-out;
+}
+
+/* Hover'da Logo Orijinal Renge Döner */
+.partner-card:hover .partner-logo {
+  filter: grayscale(0%);
+  opacity: 1;
+  transform: scale(1.05);
+}
+
+/* Responsive Başlık */
+@media (max-width: 768px) {
+  .partners-title {
+    font-size: 2rem;
+  }
+  
+  .partners-section {
+    padding: 4rem 1.5rem;
+  }
+  
+  .partner-card {
+    padding: 2rem 1.5rem;
+    min-height: 120px;
+  }
+  
+  .partner-logo {
+    max-width: 120px;
+    max-height: 60px;
   }
 }
 
