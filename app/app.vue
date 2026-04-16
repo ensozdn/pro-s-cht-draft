@@ -971,7 +971,7 @@ onMounted(async () => {
     timeline1.to(section2.value, {
       opacity: 1,
       x: 280,  // TAM SAĞA kayar
-      rotateY: 2,  // Kart 1 ile aynı duruş (sağa dönük)
+      rotateY: -3,  // Kart 1 ile aynı duruş (sağa dönük)
       ease: 'power2.inOut'  // Daha yumuşak
     }, 0)
   }
