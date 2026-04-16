@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-slate-50">
+  <div :class="isDark ? 'bg-slate-900' : 'bg-slate-50'">
     <!-- Premium Preloader -->
     <div ref="preloader" class="preloader">
       <div class="preloader-content">
@@ -27,6 +27,43 @@
           <a href="#blog" class="nav-link">Blog</a>
           <a href="#contact" class="nav-cta">İletişim</a>
         </nav>
+
+        <!-- LOKMA 24: Premium Theme Toggle -->
+        <button 
+          @click="toggleTheme"
+          class="theme-toggle"
+          aria-label="Toggle theme"
+        >
+          <!-- Sun Icon (Light Mode) -->
+          <svg
+            :class="['theme-icon', 'sun-icon', { 'icon-hidden': isDark }]"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"
+            />
+          </svg>
+
+          <!-- Moon Icon (Dark Mode) -->
+          <svg
+            :class="['theme-icon', 'moon-icon', { 'icon-visible': isDark }]"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"
+            />
+          </svg>
+        </button>
 
         <!-- Mobile Hamburger Menu (Placeholder) -->
         <button class="mobile-menu-btn">
@@ -264,6 +301,72 @@
               :title="partner.name"
             />
           </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- LOKMA 23: Blog & Haberler (Asimetrik Bento Grid) -->
+    <section class="blog-section">
+      <div class="blog-container">
+        <!-- Başlık -->
+        <div class="blog-header">
+          <h2 class="blog-title">ProSicht - <span class="text-gradient">Blog</span></h2>
+        </div>
+
+        <!-- Asimetrik Bento Grid -->
+        <div class="blog-grid">
+          <article
+            v-for="post in blogPosts"
+            :key="post.id"
+            :class="['blog-card', 'group', { 'blog-card-featured': post.featured }]"
+          >
+            <!-- Resim Konteyneri -->
+            <div class="blog-image-wrapper">
+              <img
+                :src="post.image"
+                :alt="post.title"
+                class="blog-image"
+              />
+            </div>
+
+            <!-- İçerik -->
+            <div class="blog-content">
+              <!-- Etiketler -->
+              <div class="blog-tags">
+                <span
+                  v-for="tag in post.tags"
+                  :key="tag"
+                  class="blog-tag"
+                >
+                  {{ tag }}
+                </span>
+              </div>
+
+              <!-- Başlık -->
+              <h3 class="blog-post-title">{{ post.title }}</h3>
+
+              <!-- Yazar ve Tarih -->
+              <div class="blog-meta">
+                <div class="blog-author">
+                  <div class="author-avatar">
+                    <span class="author-initial">İ</span>
+                  </div>
+                  <span class="author-name">{{ post.author }}</span>
+                </div>
+                <span class="blog-date">{{ post.date }}</span>
+              </div>
+            </div>
+          </article>
+        </div>
+
+        <!-- Daha Fazla Göster Butonu -->
+        <div class="blog-button-wrapper">
+          <button class="blog-load-more">
+            Daha Fazla Göster
+            <svg class="button-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+            </svg>
+          </button>
         </div>
       </div>
     </section>
@@ -642,6 +745,19 @@ const contactInfo = ref([
   }
 ])
 
+// LOKMA 24: Theme Toggle (Light/Dark)
+const isDark = ref(false)
+
+const toggleTheme = () => {
+  isDark.value = !isDark.value
+  // Dark mode class'ı body'ye ekle/çıkar
+  if (isDark.value) {
+    document.documentElement.classList.add('dark')
+  } else {
+    document.documentElement.classList.remove('dark')
+  }
+}
+
 // Bize Ulaşın Formu
 const form = ref({
   firstName: '',
@@ -691,6 +807,37 @@ const partners = ref([
   { name: 'Sakarya Teknokent', logo: '/images/partners/sakarya-teknokent.png' },
   { name: 'NVIDIA Inception Program', logo: '/images/partners/nvidia.png' },
   { name: 'Bilişim Vadisi', logo: '/images/partners/bilisim-vadisi.png' }
+])
+
+// LOKMA 23: Blog & Haberler (Asimetrik Bento Grid)
+const blogPosts = ref([
+  {
+    id: 1,
+    title: 'Doğal Bir "Budak" mı, Yoksa Kritik Bir "Çatlak" mı?',
+    image: '/images/blog/blog1.jpg',
+    tags: ['AI', 'Endüstri 4.0', 'Technology'],
+    author: 'İdil Karabaş',
+    date: '2 ay ago',
+    featured: true
+  },
+  {
+    id: 2,
+    title: 'Otomotiv Üretiminde Yapay Zeka Destekli Kalite Kontrol Dönemi',
+    image: '/images/blog/blog2.jpg',
+    tags: ['AI', 'Endüstri 4.0', 'Technology'],
+    author: 'İdil Karabaş',
+    date: 'Şubat 24, 2026',
+    featured: false
+  },
+  {
+    id: 3,
+    title: 'Pro Sicht ve BIOS\'tan Güç Birliği: Kalite Kontrolde Uçtan Uca Otonom Dönem',
+    image: '/images/blog/blog3.jpg',
+    tags: ['AI', 'Technology'],
+    author: 'İdil Karabaş',
+    date: 'Şubat 24, 2026',
+    featured: false
+  }
 ])
 
 const activeTab = ref('metal-celik')
@@ -1244,6 +1391,11 @@ onUnmounted(async () => {
   transition: all 0.3s ease;
 }
 
+.dark .header-bar {
+  background: rgba(15, 23, 42, 0.8);
+  border-bottom: 1px solid rgba(61, 186, 162, 0.2);
+}
+
 .header-content {
   max-width: 1400px;
   margin: 0 auto;
@@ -1311,6 +1463,14 @@ onUnmounted(async () => {
   width: 100%;
 }
 
+.dark .nav-link {
+  color: #e2e8f0;
+}
+
+.dark .nav-link:hover {
+  color: #3DBAA2;
+}
+
 .nav-cta {
   padding: 0.625rem 1.5rem;
   background: #0D7C6C;
@@ -1346,6 +1506,79 @@ onUnmounted(async () => {
 .hamburger-icon {
   width: 28px;
   height: 28px;
+}
+
+/* ═══════════════════════════════════════════════════════════════ */
+/* LOKMA 24: PREMIUM THEME TOGGLE - MIKRO ANİMASYON */
+/* ═══════════════════════════════════════════════════════════════ */
+.theme-toggle {
+  position: relative;
+  width: 48px;
+  height: 48px;
+  background: rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(12px) saturate(180%);
+  border: 1px solid rgba(226, 232, 240, 0.6);
+  border-radius: 9999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  margin-left: 1rem;
+}
+
+.theme-toggle:hover {
+  background: rgba(255, 255, 255, 0.8);
+  border-color: rgba(61, 186, 162, 0.4);
+  box-shadow: 0 0 15px rgba(61, 186, 162, 0.3);
+  transform: translateY(-2px);
+}
+
+.theme-toggle:active {
+  transform: scale(0.95);
+}
+
+/* İkon Container */
+.theme-icon {
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Sun Icon (Light Mode - Default) */
+.sun-icon {
+  color: #0D7C6C;
+  transform: scale(1) rotate(0deg);
+  opacity: 1;
+}
+
+.sun-icon.icon-hidden {
+  transform: scale(0) rotate(90deg);
+  opacity: 0;
+}
+
+/* Moon Icon (Dark Mode) */
+.moon-icon {
+  color: #3DBAA2;
+  transform: scale(0) rotate(-90deg);
+  opacity: 0;
+}
+
+.moon-icon.icon-visible {
+  transform: scale(1) rotate(0deg);
+  opacity: 1;
+}
+
+/* Dark Mode için buton stil değişimi */
+.dark .theme-toggle {
+  background: rgba(30, 41, 59, 0.5);
+  border-color: rgba(71, 85, 105, 0.6);
+}
+
+.dark .theme-toggle:hover {
+  background: rgba(30, 41, 59, 0.8);
+  border-color: rgba(61, 186, 162, 0.4);
 }
 
 /* Mobile Responsive */
@@ -1427,6 +1660,16 @@ canvas {
     0 0 30px rgba(61, 186, 162, 0.15);
 }
 
+.dark .glass-card {
+  background: rgba(15, 23, 42, 0.4);
+  border: 1px solid rgba(61, 186, 162, 0.3);
+}
+
+.dark .glass-card:hover {
+  background: rgba(15, 23, 42, 0.5);
+  border-color: rgba(61, 186, 162, 0.5);
+}
+
 .content-title {
   font-size: 3.5rem;
   font-weight: 700;
@@ -1437,6 +1680,10 @@ canvas {
   margin-bottom: 1rem;
 }
 
+.dark .content-title {
+  color: #f1f5f9;
+}
+
 .content-description {
   font-size: 1.125rem;
   color: rgba(30, 41, 59, 0.8);
@@ -1445,6 +1692,10 @@ canvas {
   max-width: 600px;
   margin-left: auto;
   margin-right: auto;
+}
+
+.dark .content-description {
+  color: rgba(226, 232, 240, 0.8);
 }
 
 .text-gradient {
@@ -1537,6 +1788,10 @@ canvas {
   letter-spacing: -0.02em;
 }
 
+.dark .stats-title {
+  color: #f1f5f9;
+}
+
 .stats-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -1577,6 +1832,10 @@ canvas {
   letter-spacing: 0.01em;
 }
 
+.dark .stat-label {
+  color: rgba(226, 232, 240, 0.7);
+}
+
 /* Neden Biz? Bölümü */
 .why-us-section {
   position: relative;
@@ -1586,6 +1845,10 @@ canvas {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.dark .why-us-section {
+  background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
 }
 
 .why-us-container {
@@ -1631,12 +1894,22 @@ canvas {
   text-align: center;
 }
 
+.dark .feature-card {
+  background: rgba(15, 23, 42, 0.5);
+  border: 1px solid rgba(61, 186, 162, 0.2);
+}
+
 .feature-card:hover {
   transform: translateY(-8px);
   box-shadow: 
     0 25px 50px -12px rgba(0, 0, 0, 0.15),
     0 0 30px rgba(61, 186, 162, 0.1);
   border-color: rgba(61, 186, 162, 0.3);
+}
+
+.dark .feature-card:hover {
+  background: rgba(15, 23, 42, 0.6);
+  border-color: rgba(61, 186, 162, 0.4);
 }
 
 .feature-icon {
@@ -1664,10 +1937,18 @@ canvas {
   letter-spacing: -0.01em;
 }
 
+.dark .feature-title {
+  color: #f1f5f9;
+}
+
 .feature-description {
   font-size: 1rem;
   color: rgba(30, 41, 59, 0.7);
   line-height: 1.7;
+}
+
+.dark .feature-description {
+  color: rgba(226, 232, 240, 0.7);
 }
 
 /* InspectAI'ın İşletmeye Katkıları */
@@ -1679,6 +1960,10 @@ canvas {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.dark .contributions-section {
+  background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
 }
 
 .contributions-container {
@@ -1724,6 +2009,11 @@ canvas {
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
   overflow: hidden;
+}
+
+.dark .contribution-card {
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid rgba(61, 186, 162, 0.2);
 }
 
 .contribution-card::before {
@@ -1781,10 +2071,18 @@ canvas {
   line-height: 1.3;
 }
 
+.dark .contribution-title {
+  color: #f1f5f9;
+}
+
 .contribution-description {
   font-size: 0.95rem;
   color: rgba(30, 41, 59, 0.7);
   line-height: 1.7;
+}
+
+.dark .contribution-description {
+  color: rgba(226, 232, 240, 0.7);
 }
 
 /* Uygulama Alanları - Tab Yapısı */
@@ -1796,6 +2094,10 @@ canvas {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.dark .applications-section {
+  background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
 }
 
 .applications-container {
@@ -1812,6 +2114,10 @@ canvas {
   text-align: center;
   margin-bottom: 3rem;
   letter-spacing: -0.02em;
+}
+
+.dark .applications-title {
+  color: #f1f5f9;
 }
 
 .tabs-wrapper {
@@ -2486,6 +2792,10 @@ canvas {
   padding: 6rem 2rem;
 }
 
+.dark .partners-section {
+  background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+}
+
 .partners-container {
   max-width: 1400px;
   width: 100%;
@@ -2504,6 +2814,10 @@ canvas {
   color: #1e293b;
   margin-bottom: 1rem;
   letter-spacing: -0.02em;
+}
+
+.dark .partners-title {
+  color: #f1f5f9;
 }
 
 .partners-divider {
@@ -2556,6 +2870,11 @@ canvas {
   cursor: pointer;
 }
 
+.dark .partner-card {
+  background: rgba(15, 23, 42, 0.5);
+  border: 1px solid rgba(61, 186, 162, 0.2);
+}
+
 /* Hover Efekti */
 .partner-card:hover {
   transform: translateY(-8px);
@@ -2564,6 +2883,11 @@ canvas {
   box-shadow: 
     0 20px 40px -10px rgba(13, 124, 108, 0.15),
     0 0 0 1px rgba(61, 186, 162, 0.1);
+}
+
+.dark .partner-card:hover {
+  background: rgba(15, 23, 42, 0.7);
+  border-color: rgba(61, 186, 162, 0.4);
 }
 
 /* Logo Stili - GRAYSCALE Efekti */
@@ -2603,6 +2927,340 @@ canvas {
   .partner-logo {
     max-width: 120px;
     max-height: 60px;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════ */
+/* LOKMA 23: BLOG & HABERLER - ASİMETRİK BENTO GRID */
+/* ═══════════════════════════════════════════════════════════════ */
+.blog-section {
+  position: relative;
+  background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+  padding: 6rem 2rem;
+}
+
+.dark .blog-section {
+  background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+}
+
+.blog-container {
+  max-width: 1400px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+/* Başlık */
+.blog-header {
+  text-align: center;
+  margin-bottom: 4rem;
+}
+
+.blog-title {
+  font-size: 3rem;
+  font-weight: 700;
+  color: #1e293b;
+  letter-spacing: -0.02em;
+}
+
+.dark .blog-title {
+  color: #f1f5f9;
+}
+
+/* Asimetrik Bento Grid */
+.blog-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+}
+
+@media (min-width: 1024px) {
+  .blog-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2.5rem;
+  }
+  
+  /* Featured post - sol kolon, 2 satır */
+  .blog-card-featured {
+    grid-row: span 2;
+  }
+}
+
+/* Premium Glassmorphism Kart */
+.blog-card {
+  position: relative;
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(16px) saturate(180%);
+  border: 1px solid rgba(226, 232, 240, 0.8);
+  border-radius: 1.5rem;
+  overflow: hidden;
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+}
+
+.dark .blog-card {
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid rgba(61, 186, 162, 0.2);
+}
+
+.blog-card:hover {
+  transform: translateY(-8px);
+  background: rgba(255, 255, 255, 0.9);
+  border-color: rgba(61, 186, 162, 0.4);
+  box-shadow: 
+    0 25px 50px -12px rgba(13, 124, 108, 0.15),
+    0 0 0 1px rgba(61, 186, 162, 0.1);
+}
+
+.dark .blog-card:hover {
+  background: rgba(15, 23, 42, 0.8);
+  border-color: rgba(61, 186, 162, 0.4);
+}
+
+/* Resim Konteyneri */
+.blog-image-wrapper {
+  position: relative;
+  width: 100%;
+  height: 280px;
+  overflow: hidden;
+  border-radius: 1.5rem 1.5rem 0 0;
+}
+
+.blog-card-featured .blog-image-wrapper {
+  height: 400px;
+}
+
+@media (min-width: 1024px) {
+  .blog-card-featured .blog-image-wrapper {
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: 1.5rem;
+  }
+  
+  .blog-card-featured .blog-content {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.85) 0%, transparent 100%);
+    padding: 3rem;
+    color: white;
+  }
+  
+  .blog-card-featured .blog-post-title,
+  .blog-card-featured .blog-meta,
+  .blog-card-featured .author-name,
+  .blog-card-featured .blog-date {
+    color: white !important;
+  }
+  
+  .blog-card-featured .blog-tag {
+    background: rgba(61, 186, 162, 0.3);
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+  }
+  
+  .blog-card-featured .author-avatar {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.4);
+  }
+}
+
+/* Resim Hover Efekti */
+.blog-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.group:hover .blog-image {
+  transform: scale(1.05);
+}
+
+/* İçerik */
+.blog-content {
+  padding: 2rem;
+}
+
+/* Etiketler */
+.blog-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.blog-tag {
+  display: inline-block;
+  padding: 0.375rem 1rem;
+  background: rgba(61, 186, 162, 0.1);
+  color: #0D7C6C;
+  font-size: 0.75rem;
+  font-weight: 600;
+  border-radius: 9999px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  transition: all 0.3s ease;
+}
+
+.blog-tag:hover {
+  background: rgba(61, 186, 162, 0.2);
+  transform: translateY(-2px);
+}
+
+/* Başlık */
+.blog-post-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #1e293b;
+  line-height: 1.4;
+  margin-bottom: 1.5rem;
+  transition: color 0.3s ease;
+}
+
+.dark .blog-post-title {
+  color: #f1f5f9;
+}
+
+.blog-card:hover .blog-post-title {
+  color: #0D7C6C;
+}
+
+.dark .blog-card:hover .blog-post-title {
+  color: #3DBAA2;
+}
+
+.blog-card-featured .blog-post-title {
+  font-size: 2rem;
+}
+
+/* Meta Bilgileri */
+.blog-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.blog-author {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.author-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #0D7C6C 0%, #3DBAA2 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: 600;
+  font-size: 1rem;
+  border: 2px solid rgba(61, 186, 162, 0.3);
+}
+
+.author-name {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #475569;
+}
+
+.dark .author-name {
+  color: #cbd5e1;
+}
+
+.blog-date {
+  font-size: 0.875rem;
+  color: #94a3b8;
+  font-style: italic;
+}
+
+.dark .blog-date {
+  color: #64748b;
+}
+
+/* Daha Fazla Göster Butonu */
+.blog-button-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-top: 4rem;
+}
+
+.blog-load-more {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem 2.5rem;
+  background: #0D7C6C;
+  color: white;
+  font-size: 1rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 0.75rem;
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.blog-load-more::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(61, 186, 162, 0.3), transparent);
+  transition: left 0.6s ease;
+}
+
+.blog-load-more:hover::before {
+  left: 100%;
+}
+
+.blog-load-more:hover {
+  background: #3DBAA2;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px rgba(13, 124, 108, 0.3);
+}
+
+.button-arrow {
+  width: 20px;
+  height: 20px;
+  transition: transform 0.3s ease;
+}
+
+.blog-load-more:hover .button-arrow {
+  transform: translateX(4px);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .blog-title {
+    font-size: 2rem;
+  }
+  
+  .blog-section {
+    padding: 4rem 1.5rem;
+  }
+  
+  .blog-post-title {
+    font-size: 1.25rem;
+  }
+  
+  .blog-card-featured .blog-post-title {
+    font-size: 1.5rem;
+  }
+  
+  .blog-card-featured .blog-image-wrapper {
+    height: 280px;
   }
 }
 
