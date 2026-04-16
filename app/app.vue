@@ -920,7 +920,7 @@ onMounted(async () => {
   window.addEventListener('mousemove', handleMouseMove)
 
   // ═══════════════════════════════════════════════════════════════
-  // LOKMA 21: PREMIUM 3D SAHNE + HERO KARTLARI SİNEMATİK DANSI 🎬
+  //  PREMIUM 3D SAHNE + HERO KARTLARI SİNEMATİK DANSI 
   // ═══════════════════════════════════════════════════════════════
   
   // Hero Kartları Referansları
