@@ -1729,6 +1729,8 @@ onUnmounted(async () => {
   /* Scene container mobilde ortala */
   .scene-container {
     overflow: hidden;
+    /* LOKMA 26: Mobilde 3D sahneyi gizle - kartlar odak noktası */
+    display: none;
   }
   
   canvas {
