@@ -1054,59 +1054,253 @@ onMounted(async () => {
   fillLight.position.set(-5, 3, -5)
   scene.add(fillLight)
 
-  // Konveyör Bandı Grubu Oluştur
+  // LOKMA 29: PROSICHT Endüstriyel Kamera + Robot Kol
   conveyorGroup = new THREE.Group()
 
-  // Premium Materyal Ayarları
-  beltMaterial = new THREE.MeshStandardMaterial({
-    color: 0x2a2a2a,
-    metalness: 0.7,
-    roughness: 0.3,
-    transparent: true,
-    opacity: 0
-  })
-
-  rollerMaterial = new THREE.MeshStandardMaterial({
-    color: 0x555555,
-    metalness: 0.7,
-    roughness: 0.3,
-    transparent: true,
-    opacity: 0
-  })
-
-  // Ana konveyör kasası (uzun ince kutu)
-  const beltGeometry = new THREE.BoxGeometry(4, 0.3, 1)
-  const beltMesh = new THREE.Mesh(beltGeometry, beltMaterial)
-  conveyorGroup.add(beltMesh)
-
-  // Rulo silindirler (yan yatmış)
-  const rollerGeometry = new THREE.CylinderGeometry(0.15, 0.15, 1.2, 16)
+  // ═══════════════════════════════════════════════════════════════
+  //  PROSICHT ENDÜSTRİYEL KALITE KONTROL KAMERASI (REFERANS GÖRSELE UYGUN)
+  // ═══════════════════════════════════════════════════════════════
   
-  // Sol silindir
-  const leftRoller = new THREE.Mesh(rollerGeometry, rollerMaterial)
-  leftRoller.rotation.z = Math.PI / 2
-  leftRoller.position.set(-1.6, -0.15, 0)
-  conveyorGroup.add(leftRoller)
+  // Premium Materyal Tanımlamaları
+  const metalBodyMaterial = new THREE.MeshStandardMaterial({
+    color: 0x6a7b8c,        // Metalik gümüş-gri
+    metalness: 0.9,
+    roughness: 0.15,
+    transparent: true,
+    opacity: 0
+  })
 
-  // Sağ silindir
-  const rightRoller = new THREE.Mesh(rollerGeometry, rollerMaterial)
-  rightRoller.rotation.z = Math.PI / 2
-  rightRoller.position.set(1.6, -0.15, 0)
-  conveyorGroup.add(rightRoller)
+  const darkMetalMaterial = new THREE.MeshStandardMaterial({
+    color: 0x2a3540,        // Koyu metalik
+    metalness: 0.85,
+    roughness: 0.2,
+    transparent: true,
+    opacity: 0
+  })
 
-  // Orta silindir (opsiyonel detay)
-  const centerRoller = new THREE.Mesh(rollerGeometry, rollerMaterial)
-  centerRoller.rotation.z = Math.PI / 2
-  centerRoller.position.set(0, -0.15, 0)
-  conveyorGroup.add(centerRoller)
+  const glassMaterial = new THREE.MeshPhysicalMaterial({
+    color: 0x88ddff,
+    metalness: 0,
+    roughness: 0.05,
+    transmission: 0.95,      // Çok şeffaf cam
+    thickness: 0.5,
+    clearcoat: 1.0,
+    clearcoatRoughness: 0.1,
+    transparent: true,
+    opacity: 0
+  })
 
-  // Konveyörü sahneye ekle
+  const ledRingMaterial = new THREE.MeshStandardMaterial({
+    color: 0x3DBAA2,        // PROSICHT turkuaz
+    emissive: 0x3DBAA2,
+    emissiveIntensity: 0,   // Başta kapalı
+    metalness: 0.2,
+    roughness: 0.3,
+    transparent: true,
+    opacity: 0
+  })
+
+  const screwMaterial = new THREE.MeshStandardMaterial({
+    color: 0x1a1a1a,
+    metalness: 0.6,
+    roughness: 0.4,
+    transparent: true,
+    opacity: 0
+  })
+
+  // ═══════════════════════════════════════════════════════════════
+  //  1. ANA SİLİNDİRİK KAMERA GÖVDESİ
+  // ═══════════════════════════════════════════════════════════════
+  
+  // Ana silindir gövde
+  const mainBodyGeo = new THREE.CylinderGeometry(0.35, 0.35, 1.5, 32)
+  const mainBody = new THREE.Mesh(mainBodyGeo, metalBodyMaterial)
+  mainBody.rotation.z = Math.PI / 2  // Yatay pozisyon
+  conveyorGroup.add(mainBody)
+
+  // Ön lens bölümü (daha geniş)
+  const frontSectionGeo = new THREE.CylinderGeometry(0.42, 0.35, 0.3, 32)
+  const frontSection = new THREE.Mesh(frontSectionGeo, darkMetalMaterial)
+  frontSection.rotation.z = Math.PI / 2
+  frontSection.position.set(0.9, 0, 0)
+  conveyorGroup.add(frontSection)
+
+  // ═══════════════════════════════════════════════════════════════
+  //  2. LENS SİSTEMİ
+  // ═══════════════════════════════════════════════════════════════
+  
+  // Dış lens çerçevesi (koyu)
+  const lensFrameGeo = new THREE.CylinderGeometry(0.38, 0.38, 0.08, 32)
+  const lensFrame = new THREE.Mesh(lensFrameGeo, darkMetalMaterial)
+  lensFrame.rotation.z = Math.PI / 2
+  lensFrame.position.set(1.05, 0, 0)
+  conveyorGroup.add(lensFrame)
+
+  // İç cam lens
+  const glassLensGeo = new THREE.CylinderGeometry(0.32, 0.32, 0.05, 32)
+  const glassLens = new THREE.Mesh(glassLensGeo, glassMaterial)
+  glassLens.rotation.z = Math.PI / 2
+  glassLens.position.set(1.08, 0, 0)
+  conveyorGroup.add(glassLens)
+
+  // ═══════════════════════════════════════════════════════════════
+  //  3. NEON LED RING (Lens etrafı)
+  // ═══════════════════════════════════════════════════════════════
+  
+  const ledRingGeo = new THREE.TorusGeometry(0.35, 0.025, 16, 32)
+  const ledRing = new THREE.Mesh(ledRingGeo, ledRingMaterial)
+  ledRing.rotation.y = Math.PI / 2
+  ledRing.position.set(1.05, 0, 0)
+  conveyorGroup.add(ledRing)
+
+  // ═══════════════════════════════════════════════════════════════
+  //  4. VİDA DETAYLARI (Kenar çevresi)
+  // ═══════════════════════════════════════════════════════════════
+  
+  const screwGeo = new THREE.CylinderGeometry(0.02, 0.02, 0.03, 8)
+  const screwPositions = [
+    { angle: 0, x: 1.05 },
+    { angle: Math.PI / 2, x: 1.05 },
+    { angle: Math.PI, x: 1.05 },
+    { angle: -Math.PI / 2, x: 1.05 }
+  ]
+
+  screwPositions.forEach(pos => {
+    const screw = new THREE.Mesh(screwGeo, screwMaterial)
+    screw.rotation.z = Math.PI / 2
+    screw.position.set(
+      pos.x,
+      Math.cos(pos.angle) * 0.4,
+      Math.sin(pos.angle) * 0.4
+    )
+    conveyorGroup.add(screw)
+  })
+
+  // ═══════════════════════════════════════════════════════════════
+  //  5. ORTA BÖLÜM PANEL (PROSICHT Logo alanı)
+  // ═══════════════════════════════════════════════════════════════
+  
+  const logoPanelGeo = new THREE.BoxGeometry(0.6, 0.25, 0.02)
+  const logoPanel = new THREE.Mesh(logoPanelGeo, darkMetalMaterial)
+  logoPanel.position.set(0, 0, 0.36)
+  conveyorGroup.add(logoPanel)
+
+  // ═══════════════════════════════════════════════════════════════
+  //  6. ARKA KABLO BAĞLANTI PORTLARI
+  // ═══════════════════════════════════════════════════════════════
+  
+  // Port kapağı
+  const portCoverGeo = new THREE.CylinderGeometry(0.25, 0.25, 0.15, 32)
+  const portCover = new THREE.Mesh(portCoverGeo, darkMetalMaterial)
+  portCover.rotation.z = Math.PI / 2
+  portCover.position.set(-0.85, 0, 0)
+  conveyorGroup.add(portCover)
+
+  // Küçük kablo portları
+  const cablePortGeo = new THREE.CylinderGeometry(0.04, 0.04, 0.1, 16)
+  
+  const cablePort1 = new THREE.Mesh(cablePortGeo, screwMaterial)
+  cablePort1.rotation.z = Math.PI / 2
+  cablePort1.position.set(-0.95, 0.1, 0)
+  conveyorGroup.add(cablePort1)
+
+  const cablePort2 = new THREE.Mesh(cablePortGeo, screwMaterial)
+  cablePort2.rotation.z = Math.PI / 2
+  cablePort2.position.set(-0.95, -0.1, 0)
+  conveyorGroup.add(cablePort2)
+
+  // ═══════════════════════════════════════════════════════════════
+  //  7. ROBOT KOL BAĞLANTISI (Üstte)
+  // ═══════════════════════════════════════════════════════════════
+  
+  // Ana montaj braketi (L-şekil)
+  const mountBracketGeo = new THREE.BoxGeometry(0.15, 0.4, 0.15)
+  const mountBracket = new THREE.Mesh(mountBracketGeo, darkMetalMaterial)
+  mountBracket.position.set(0, 0.55, 0)
+  conveyorGroup.add(mountBracket)
+
+  // Üst bağlantı bloğu
+  const topMountGeo = new THREE.BoxGeometry(0.5, 0.12, 0.2)
+  const topMount = new THREE.Mesh(topMountGeo, metalBodyMaterial)
+  topMount.position.set(0, 0.75, 0)
+  conveyorGroup.add(topMount)
+
+  // Robot kol eklemi (silindir)
+  const armJointGeo = new THREE.CylinderGeometry(0.08, 0.08, 0.25, 16)
+  const armJoint = new THREE.Mesh(armJointGeo, screwMaterial)
+  armJoint.position.set(0, 0.95, 0)
+  conveyorGroup.add(armJoint)
+
+  // Kol parçası 1 (üst)
+  const armSegment1Geo = new THREE.CylinderGeometry(0.06, 0.06, 0.4, 16)
+  const armSegment1 = new THREE.Mesh(armSegment1Geo, darkMetalMaterial)
+  armSegment1.rotation.z = -Math.PI / 6  // 30 derece açı
+  armSegment1.position.set(-0.15, 1.15, 0)
+  conveyorGroup.add(armSegment1)
+
+  // Eklem küresi
+  const jointSphereGeo = new THREE.SphereGeometry(0.08, 16, 16)
+  const jointSphere = new THREE.Mesh(jointSphereGeo, screwMaterial)
+  jointSphere.position.set(-0.3, 1.3, 0)
+  conveyorGroup.add(jointSphere)
+
+  // Kol parçası 2 (üst devamı)
+  const armSegment2Geo = new THREE.CylinderGeometry(0.055, 0.055, 0.35, 16)
+  const armSegment2 = new THREE.Mesh(armSegment2Geo, darkMetalMaterial)
+  armSegment2.rotation.z = -Math.PI / 4  // 45 derece
+  armSegment2.position.set(-0.5, 1.45, 0)
+  conveyorGroup.add(armSegment2)
+
+  // ═══════════════════════════════════════════════════════════════
+  //  8. DETAY LED GÖSTERGELER
+  // ═══════════════════════════════════════════════════════════════
+  
+  const smallLedGeo = new THREE.CircleGeometry(0.015, 16)
+  
+  // Yeşil power LED
+  const greenLed = new THREE.Mesh(smallLedGeo, new THREE.MeshStandardMaterial({
+    color: 0x00ff00,
+    emissive: 0x00ff00,
+    emissiveIntensity: 0,
+    transparent: true,
+    opacity: 0
+  }))
+  greenLed.position.set(-0.2, 0, 0.36)
+  conveyorGroup.add(greenLed)
+
+  // Kırmızı status LED
+  const redLed = new THREE.Mesh(smallLedGeo, new THREE.MeshStandardMaterial({
+    color: 0xff0000,
+    emissive: 0xff0000,
+    emissiveIntensity: 0,
+    transparent: true,
+    opacity: 0
+  }))
+  redLed.position.set(0.2, 0, 0.36)
+  conveyorGroup.add(redLed)
+
+  // ═══════════════════════════════════════════════════════════════
+  //  9. YAN SOĞUTMA DİLİMLERİ
+  // ═══════════════════════════════════════════════════════════════
+  
+  const coolSlitGeo = new THREE.BoxGeometry(0.08, 0.02, 0.01)
+  for (let i = 0; i < 8; i++) {
+    const slit = new THREE.Mesh(coolSlitGeo, screwMaterial)
+    slit.position.set(-0.4 + i * 0.12, 0.36, 0)
+    conveyorGroup.add(slit)
+  }
+
+  // Kamerayı sahneye ekle
   scene.add(conveyorGroup)
+
+  // LED Ring referansını sakla (animasyon için)
+  beltMaterial = ledRingMaterial  // Animasyonlarda kullanmak için
+  rollerMaterial = metalBodyMaterial
 
   // Scroll progress objesi
   const scrollProgress = { value: 0 }
 
-  // GSAP ScrollTrigger - scroll ile konveyörü döndür
+  // GSAP ScrollTrigger - scroll ile kamerayı döndür
   gsap.to(scrollProgress, {
     value: 1,
     ease: 'none',
