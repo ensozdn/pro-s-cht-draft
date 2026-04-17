@@ -1,5 +1,5 @@
 <template>
-  <div :class="isDark ? 'bg-slate-900' : 'bg-slate-50'">
+  <div :class="isDark ? 'bg-slate-900' : 'bg-slate-50'" class="overflow-x-hidden w-full">
     <!-- Premium Preloader -->
     <div ref="preloader" class="preloader">
       <div class="preloader-content">
@@ -28,49 +28,52 @@
           <a href="#contact" class="nav-cta">İletişim</a>
         </nav>
 
-        <!-- LOKMA 24: Premium Theme Toggle -->
-        <button 
-          @click="toggleTheme"
-          class="theme-toggle"
-          aria-label="Toggle theme"
-        >
-          <!-- Sun Icon (Light Mode) -->
-          <svg
-            :class="['theme-icon', 'sun-icon', { 'icon-hidden': isDark }]"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
+        <!-- LOKMA 25: Mobile Right Side (Theme + Hamburger) -->
+        <div class="mobile-right-controls">
+          <!-- LOKMA 24: Premium Theme Toggle -->
+          <button 
+            @click="toggleTheme"
+            class="theme-toggle"
+            aria-label="Toggle theme"
           >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"
-            />
-          </svg>
+            <!-- Sun Icon (Light Mode) -->
+            <svg
+              :class="['theme-icon', 'sun-icon', { 'icon-hidden': isDark }]"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"
+              />
+            </svg>
 
-          <!-- Moon Icon (Dark Mode) -->
-          <svg
-            :class="['theme-icon', 'moon-icon', { 'icon-visible': isDark }]"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"
-            />
-          </svg>
-        </button>
+            <!-- Moon Icon (Dark Mode) -->
+            <svg
+              :class="['theme-icon', 'moon-icon', { 'icon-visible': isDark }]"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"
+              />
+            </svg>
+          </button>
 
-        <!-- Mobile Hamburger Menu (Placeholder) -->
-        <button class="mobile-menu-btn">
-          <svg class="hamburger-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-          </svg>
-        </button>
+          <!-- Mobile Hamburger Menu -->
+          <button class="mobile-menu-btn">
+            <svg class="hamburger-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+          </button>
+        </div>
       </div>
     </header>
 
@@ -1115,97 +1118,120 @@ onMounted(async () => {
   // Hero Kartları Referansları
   const heroSections = [section1.value, section2.value, section3.value]
   
+  // LOKMA 25: Mobile check için MediaQuery
+  const isMobile = window.innerWidth < 768
+  
   // BAŞLANGIÇ POZİSYONU: Kart sol-orta, 3D sağda (dengeli kompozisyon)
-  gsap.set(conveyorGroup.position, { x: 3, z: 0 }) // 3D nesne sağda ama çok değil
+  // LOKMA 25: Mobilde 3D obje ortalanır
+  gsap.set(conveyorGroup.position, { 
+    x: isMobile ? 0 : 3,  // Mobilde ortala
+    z: isMobile ? 2 : 0   // Mobilde arkaya çek
+  })
   
   // STEP 1: İlk Kart → İkinci Kart Geçişi (3D Sahne MERKEZE gelir)
   if (section1.value && section2.value) {
     // İlk kartı dengeli pozisyonda + hafif 3D ile başlat
+    // LOKMA 25: Mobilde kartlar ortalı
     gsap.set(section1.value, { 
       opacity: 1, 
-      x: -280,  // Hafif solda (merkeze yakın)
-      rotateY: 2,  // ÇOK hafif perspektif (daha dik)
+      x: isMobile ? 0 : -280,  // Mobilde merkez
+      rotateY: isMobile ? 0 : 2,  // Mobilde düz
       transformPerspective: 1200,
       transformStyle: 'preserve-3d'
     })
-    gsap.set(section2.value, { opacity: 0, x: 280, rotateY: 2 })  // Sağda başlar, Kart 1 ile aynı duruş
+    gsap.set(section2.value, { 
+      opacity: 0, 
+      x: isMobile ? 0 : 280, 
+      rotateY: isMobile ? 0 : 2 
+    })
     
     // 3D sahneyi ve kartları senkronize et
     const timeline1 = gsap.timeline({
       scrollTrigger: {
         trigger: section1.value,
         start: 'top top',
-        end: '+=70%',           // Daha kısa süre (100% → 70%)
-        scrub: 1.2,             // Yumuşak geçiş
+        end: '+=70%',
+        scrub: 1.2,
         pin: false
       }
     })
     
-    // 3D Sahne SOLA kayar (ROL DEĞİŞİMİ!)
+    // LOKMA 25: Mobilde 3D sahne sabit kalır veya minimal hareket
     timeline1.to(conveyorGroup.position, {
-      x: -4,  // TAM SOLA kayar
-      z: 0,   // Derinlik düz
-      ease: 'power2.inOut'  // Daha yumuşak
+      x: isMobile ? 0 : -4,  // Mobilde hareket yok
+      z: isMobile ? 2 : 0,   // Mobilde arkada sabit
+      ease: 'power2.inOut'
     }, 0)
     
     // İlk kart hafif kayarak kaybolur
     timeline1.to(section1.value, {
       opacity: 0,
-      x: -120,
-      rotateY: 4,  // Hafif rotasyon (dik kalır)
-      ease: 'power2.inOut'  // Daha yumuşak
+      x: isMobile ? 0 : -120,  // Mobilde yatay kayma yok
+      y: isMobile ? -50 : 0,   // Mobilde yukarı kayar
+      rotateY: isMobile ? 0 : 4,
+      ease: 'power2.inOut'
     }, 0)
     
-    // İkinci kart SAĞA kayarak belirer (ROL DEĞİŞİMİ!)
+    // İkinci kart belirer
     timeline1.to(section2.value, {
       opacity: 1,
-      x: 280,  // TAM SAĞA kayar
-      rotateY: -3,  // Kart 1 ile aynı duruş (sağa dönük)
-      ease: 'power2.inOut'  // Daha yumuşak
+      x: isMobile ? 0 : 280,
+      y: isMobile ? 0 : 0,
+      rotateY: isMobile ? 0 : -3,
+      ease: 'power2.inOut'
     }, 0)
   }
   
   // STEP 2: İkinci Kart → Üçüncü Kart Geçişi (3D Sahne SAĞA kayar)
   if (section2.value && section3.value) {
-    gsap.set(section3.value, { opacity: 0, x: -280, rotateY: 2 })  // Solda başlar
+    gsap.set(section3.value, { 
+      opacity: 0, 
+      x: isMobile ? 0 : -280, 
+      rotateY: isMobile ? 0 : 2 
+    })
     
     const timeline2 = gsap.timeline({
       scrollTrigger: {
         trigger: section2.value,
-        start: 'top top',        // Daha erken başlar
-        end: '+=70%',            // Daha kısa sürede biter (100% → 70%)
-        scrub: 1.2,              // Hafif yumuşatma ekledik (true → 1.2)
+        start: 'top top',
+        end: '+=70%',
+        scrub: 1.2,
         pin: false
       }
     })
     
-    // 3D Sahne SAĞA kayar (2. ROL DEĞİŞİMİ!)
+    // LOKMA 25: Mobilde 3D sahne minimal hareket
     timeline2.to(conveyorGroup.position, {
-      x: 4,  // TAM SAĞA kayar
-      ease: 'power2.inOut'  // Daha yumuşak easing (power1 → power2)
+      x: isMobile ? 0 : 4,
+      z: isMobile ? 2 : 0,
+      ease: 'power2.inOut'
     }, 0)
     
     // İkinci kart kaybolur
     timeline2.to(section2.value, {
       opacity: 0,
-      x: 320,
-      rotateY: 4,  // Kart 1'in kaybolma gibi (rotateY: 4)
-      ease: 'power2.inOut'  // Daha yumuşak
+      x: isMobile ? 0 : 320,
+      y: isMobile ? -50 : 0,
+      rotateY: isMobile ? 0 : 4,
+      ease: 'power2.inOut'
     }, 0)
     
-    // Üçüncü kart SOLDA belirerek ortaya çıkar (2. ROL DEĞİŞİMİ!)
+    // Üçüncü kart belirer
     timeline2.to(section3.value, {
       opacity: 1,
-      x: -280,  // TAM SOLDA
-      rotateY: 2,  // Sağa dönük (3D'ye bakıyor)
-      ease: 'power2.inOut'  // Daha yumuşak
+      x: isMobile ? 0 : -280,  // Mobilde merkez
+      y: isMobile ? 0 : 0,
+      rotateY: isMobile ? 0 : 2,
+      ease: 'power2.inOut'
     }, 0)
   }
   
   // STEP 3: Stats bölümüne gelince 3D sahneyi merkeze geri getir
+  // LOKMA 25: Mobilde zaten merkezde
   if (statsSection.value) {
     gsap.to(conveyorGroup.position, {
-      x: 0,
+      x: 0,  // Hem mobil hem desktop merkezde
+
       scrollTrigger: {
         trigger: statsSection.value,
         start: 'top center',
@@ -1497,6 +1523,13 @@ onUnmounted(async () => {
   box-shadow: 0 8px 20px rgba(61, 186, 162, 0.3);
 }
 
+/* LOKMA 25: Mobile Right Controls (Theme + Hamburger) */
+.mobile-right-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
 .mobile-menu-btn {
   display: none;
   background: none;
@@ -1590,6 +1623,7 @@ onUnmounted(async () => {
 }
 
 /* Mobile Responsive */
+/* LOKMA 25: PREMIUM MOBİL OPTİMİZASYON */
 @media (max-width: 768px) {
   .desktop-nav {
     display: none;
@@ -1600,11 +1634,71 @@ onUnmounted(async () => {
   }
   
   .logo-img {
-    height: 45px;
+    height: 60px; /* Mobilde biraz daha büyük */
   }
   
   .header-content {
-    padding: 0.875rem 1.5rem;
+    padding: 0.75rem 1rem;
+    width: 100%;
+    justify-content: space-between;
+  }
+  
+  /* Theme toggle mobilde küçült */
+  .theme-toggle {
+    width: 42px;
+    height: 42px;
+  }
+  
+  .theme-icon {
+    width: 20px;
+    height: 20px;
+  }
+  
+  /* Hamburger icon boyutu */
+  .hamburger-icon {
+    width: 24px;
+    height: 24px;
+  }
+  
+  /* Content wrapper mobilde padding ayarı */
+  .content-wrapper {
+    padding-top: 70px;
+  }
+  
+  /* Glass cards mobilde tam genişlik ve küçük padding */
+  .glass-card {
+    width: 92%;
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 2rem 1.5rem;
+    border-radius: 1.5rem;
+  }
+  
+  /* Title ve description mobilde küçült */
+  .content-title {
+    font-size: 1.75rem !important;
+    line-height: 1.3;
+  }
+  
+  .content-description {
+    font-size: 0.95rem !important;
+    margin-bottom: 1.5rem;
+  }
+  
+  /* CTA buton mobilde daha küçük */
+  .cta-button {
+    padding: 0.75rem 1.75rem;
+    font-size: 0.9rem;
+  }
+  
+  /* Scene container mobilde ortala */
+  .scene-container {
+    overflow: hidden;
+  }
+  
+  canvas {
+    transform: scale(0.8);
+    transform-origin: center center;
   }
 }
 
