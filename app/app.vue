@@ -1040,262 +1040,363 @@ onMounted(async () => {
   renderer.setSize(window.innerWidth, window.innerHeight)
   renderer.setPixelRatio(window.devicePixelRatio)
 
-  // Premium Işıklandırma
-  const ambientLight = new THREE.AmbientLight(0xffffff, 0.3)
+  // LOKMA 30: Premium Işıklandırma (Metalik Yansımalar İçin)
+  const ambientLight = new THREE.AmbientLight(0xffffff, 0.4)  // Artırıldı
   scene.add(ambientLight)
 
-  // Ana ışık (yukarıdan önden)
-  const mainLight = new THREE.DirectionalLight(0xffffff, 1.2)
-  mainLight.position.set(5, 8, 5)
+  // Ana Directional Light (Güçlü, keskin gölgeler)
+  const mainLight = new THREE.DirectionalLight(0xffffff, 1.8)  // Artırıldı
+  mainLight.position.set(6, 10, 8)
+  mainLight.castShadow = true
   scene.add(mainLight)
 
-  // Dolgu ışığı (arka soldan)
-  const fillLight = new THREE.DirectionalLight(0x88ccff, 0.5)
-  fillLight.position.set(-5, 3, -5)
+  // Dolgu ışığı (Gölge detayları için)
+  const fillLight = new THREE.DirectionalLight(0xaaccff, 0.6)
+  fillLight.position.set(-6, 4, -6)
   scene.add(fillLight)
 
-  // LOKMA 29: PROSICHT Endüstriyel Kamera + Robot Kol
+  // Spot ışık (Metalik highlight için)
+  const spotLight1 = new THREE.SpotLight(0xffffff, 2.0)  // Artırıldı
+  spotLight1.position.set(7, 7, 7)
+  spotLight1.angle = Math.PI / 3
+  scene.add(spotLight1)
+
+  // Turkuaz accent ışık
+  const accentLight = new THREE.SpotLight(0x3DBAA2, 1.2)  // Artırıldı
+  accentLight.position.set(-4, 5, 4)
+  accentLight.angle = Math.PI / 4
+  scene.add(accentLight)
+
+  // LOKMA 30: AĞIR SANAYİ ENDÜSTRİYEL YAPAY ZEKA KAMERASI 🏭
   conveyorGroup = new THREE.Group()
 
-  // ═══════════════════════════════════════════════════════════════
-  //  PROSICHT ENDÜSTRİYEL KALITE KONTROL KAMERASI (REFERANS GÖRSELE UYGUN)
-  // ═══════════════════════════════════════════════════════════════
   
-  // Premium Materyal Tanımlamaları
-  const metalBodyMaterial = new THREE.MeshStandardMaterial({
-    color: 0x6a7b8c,        // Metalik gümüş-gri
-    metalness: 0.9,
-    roughness: 0.15,
-    transparent: true,
-    opacity: 0
-  })
-
-  const darkMetalMaterial = new THREE.MeshStandardMaterial({
-    color: 0x2a3540,        // Koyu metalik
+  // 1. PREMIUM METALİK MATERYALLER
+  const titaniumMaterial = new THREE.MeshStandardMaterial({
+    color: 0xaaaaaa,        // Titanyum/Gümüş
     metalness: 0.85,
-    roughness: 0.2,
+    roughness: 0.25,
     transparent: true,
     opacity: 0
   })
 
-  const glassMaterial = new THREE.MeshPhysicalMaterial({
-    color: 0x88ddff,
-    metalness: 0,
-    roughness: 0.05,
-    transmission: 0.95,      // Çok şeffaf cam
-    thickness: 0.5,
-    clearcoat: 1.0,
-    clearcoatRoughness: 0.1,
+  const matBlackMaterial = new THREE.MeshStandardMaterial({
+    color: 0x1a1a1a,        // Mat Siyah
+    metalness: 0.3,
+    roughness: 0.8,
     transparent: true,
     opacity: 0
   })
 
-  const ledRingMaterial = new THREE.MeshStandardMaterial({
-    color: 0x3DBAA2,        // PROSICHT turkuaz
+  const neonTurquoiseMaterial = new THREE.MeshStandardMaterial({
+    color: 0x3DBAA2,        // Bizim turkuaz
     emissive: 0x3DBAA2,
-    emissiveIntensity: 0,   // Başta kapalı
-    metalness: 0.2,
+    emissiveIntensity: 1.5, // Parlayan halka
+    metalness: 0.4,
     roughness: 0.3,
     transparent: true,
     opacity: 0
   })
 
-  const screwMaterial = new THREE.MeshStandardMaterial({
-    color: 0x1a1a1a,
-    metalness: 0.6,
-    roughness: 0.4,
-    transparent: true,
-    opacity: 0
-  })
-
   // ═══════════════════════════════════════════════════════════════
-  //  1. ANA SİLİNDİRİK KAMERA GÖVDESİ
+  //  2. KASLI GÖVDE İNŞASI (Köşeli Prizma Yapı)
   // ═══════════════════════════════════════════════════════════════
   
-  // Ana silindir gövde
-  const mainBodyGeo = new THREE.CylinderGeometry(0.35, 0.35, 1.5, 32)
-  const mainBody = new THREE.Mesh(mainBodyGeo, metalBodyMaterial)
-  mainBody.rotation.z = Math.PI / 2  // Yatay pozisyon
+  // Ana gövde (8 kenarlı prizma - köşeli)
+  const mainBodyGeo = new THREE.CylinderGeometry(0.4, 0.4, 1.2, 8)
+  const mainBody = new THREE.Mesh(mainBodyGeo, titaniumMaterial)
+  mainBody.rotation.z = Math.PI / 2  // Yatay
+  mainBody.position.set(0, 0, 0)
   conveyorGroup.add(mainBody)
 
-  // Ön lens bölümü (daha geniş)
-  const frontSectionGeo = new THREE.CylinderGeometry(0.42, 0.35, 0.3, 32)
-  const frontSection = new THREE.Mesh(frontSectionGeo, darkMetalMaterial)
-  frontSection.rotation.z = Math.PI / 2
-  frontSection.position.set(0.9, 0, 0)
-  conveyorGroup.add(frontSection)
+  // Ön kalın çerçeve (mat siyah)
+  const frontRingGeo = new THREE.CylinderGeometry(0.45, 0.4, 0.15, 8)
+  const frontRing = new THREE.Mesh(frontRingGeo, matBlackMaterial)
+  frontRing.rotation.z = Math.PI / 2
+  frontRing.position.set(0.7, 0, 0)
+  conveyorGroup.add(frontRing)
+
+  // Arka kalın segment (titanyum)
+  const backSegmentGeo = new THREE.CylinderGeometry(0.38, 0.38, 0.4, 8)
+  const backSegment = new THREE.Mesh(backSegmentGeo, titaniumMaterial)
+  backSegment.rotation.z = Math.PI / 2
+  backSegment.position.set(-0.7, 0, 0)
+  conveyorGroup.add(backSegment)
 
   // ═══════════════════════════════════════════════════════════════
-  //  2. LENS SİSTEMİ
+  //  3. SOĞUTUCU IZGARALAR (Heat Sinks - 5 Adet)
   // ═══════════════════════════════════════════════════════════════
   
-  // Dış lens çerçevesi (koyu)
-  const lensFrameGeo = new THREE.CylinderGeometry(0.38, 0.38, 0.08, 32)
-  const lensFrame = new THREE.Mesh(lensFrameGeo, darkMetalMaterial)
-  lensFrame.rotation.z = Math.PI / 2
-  lensFrame.position.set(1.05, 0, 0)
-  conveyorGroup.add(lensFrame)
-
-  // İç cam lens
-  const glassLensGeo = new THREE.CylinderGeometry(0.32, 0.32, 0.05, 32)
-  const glassLens = new THREE.Mesh(glassLensGeo, glassMaterial)
-  glassLens.rotation.z = Math.PI / 2
-  glassLens.position.set(1.08, 0, 0)
-  conveyorGroup.add(glassLens)
-
-  // ═══════════════════════════════════════════════════════════════
-  //  3. NEON LED RING (Lens etrafı)
-  // ═══════════════════════════════════════════════════════════════
+  const heatSinkGeo = new THREE.BoxGeometry(0.12, 0.5, 0.03)
+  const heatSinkPositions = [-0.3, -0.15, 0, 0.15, 0.3]
   
-  const ledRingGeo = new THREE.TorusGeometry(0.35, 0.025, 16, 32)
-  const ledRing = new THREE.Mesh(ledRingGeo, ledRingMaterial)
-  ledRing.rotation.y = Math.PI / 2
-  ledRing.position.set(1.05, 0, 0)
-  conveyorGroup.add(ledRing)
-
-  // ═══════════════════════════════════════════════════════════════
-  //  4. VİDA DETAYLARI (Kenar çevresi)
-  // ═══════════════════════════════════════════════════════════════
-  
-  const screwGeo = new THREE.CylinderGeometry(0.02, 0.02, 0.03, 8)
-  const screwPositions = [
-    { angle: 0, x: 1.05 },
-    { angle: Math.PI / 2, x: 1.05 },
-    { angle: Math.PI, x: 1.05 },
-    { angle: -Math.PI / 2, x: 1.05 }
-  ]
-
-  screwPositions.forEach(pos => {
-    const screw = new THREE.Mesh(screwGeo, screwMaterial)
-    screw.rotation.z = Math.PI / 2
-    screw.position.set(
-      pos.x,
-      Math.cos(pos.angle) * 0.4,
-      Math.sin(pos.angle) * 0.4
-    )
-    conveyorGroup.add(screw)
+  heatSinkPositions.forEach(xPos => {
+    // Üst kanatçık
+    const topFin = new THREE.Mesh(heatSinkGeo, matBlackMaterial)
+    topFin.position.set(xPos, 0.43, 0)
+    conveyorGroup.add(topFin)
+    
+    // Alt kanatçık
+    const bottomFin = new THREE.Mesh(heatSinkGeo, matBlackMaterial)
+    bottomFin.position.set(xPos, -0.43, 0)
+    conveyorGroup.add(bottomFin)
   })
 
+  // Yan soğutucu paneller (daha belirgin)
+  const sidePanelGeo = new THREE.BoxGeometry(0.8, 0.06, 0.48)
+  const topPanel = new THREE.Mesh(sidePanelGeo, matBlackMaterial)
+  topPanel.position.set(0, 0.46, 0)
+  conveyorGroup.add(topPanel)
+  
+  const bottomPanel = new THREE.Mesh(sidePanelGeo, matBlackMaterial)
+  bottomPanel.position.set(0, -0.46, 0)
+  conveyorGroup.add(bottomPanel)
+
   // ═══════════════════════════════════════════════════════════════
-  //  5. ORTA BÖLÜM PANEL (PROSICHT Logo alanı)
+  //  4. KADEMELİ LENS KASASI (3 Katman)
   // ═══════════════════════════════════════════════════════════════
   
-  const logoPanelGeo = new THREE.BoxGeometry(0.6, 0.25, 0.02)
-  const logoPanel = new THREE.Mesh(logoPanelGeo, darkMetalMaterial)
-  logoPanel.position.set(0, 0, 0.36)
-  conveyorGroup.add(logoPanel)
+  // Katman 1: Dış (gümüş, büyük)
+  const lensHood1Geo = new THREE.CylinderGeometry(0.45, 0.42, 0.2, 16)
+  const lensHood1 = new THREE.Mesh(lensHood1Geo, titaniumMaterial)
+  lensHood1.rotation.z = Math.PI / 2
+  lensHood1.position.set(0.9, 0, 0)
+  conveyorGroup.add(lensHood1)
 
-  // ═══════════════════════════════════════════════════════════════
-  //  6. ARKA KABLO BAĞLANTI PORTLARI
-  // ═══════════════════════════════════════════════════════════════
-  
-  // Port kapağı
-  const portCoverGeo = new THREE.CylinderGeometry(0.25, 0.25, 0.15, 32)
-  const portCover = new THREE.Mesh(portCoverGeo, darkMetalMaterial)
-  portCover.rotation.z = Math.PI / 2
-  portCover.position.set(-0.85, 0, 0)
-  conveyorGroup.add(portCover)
+  // Katman 2: Orta (mat siyah, orta)
+  const lensHood2Geo = new THREE.CylinderGeometry(0.40, 0.38, 0.15, 16)
+  const lensHood2 = new THREE.Mesh(lensHood2Geo, matBlackMaterial)
+  lensHood2.rotation.z = Math.PI / 2
+  lensHood2.position.set(1.05, 0, 0)
+  conveyorGroup.add(lensHood2)
 
-  // Küçük kablo portları
-  const cablePortGeo = new THREE.CylinderGeometry(0.04, 0.04, 0.1, 16)
-  
-  const cablePort1 = new THREE.Mesh(cablePortGeo, screwMaterial)
-  cablePort1.rotation.z = Math.PI / 2
-  cablePort1.position.set(-0.95, 0.1, 0)
-  conveyorGroup.add(cablePort1)
+  // Katman 3: İç (turkuaz neon ring)
+  const neonRingGeo = new THREE.TorusGeometry(0.35, 0.04, 16, 32)
+  const neonRing = new THREE.Mesh(neonRingGeo, neonTurquoiseMaterial)
+  neonRing.rotation.y = Math.PI / 2
+  neonRing.position.set(1.13, 0, 0)
+  conveyorGroup.add(neonRing)
 
-  const cablePort2 = new THREE.Mesh(cablePortGeo, screwMaterial)
-  cablePort2.rotation.z = Math.PI / 2
-  cablePort2.position.set(-0.95, -0.1, 0)
-  conveyorGroup.add(cablePort2)
-
-  // ═══════════════════════════════════════════════════════════════
-  //  7. ROBOT KOL BAĞLANTISI (Üstte)
-  // ═══════════════════════════════════════════════════════════════
-  
-  // Ana montaj braketi (L-şekil)
-  const mountBracketGeo = new THREE.BoxGeometry(0.15, 0.4, 0.15)
-  const mountBracket = new THREE.Mesh(mountBracketGeo, darkMetalMaterial)
-  mountBracket.position.set(0, 0.55, 0)
-  conveyorGroup.add(mountBracket)
-
-  // Üst bağlantı bloğu
-  const topMountGeo = new THREE.BoxGeometry(0.5, 0.12, 0.2)
-  const topMount = new THREE.Mesh(topMountGeo, metalBodyMaterial)
-  topMount.position.set(0, 0.75, 0)
-  conveyorGroup.add(topMount)
-
-  // Robot kol eklemi (silindir)
-  const armJointGeo = new THREE.CylinderGeometry(0.08, 0.08, 0.25, 16)
-  const armJoint = new THREE.Mesh(armJointGeo, screwMaterial)
-  armJoint.position.set(0, 0.95, 0)
-  conveyorGroup.add(armJoint)
-
-  // Kol parçası 1 (üst)
-  const armSegment1Geo = new THREE.CylinderGeometry(0.06, 0.06, 0.4, 16)
-  const armSegment1 = new THREE.Mesh(armSegment1Geo, darkMetalMaterial)
-  armSegment1.rotation.z = -Math.PI / 6  // 30 derece açı
-  armSegment1.position.set(-0.15, 1.15, 0)
-  conveyorGroup.add(armSegment1)
-
-  // Eklem küresi
-  const jointSphereGeo = new THREE.SphereGeometry(0.08, 16, 16)
-  const jointSphere = new THREE.Mesh(jointSphereGeo, screwMaterial)
-  jointSphere.position.set(-0.3, 1.3, 0)
-  conveyorGroup.add(jointSphere)
-
-  // Kol parçası 2 (üst devamı)
-  const armSegment2Geo = new THREE.CylinderGeometry(0.055, 0.055, 0.35, 16)
-  const armSegment2 = new THREE.Mesh(armSegment2Geo, darkMetalMaterial)
-  armSegment2.rotation.z = -Math.PI / 4  // 45 derece
-  armSegment2.position.set(-0.5, 1.45, 0)
-  conveyorGroup.add(armSegment2)
-
-  // ═══════════════════════════════════════════════════════════════
-  //  8. DETAY LED GÖSTERGELER
-  // ═══════════════════════════════════════════════════════════════
-  
-  const smallLedGeo = new THREE.CircleGeometry(0.015, 16)
-  
-  // Yeşil power LED
-  const greenLed = new THREE.Mesh(smallLedGeo, new THREE.MeshStandardMaterial({
-    color: 0x00ff00,
-    emissive: 0x00ff00,
-    emissiveIntensity: 0,
+  // Lens cam (koyu, gümüş kenarlı)
+  const lensGlassGeo = new THREE.CylinderGeometry(0.32, 0.32, 0.05, 32)
+  const lensGlass = new THREE.Mesh(lensGlassGeo, new THREE.MeshPhysicalMaterial({
+    color: 0x334455,
+    metalness: 0,
+    roughness: 0.1,
+    transmission: 0.7,
+    thickness: 0.3,
     transparent: true,
     opacity: 0
   }))
-  greenLed.position.set(-0.2, 0, 0.36)
-  conveyorGroup.add(greenLed)
+  lensGlass.rotation.z = Math.PI / 2
+  lensGlass.position.set(1.15, 0, 0)
+  conveyorGroup.add(lensGlass)
 
-  // Kırmızı status LED
-  const redLed = new THREE.Mesh(smallLedGeo, new THREE.MeshStandardMaterial({
+  // Sensör merkezi
+  const sensorGeo = new THREE.CircleGeometry(0.12, 32)
+  const sensor = new THREE.Mesh(sensorGeo, matBlackMaterial)
+  sensor.rotation.y = Math.PI / 2
+  sensor.position.set(1.16, 0, 0)
+  conveyorGroup.add(sensor)
+
+  // ═══════════════════════════════════════════════════════════════
+  //  5. MONTAJ BRAKETİ (Kalın L-Braket - Alt)
+  // ═══════════════════════════════════════════════════════════════
+  
+  // Ana dikey blok (kalın, köşeli)
+  const bracketVerticalGeo = new THREE.BoxGeometry(0.2, 0.6, 0.2)
+  const bracketVertical = new THREE.Mesh(bracketVerticalGeo, matBlackMaterial)
+  bracketVertical.position.set(0, -0.6, 0)
+  conveyorGroup.add(bracketVertical)
+
+  // Yatay montaj plakası
+  const bracketHorizontalGeo = new THREE.BoxGeometry(0.7, 0.12, 0.3)
+  const bracketHorizontal = new THREE.Mesh(bracketHorizontalGeo, titaniumMaterial)
+  bracketHorizontal.position.set(0, -0.9, 0)
+  conveyorGroup.add(bracketHorizontal)
+
+  // Yan destek kanatları (L-şekil güçlendirme)
+  const supportWingGeo = new THREE.BoxGeometry(0.15, 0.25, 0.08)
+  
+  const leftWing = new THREE.Mesh(supportWingGeo, matBlackMaterial)
+  leftWing.rotation.z = Math.PI / 6
+  leftWing.position.set(-0.15, -0.7, -0.12)
+  conveyorGroup.add(leftWing)
+  
+  const rightWing = new THREE.Mesh(supportWingGeo, matBlackMaterial)
+  rightWing.rotation.z = -Math.PI / 6
+  rightWing.position.set(-0.15, -0.7, 0.12)
+  conveyorGroup.add(rightWing)
+
+  // ═══════════════════════════════════════════════════════════════
+  //  6. VİDALAR VE DETAYLAR (16 Adet Vida)
+  // ═══════════════════════════════════════════════════════════════
+  
+  const boltGeo = new THREE.CylinderGeometry(0.02, 0.02, 0.05, 6)
+  const boltHeadGeo = new THREE.CylinderGeometry(0.03, 0.02, 0.01, 6)
+  
+  // 8 vida ön lens çevresinde
+  for (let i = 0; i < 8; i++) {
+    const angle = (i / 8) * Math.PI * 2
+    const bolt = new THREE.Mesh(boltGeo, matBlackMaterial)
+    bolt.rotation.z = Math.PI / 2
+    bolt.position.set(
+      0.88,
+      Math.cos(angle) * 0.42,
+      Math.sin(angle) * 0.42
+    )
+    conveyorGroup.add(bolt)
+    
+    const boltHead = new THREE.Mesh(boltHeadGeo, matBlackMaterial)
+    boltHead.rotation.z = Math.PI / 2
+    boltHead.position.set(
+      0.9,
+      Math.cos(angle) * 0.42,
+      Math.sin(angle) * 0.42
+    )
+    conveyorGroup.add(boltHead)
+  }
+
+  // 8 vida arka segment
+  for (let i = 0; i < 8; i++) {
+    const angle = (i / 8) * Math.PI * 2
+    const bolt = new THREE.Mesh(boltGeo, matBlackMaterial)
+    bolt.rotation.z = Math.PI / 2
+    bolt.position.set(
+      -0.7,
+      Math.cos(angle) * 0.36,
+      Math.sin(angle) * 0.36
+    )
+    conveyorGroup.add(bolt)
+  }
+
+  // ═══════════════════════════════════════════════════════════════
+  //  7. LED GÖSTERGE PANELI (Üstte)
+  // ═══════════════════════════════════════════════════════════════
+  
+  // Panel arka planı
+  const ledPanelGeo = new THREE.BoxGeometry(0.4, 0.12, 0.02)
+  const ledPanel = new THREE.Mesh(ledPanelGeo, matBlackMaterial)
+  ledPanel.position.set(-0.2, 0, 0.42)
+  conveyorGroup.add(ledPanel)
+
+  // LED'ler
+  const ledGeo = new THREE.CircleGeometry(0.02, 16)
+  
+  // Power (yeşil)
+  const powerLed = new THREE.Mesh(ledGeo, new THREE.MeshStandardMaterial({
+    color: 0x00ff00,
+    emissive: 0x00ff00,
+    emissiveIntensity: 1.2,
+    transparent: true,
+    opacity: 0
+  }))
+  powerLed.position.set(-0.32, 0.04, 0.43)
+  conveyorGroup.add(powerLed)
+
+  // Activity (turkuaz)
+  const activityLed = new THREE.Mesh(ledGeo, new THREE.MeshStandardMaterial({
+    color: 0x3DBAA2,
+    emissive: 0x3DBAA2,
+    emissiveIntensity: 1.0,
+    transparent: true,
+    opacity: 0
+  }))
+  activityLed.position.set(-0.2, 0.04, 0.43)
+  conveyorGroup.add(activityLed)
+
+  // Error (kırmızı)
+  const errorLed = new THREE.Mesh(ledGeo, new THREE.MeshStandardMaterial({
     color: 0xff0000,
     emissive: 0xff0000,
     emissiveIntensity: 0,
     transparent: true,
     opacity: 0
   }))
-  redLed.position.set(0.2, 0, 0.36)
-  conveyorGroup.add(redLed)
+  errorLed.position.set(-0.08, 0.04, 0.43)
+  conveyorGroup.add(errorLed)
 
-  // ═══════════════════════════════════════════════════════════════
-  //  9. YAN SOĞUTMA DİLİMLERİ
-  // ═══════════════════════════════════════════════════════════════
   
-  const coolSlitGeo = new THREE.BoxGeometry(0.08, 0.02, 0.01)
-  for (let i = 0; i < 8; i++) {
-    const slit = new THREE.Mesh(coolSlitGeo, screwMaterial)
-    slit.position.set(-0.4 + i * 0.12, 0.36, 0)
-    conveyorGroup.add(slit)
+  const beamMaterial = new THREE.MeshBasicMaterial({
+    color: 0x3DBAA2,
+    transparent: true,
+    opacity: 0,          // Başlangıçta görünmez
+    side: THREE.DoubleSide,
+    blending: THREE.AdditiveBlending,  // Parlama efekti
+    depthWrite: false
+  })
+
+  // Koni şekilli ışın (lens'ten çıkacak) - ELİT VE İNCE
+  const beamGeometry = new THREE.ConeGeometry(
+    0.25,   // Uç genişlik (daha ince, elit)
+    5.5,    // Uzunluk (daha uzun, profesyonel)
+    24,     // Segment (optimize)
+    1,
+    true    // Open ended
+  )
+  const scanBeam = new THREE.Mesh(beamGeometry, beamMaterial)
+  scanBeam.rotation.z = -Math.PI / 2  // Sağa doğru
+  scanBeam.position.set(3.5, 0, 0)    // Lens önünden başla
+  conveyorGroup.add(scanBeam)
+
+  // Işın içi grid pattern (profesyonel tarama efekti) - ELİT
+  const gridMaterial = new THREE.MeshBasicMaterial({
+    color: 0x3DBAA2,
+    transparent: true,
+    opacity: 0,
+    wireframe: true,
+    blending: THREE.AdditiveBlending
+  })
+  const gridBeam = new THREE.Mesh(
+    new THREE.ConeGeometry(0.23, 5.48, 12, 6, true),  // Daha ince grid
+    gridMaterial
+  )
+  gridBeam.rotation.z = -Math.PI / 2
+  gridBeam.position.set(3.5, 0, 0)
+  conveyorGroup.add(gridBeam)
+
+  // SpotLight (gerçek ışık kaynağı) - ELİT AYARLAR
+  const scanLight = new THREE.SpotLight(0x3DBAA2, 0)  // Başta kapalı
+  scanLight.position.set(1.2, 0, 0)    // Lens pozisyonu
+  scanLight.target.position.set(6.5, 0, 0)  // Daha uzak hedef
+  scanLight.angle = Math.PI / 10  // Daha dar açı (elit, odaklanmış)
+  scanLight.penumbra = 0.3  // Keskin kenarlar
+  scanLight.decay = 1.2
+  scanLight.distance = 12
+  conveyorGroup.add(scanLight)
+  conveyorGroup.add(scanLight.target)
+
+  // Parçacık sistemi (ışın içinde uçuşan noktalar) - DAHA AZ YOĞUN
+  const particleCount = 30  // 50'den 30'a (daha az, elit)
+  const particlesGeometry = new THREE.BufferGeometry()
+  const particlePositions = new Float32Array(particleCount * 3)
+  
+  for (let i = 0; i < particleCount; i++) {
+    particlePositions[i * 3] = 1.5 + Math.random() * 5      // X (lens → kart, daha uzun)
+    particlePositions[i * 3 + 1] = (Math.random() - 0.5) * 0.3  // Y spread (daha dar)
+    particlePositions[i * 3 + 2] = (Math.random() - 0.5) * 0.3  // Z spread (daha dar)
   }
+  
+  particlesGeometry.setAttribute('position', new THREE.BufferAttribute(particlePositions, 3))
+  
+  const particlesMaterial = new THREE.PointsMaterial({
+    color: 0x3DBAA2,
+    size: 0.02,  // Daha küçük parçacıklar (0.03'ten 0.02)
+    transparent: true,
+    opacity: 0,
+    blending: THREE.AdditiveBlending,
+    depthWrite: false
+  })
+  
+  const scanParticles = new THREE.Points(particlesGeometry, particlesMaterial)
+  conveyorGroup.add(scanParticles)
 
   // Kamerayı sahneye ekle
   scene.add(conveyorGroup)
 
   // LED Ring referansını sakla (animasyon için)
-  beltMaterial = ledRingMaterial  // Animasyonlarda kullanmak için
-  rollerMaterial = metalBodyMaterial
+  beltMaterial = neonTurquoiseMaterial
+  rollerMaterial = titaniumMaterial
 
   // Scroll progress objesi
   const scrollProgress = { value: 0 }
@@ -1328,6 +1429,23 @@ onMounted(async () => {
     conveyorGroup.rotation.x = baseRotationX + currentRotation.x
     conveyorGroup.rotation.y = currentRotation.y
     
+    if (scanParticles && particlesMaterial.opacity > 0) {
+      const posAttr = particlesGeometry.attributes.position
+      if (posAttr && posAttr.array) {
+        const positions = posAttr.array as Float32Array
+        for (let i = 0; i < particleCount; i++) {
+          // Parçacıklar lens'ten kartlara doğru akıyor
+          positions[i * 3] += 0.02  // X ekseninde ileri
+          
+          // Eğer çok uzağa gittiyse başa sar (daha uzun ışın için)
+          if (positions[i * 3] > 7) {
+            positions[i * 3] = 1.5
+          }
+        }
+        posAttr.needsUpdate = true
+      }
+    }
+    
     renderer.render(scene, camera)
   }
   animate()
@@ -1344,6 +1462,22 @@ onMounted(async () => {
   
   // LOKMA 25: Mobile check için MediaQuery
   const isMobile = window.innerWidth < 768
+
+  // LOKMA 29: Kamera Parçalarını Fade-In Animasyonu
+  // Tüm kamera parçalarını topla ve görünür yap
+  conveyorGroup.traverse((child: any) => {
+    if (child.isMesh && child.material) {
+      gsap.to(child.material, {
+        opacity: 1,
+        duration: 1.5,
+        ease: 'power2.out',
+        delay: 0.3
+      })
+    }
+  })
+
+  // LOKMA 29: Kamerayı daha büyük ve belirgin yap
+  conveyorGroup.scale.set(1.8, 1.8, 1.8)  // 1.8x daha büyük
   
   // BAŞLANGIÇ POZİSYONU: Kart sol-orta, 3D sağda (dengeli kompozisyon)
   // LOKMA 26: Mobilde 3D obje yukarıda kalır, kartlar altta
@@ -1381,6 +1515,33 @@ onMounted(async () => {
       }
     })
     
+    // LOKMA 30: Card 1 aktifken - TARAMA IŞINI AÇIK 🔦 (ELİT)
+    timeline1.to(beamMaterial, {
+      opacity: 0.25,  // Daha ince, elit opacity (0.35'ten düşük)
+      duration: 0.8
+    }, 0)
+    
+    timeline1.to(gridMaterial, {
+      opacity: 0.15,  // Daha hafif grid (0.25'ten düşük)
+      duration: 0.8
+    }, 0)
+    
+    timeline1.to(scanLight, {
+      intensity: 2.8,  // Daha soft ışık (3.5'ten düşük)
+      duration: 0.8
+    }, 0)
+    
+    timeline1.to(particlesMaterial, {
+      opacity: 0.8,  // Parçacıklar uçuşuyor
+      duration: 0.8
+    }, 0)
+    
+    // KAMERA ROTASYON: Card 1'de SOLA baksın 👈
+    timeline1.to(conveyorGroup.rotation, {
+      y: -0.25,  // Sola doğru hafif dönüş
+      ease: 'power2.inOut'
+    }, 0)
+    
     // LOKMA 26: Mobilde 3D sahne yukarıda sabit kalır
     timeline1.to(conveyorGroup.position, {
       x: isMobile ? 0 : -4,    // Mobilde hareket yok
@@ -1397,6 +1558,22 @@ onMounted(async () => {
       rotateY: isMobile ? 0 : 4,
       ease: 'power2.inOut'
     }, 0)
+    
+    // LOKMA 30: Card 1 kaybolurken - IŞIN KAPANIYOR 🔦
+    timeline1.to([beamMaterial, gridMaterial], {
+      opacity: 0,
+      duration: 0.5
+    }, 0.3)
+    
+    timeline1.to(scanLight, {
+      intensity: 0,
+      duration: 0.5
+    }, 0.3)
+    
+    timeline1.to(particlesMaterial, {
+      opacity: 0,
+      duration: 0.5
+    }, 0.3)
     
     // İkinci kart belirer
     timeline1.to(section2.value, {
@@ -1426,12 +1603,39 @@ onMounted(async () => {
       }
     })
     
+    // KAMERA ROTASYON: Card 2'de SAĞA baksın 👉
+    timeline2.to(conveyorGroup.rotation, {
+      y: 0.25,  // Sağa doğru dönüş (pozitif değer)
+      ease: 'power2.inOut'
+    }, 0)
+    
     // LOKMA 26: Mobilde 3D sahne yukarıda sabit kalır
     timeline2.to(conveyorGroup.position, {
       x: isMobile ? 0 : 4,
       y: isMobile ? 1 : 0,     // Mobilde yukarıda tut
       z: isMobile ? -2 : 0,    // Mobilde arkada sabit
       ease: 'power2.inOut'
+    }, 0)
+    
+    // LOKMA 30: Card 2 aktifken - TARAMA IŞINI TEKRAR AÇIK 🔦 (ELİT)
+    timeline2.to(beamMaterial, {
+      opacity: 0.25,  // Elit opacity
+      duration: 0.8
+    }, 0)
+    
+    timeline2.to(gridMaterial, {
+      opacity: 0.15,  // Hafif grid
+      duration: 0.8
+    }, 0)
+    
+    timeline2.to(scanLight, {
+      intensity: 2.8,  // Soft ışık
+      duration: 0.8
+    }, 0)
+    
+    timeline2.to(particlesMaterial, {
+      opacity: 0.8,
+      duration: 0.8
     }, 0)
     
     // İkinci kart kaybolur
@@ -1443,6 +1647,22 @@ onMounted(async () => {
       ease: 'power2.inOut'
     }, 0)
     
+    // LOKMA 30: Card 2 kaybolurken - IŞIN KAPANIYOR 🔦
+    timeline2.to([beamMaterial, gridMaterial], {
+      opacity: 0,
+      duration: 0.5
+    }, 0.3)
+    
+    timeline2.to(scanLight, {
+      intensity: 0,
+      duration: 0.5
+    }, 0.3)
+    
+    timeline2.to(particlesMaterial, {
+      opacity: 0,
+      duration: 0.5
+    }, 0.3)
+    
     // Üçüncü kart belirer
     timeline2.to(section3.value, {
       opacity: 1,
@@ -1453,14 +1673,10 @@ onMounted(async () => {
     }, 0)
   }
   
-  // STEP 3: Stats bölümüne gelince 3D sahneyi merkeze geri getir
+  // STEP 3: Stats bölümüne gelince 3D sahneyi merkeze geri getir + IŞIN TAMAMEN KAPALI
   // LOKMA 26: Mobilde yukarıda sabit kalır
   if (statsSection.value) {
-    gsap.to(conveyorGroup.position, {
-      x: 0,  // Hem mobil hem desktop merkezde
-      y: isMobile ? 1 : 0,     // Mobilde yukarıda tut
-      z: isMobile ? -2 : 0,    // Mobilde arkada tut
-
+    const timeline3 = gsap.timeline({
       scrollTrigger: {
         trigger: statsSection.value,
         start: 'top center',
@@ -1468,6 +1684,29 @@ onMounted(async () => {
         scrub: true
       }
     })
+    
+    // KAMERA ROTASYON: Card 3'te tekrar SOLA baksın 👈
+    timeline3.to(conveyorGroup.rotation, {
+      y: -0.25,  // Tekrar sola dönüş
+      ease: 'power2.inOut'
+    }, 0)
+    
+    timeline3.to(conveyorGroup.position, {
+      x: 0,  // Hem mobil hem desktop merkezde
+      y: isMobile ? 1 : 0,     // Mobilde yukarıda tut
+      z: isMobile ? -2 : 0    // Mobilde arkada tut
+    }, 0)
+    
+    // LOKMA 30: Stats bölümünde tarama bitti - ışın kapalı
+    timeline3.to([beamMaterial, gridMaterial, particlesMaterial], {
+      opacity: 0,
+      duration: 0.3
+    }, 0)
+    
+    timeline3.to(scanLight, {
+      intensity: 0,
+      duration: 0.3
+    }, 0)
   }
 
   // İstatistik Counter Animasyonları
