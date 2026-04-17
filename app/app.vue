@@ -2659,6 +2659,10 @@ canvas {
   padding: 6rem 2rem;
 }
 
+.dark .contact-form-section {
+  background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+}
+
 .form-outer-container {
   max-width: 56rem;
   width: 100%;
@@ -2676,6 +2680,11 @@ canvas {
     0 8px 20px rgba(0, 0, 0, 0.04);
 }
 
+.dark .form-glass-card {
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid rgba(61, 186, 162, 0.2);
+}
+
 .form-main-title {
   font-size: 2.5rem;
   font-weight: 700;
@@ -2683,6 +2692,10 @@ canvas {
   text-align: center;
   margin-bottom: 3rem;
   letter-spacing: -0.02em;
+}
+
+.dark .form-main-title {
+  color: #f1f5f9;
 }
 
 .premium-form {
@@ -2725,8 +2738,18 @@ canvas {
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+.dark .form-elite-input {
+  background: rgba(15, 23, 42, 0.5);
+  border: 1px solid rgba(61, 186, 162, 0.3);
+  color: #e2e8f0;
+}
+
 .form-elite-input::placeholder {
   color: rgba(100, 116, 139, 0.5);
+}
+
+.dark .form-elite-input::placeholder {
+  color: rgba(148, 163, 184, 0.5);
 }
 
 .form-elite-input:focus {
@@ -2734,6 +2757,12 @@ canvas {
   border-color: #3DBAA2;
   box-shadow: 0 0 0 3px rgba(61, 186, 162, 0.1);
   transform: translateY(-1px);
+}
+
+.dark .form-elite-input:focus {
+  background: rgba(15, 23, 42, 0.8);
+  border-color: #3DBAA2;
+  box-shadow: 0 0 0 3px rgba(61, 186, 162, 0.2);
 }
 
 .form-select {
@@ -2744,6 +2773,10 @@ canvas {
   background-repeat: no-repeat;
   background-size: 1.5em 1.5em;
   padding-right: 3rem;
+}
+
+.dark .form-select {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%2394a3b8' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
 }
 
 .form-textarea {
