@@ -1318,7 +1318,7 @@ onMounted(async () => {
 
   
   const beamMaterial = new THREE.MeshBasicMaterial({
-    color: 0x3DBAA2,
+    color: 0x1A6B5F,  // ÇOK DAHA KOYU turkuaz (neredeyse yeşilimsi)
     transparent: true,
     opacity: 0,          // Başlangıçta görünmez
     side: THREE.DoubleSide,
@@ -1335,13 +1335,13 @@ onMounted(async () => {
     true    // Open ended
   )
   const scanBeam = new THREE.Mesh(beamGeometry, beamMaterial)
-  scanBeam.rotation.z = -Math.PI / 2  // Sağa doğru
-  scanBeam.position.set(3.5, 0, 0)    // Lens önünden başla
+  scanBeam.rotation.z = -Math.PI / 2  // SAĞA doğru (eski pozisyon) �
+  scanBeam.position.set(3.5, 0, 0)    // Sağ taraftan başla (pozitif X)
   conveyorGroup.add(scanBeam)
 
   // Işın içi grid pattern (profesyonel tarama efekti) - ELİT
   const gridMaterial = new THREE.MeshBasicMaterial({
-    color: 0x3DBAA2,
+    color: 0x1A6B5F,  // ÇOK DAHA KOYU turkuaz
     transparent: true,
     opacity: 0,
     wireframe: true,
@@ -1351,14 +1351,14 @@ onMounted(async () => {
     new THREE.ConeGeometry(0.23, 5.48, 12, 6, true),  // Daha ince grid
     gridMaterial
   )
-  gridBeam.rotation.z = -Math.PI / 2
-  gridBeam.position.set(3.5, 0, 0)
+  gridBeam.rotation.z = -Math.PI / 2  // SAĞA doğru �
+  gridBeam.position.set(3.5, 0, 0)    // Sağ taraftan başla
   conveyorGroup.add(gridBeam)
 
   // SpotLight (gerçek ışık kaynağı) - ELİT AYARLAR
-  const scanLight = new THREE.SpotLight(0x3DBAA2, 0)  // Başta kapalı
-  scanLight.position.set(1.2, 0, 0)    // Lens pozisyonu
-  scanLight.target.position.set(6.5, 0, 0)  // Daha uzak hedef
+  const scanLight = new THREE.SpotLight(0x1A6B5F, 0)  // ÇOK DAHA KOYU turkuaz
+  scanLight.position.set(1.2, 0, 0)     // Sağ tarafta (pozitif X - eski)
+  scanLight.target.position.set(6.5, 0, 0)  // SAĞA hedefle (pozitif X - eski)
   scanLight.angle = Math.PI / 10  // Daha dar açı (elit, odaklanmış)
   scanLight.penumbra = 0.3  // Keskin kenarlar
   scanLight.decay = 1.2
@@ -1367,12 +1367,12 @@ onMounted(async () => {
   conveyorGroup.add(scanLight.target)
 
   // Parçacık sistemi (ışın içinde uçuşan noktalar) - DAHA AZ YOĞUN
-  const particleCount = 30  // 50'den 30'a (daha az, elit)
+  const particleCount = 15  // 50'den 30'a (daha az, elit)
   const particlesGeometry = new THREE.BufferGeometry()
   const particlePositions = new Float32Array(particleCount * 3)
   
   for (let i = 0; i < particleCount; i++) {
-    particlePositions[i * 3] = 1.5 + Math.random() * 5      // X (lens → kart, daha uzun)
+    particlePositions[i * 3] = 1.5 + Math.random() * 5      // X (lens → kart, SAĞA pozitif - eski)
     particlePositions[i * 3 + 1] = (Math.random() - 0.5) * 0.3  // Y spread (daha dar)
     particlePositions[i * 3 + 2] = (Math.random() - 0.5) * 0.3  // Z spread (daha dar)
   }
@@ -1380,7 +1380,7 @@ onMounted(async () => {
   particlesGeometry.setAttribute('position', new THREE.BufferAttribute(particlePositions, 3))
   
   const particlesMaterial = new THREE.PointsMaterial({
-    color: 0x3DBAA2,
+    color: 0x1A6B5F,  // ÇOK DAHA KOYU turkuaz
     size: 0.02,  // Daha küçük parçacıklar (0.03'ten 0.02)
     transparent: true,
     opacity: 0,
@@ -1393,6 +1393,9 @@ onMounted(async () => {
 
   // Kamerayı sahneye ekle
   scene.add(conveyorGroup)
+  
+  // BAŞLANGIÇ ROTASYONU: Kamerayı TAM 180 derece çevir (TERS YÖN) 🎯
+  conveyorGroup.rotation.y = -Math.PI  // -180 derece (saat yönü tersine)
 
   // LED Ring referansını sakla (animasyon için)
   beltMaterial = neonTurquoiseMaterial
@@ -1434,10 +1437,10 @@ onMounted(async () => {
       if (posAttr && posAttr.array) {
         const positions = posAttr.array as Float32Array
         for (let i = 0; i < particleCount; i++) {
-          // Parçacıklar lens'ten kartlara doğru akıyor
-          positions[i * 3] += 0.02  // X ekseninde ileri
+          // Parçacıklar lens'ten kartlara doğru akıyor (SAĞA, pozitif yön - eski)
+          positions[i * 3] += 0.02  // X ekseninde SAĞA (+ değer)
           
-          // Eğer çok uzağa gittiyse başa sar (daha uzun ışın için)
+          // Eğer çok uzağa gittiyse başa sar (SAĞA için pozitif kontrol)
           if (positions[i * 3] > 7) {
             positions[i * 3] = 1.5
           }
@@ -1515,19 +1518,19 @@ onMounted(async () => {
       }
     })
     
-    // LOKMA 30: Card 1 aktifken - TARAMA IŞINI AÇIK 🔦 (ELİT)
+    // LOKMA 30: Card 1 aktifken - TARAMA IŞINI AÇIK 🔦 (ELİT + KOYU RENK)
     timeline1.to(beamMaterial, {
-      opacity: 0.25,  // Daha ince, elit opacity (0.35'ten düşük)
+      opacity: 0.35,  // Biraz artırıldı ki koyu renk görünsün
       duration: 0.8
     }, 0)
     
     timeline1.to(gridMaterial, {
-      opacity: 0.15,  // Daha hafif grid (0.25'ten düşük)
+      opacity: 0.20,  // Biraz artırıldı
       duration: 0.8
     }, 0)
     
     timeline1.to(scanLight, {
-      intensity: 2.8,  // Daha soft ışık (3.5'ten düşük)
+      intensity: 3.0,  // Biraz artırıldı
       duration: 0.8
     }, 0)
     
@@ -1536,11 +1539,8 @@ onMounted(async () => {
       duration: 0.8
     }, 0)
     
-    // KAMERA ROTASYON: Card 1'de SOLA baksın 👈
-    timeline1.to(conveyorGroup.rotation, {
-      y: -0.25,  // Sola doğru hafif dönüş
-      ease: 'power2.inOut'
-    }, 0)
+    // KAMERA ROTASYON: Artık gerekli değil, ışınlar zaten doğru pozisyonda
+    // (Fiziksel olarak sola bakıyorlar)
     
     // LOKMA 26: Mobilde 3D sahne yukarıda sabit kalır
     timeline1.to(conveyorGroup.position, {
@@ -1603,11 +1603,7 @@ onMounted(async () => {
       }
     })
     
-    // KAMERA ROTASYON: Card 2'de SAĞA baksın 👉
-    timeline2.to(conveyorGroup.rotation, {
-      y: 0.25,  // Sağa doğru dönüş (pozitif değer)
-      ease: 'power2.inOut'
-    }, 0)
+    // KAMERA ROTASYON: Kaldırıldı (ışınlar sabit pozisyonda)
     
     // LOKMA 26: Mobilde 3D sahne yukarıda sabit kalır
     timeline2.to(conveyorGroup.position, {
@@ -1617,19 +1613,19 @@ onMounted(async () => {
       ease: 'power2.inOut'
     }, 0)
     
-    // LOKMA 30: Card 2 aktifken - TARAMA IŞINI TEKRAR AÇIK 🔦 (ELİT)
+    // LOKMA 30: Card 2 aktifken - TARAMA IŞINI TEKRAR AÇIK 🔦 (ELİT + KOYU RENK)
     timeline2.to(beamMaterial, {
-      opacity: 0.25,  // Elit opacity
+      opacity: 0.35,  // Biraz artırıldı
       duration: 0.8
     }, 0)
     
     timeline2.to(gridMaterial, {
-      opacity: 0.15,  // Hafif grid
+      opacity: 0.20,  // Biraz artırıldı
       duration: 0.8
     }, 0)
     
     timeline2.to(scanLight, {
-      intensity: 2.8,  // Soft ışık
+      intensity: 3.0,  // Biraz artırıldı
       duration: 0.8
     }, 0)
     
@@ -1685,11 +1681,7 @@ onMounted(async () => {
       }
     })
     
-    // KAMERA ROTASYON: Card 3'te tekrar SOLA baksın 👈
-    timeline3.to(conveyorGroup.rotation, {
-      y: -0.25,  // Tekrar sola dönüş
-      ease: 'power2.inOut'
-    }, 0)
+    // KAMERA ROTASYON: Kaldırıldı (ışınlar sabit pozisyonda)
     
     timeline3.to(conveyorGroup.position, {
       x: 0,  // Hem mobil hem desktop merkezde
