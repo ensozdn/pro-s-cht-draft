@@ -1152,10 +1152,11 @@ onMounted(async () => {
   const isMobile = window.innerWidth < 768
   
   // BAŞLANGIÇ POZİSYONU: Kart sol-orta, 3D sağda (dengeli kompozisyon)
-  // LOKMA 25: Mobilde 3D obje ortalanır
+  // LOKMA 26: Mobilde 3D obje yukarıda kalır, kartlar altta
   gsap.set(conveyorGroup.position, { 
-    x: isMobile ? 0 : 3,  // Mobilde ortala
-    z: isMobile ? 2 : 0   // Mobilde arkaya çek
+    x: isMobile ? 0 : 3,    // Mobilde ortala
+    y: isMobile ? 1 : 0,    // Mobilde yukarı çek
+    z: isMobile ? -2 : 0    // Mobilde daha uzağa
   })
   
   // STEP 1: İlk Kart → İkinci Kart Geçişi (3D Sahne MERKEZE gelir)
@@ -1186,10 +1187,11 @@ onMounted(async () => {
       }
     })
     
-    // LOKMA 25: Mobilde 3D sahne sabit kalır veya minimal hareket
+    // LOKMA 26: Mobilde 3D sahne yukarıda sabit kalır
     timeline1.to(conveyorGroup.position, {
-      x: isMobile ? 0 : -4,  // Mobilde hareket yok
-      z: isMobile ? 2 : 0,   // Mobilde arkada sabit
+      x: isMobile ? 0 : -4,    // Mobilde hareket yok
+      y: isMobile ? 1 : 0,     // Mobilde yukarıda tut
+      z: isMobile ? -2 : 0,    // Mobilde arkada sabit
       ease: 'power2.inOut'
     }, 0)
     
@@ -1230,10 +1232,11 @@ onMounted(async () => {
       }
     })
     
-    // LOKMA 25: Mobilde 3D sahne minimal hareket
+    // LOKMA 26: Mobilde 3D sahne yukarıda sabit kalır
     timeline2.to(conveyorGroup.position, {
       x: isMobile ? 0 : 4,
-      z: isMobile ? 2 : 0,
+      y: isMobile ? 1 : 0,     // Mobilde yukarıda tut
+      z: isMobile ? -2 : 0,    // Mobilde arkada sabit
       ease: 'power2.inOut'
     }, 0)
     
@@ -1257,10 +1260,12 @@ onMounted(async () => {
   }
   
   // STEP 3: Stats bölümüne gelince 3D sahneyi merkeze geri getir
-  // LOKMA 25: Mobilde zaten merkezde
+  // LOKMA 26: Mobilde yukarıda sabit kalır
   if (statsSection.value) {
     gsap.to(conveyorGroup.position, {
       x: 0,  // Hem mobil hem desktop merkezde
+      y: isMobile ? 1 : 0,     // Mobilde yukarıda tut
+      z: isMobile ? -2 : 0,    // Mobilde arkada tut
 
       scrollTrigger: {
         trigger: statsSection.value,
@@ -1729,13 +1734,13 @@ onUnmounted(async () => {
   /* Scene container mobilde ortala */
   .scene-container {
     overflow: hidden;
-    /* LOKMA 26: Mobilde 3D sahneyi gizle - kartlar odak noktası */
-    display: none;
+    
+    height: 40vh;
   }
   
   canvas {
-    transform: scale(0.8);
-    transform-origin: center center;
+    transform: scale(0.6);
+    transform-origin: center top;
   }
 }
 
