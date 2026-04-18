@@ -1124,17 +1124,20 @@ onMounted(async () => {
   conveyorGroup.add(backSegment)
 
   // ═══════════════════════════════════════════════════════════════
-  //  3. SOĞUTUCU IZGARALAR (Heat Sinks - 5 Adet)
+  //  3. SOĞUTUCU IZGARALAR (Heat Sinks - KALDIRILDI) ❌
   // ═══════════════════════════════════════════════════════════════
   
+  // Üst parçalar kaldırıldı - daha temiz görünüm
+  
+  // Sadece alt kanatçıklar ve paneller kalacak
   const heatSinkGeo = new THREE.BoxGeometry(0.12, 0.5, 0.03)
   const heatSinkPositions = [-0.3, -0.15, 0, 0.15, 0.3]
   
   heatSinkPositions.forEach(xPos => {
-    // Üst kanatçık
-    const topFin = new THREE.Mesh(heatSinkGeo, matBlackMaterial)
-    topFin.position.set(xPos, 0.43, 0)
-    conveyorGroup.add(topFin)
+    // Üst kanatçık - KALDIRILDI ❌
+    // const topFin = new THREE.Mesh(heatSinkGeo, matBlackMaterial)
+    // topFin.position.set(xPos, 0.43, 0)
+    // conveyorGroup.add(topFin)
     
     // Alt kanatçık
     const bottomFin = new THREE.Mesh(heatSinkGeo, matBlackMaterial)
@@ -1142,11 +1145,13 @@ onMounted(async () => {
     conveyorGroup.add(bottomFin)
   })
 
-  // Yan soğutucu paneller (daha belirgin)
+  // Yan soğutucu paneller
   const sidePanelGeo = new THREE.BoxGeometry(0.8, 0.06, 0.48)
-  const topPanel = new THREE.Mesh(sidePanelGeo, matBlackMaterial)
-  topPanel.position.set(0, 0.46, 0)
-  conveyorGroup.add(topPanel)
+  
+  // Üst panel - KALDIRILDI ❌
+  // const topPanel = new THREE.Mesh(sidePanelGeo, matBlackMaterial)
+  // topPanel.position.set(0, 0.46, 0)
+  // conveyorGroup.add(topPanel)
   
   const bottomPanel = new THREE.Mesh(sidePanelGeo, matBlackMaterial)
   bottomPanel.position.set(0, -0.46, 0)
@@ -1271,50 +1276,29 @@ onMounted(async () => {
   }
 
   // ═══════════════════════════════════════════════════════════════
-  //  7. LED GÖSTERGE PANELI (Üstte)
+  //  7. PRO-SICHT LOGO (Texture) 🏢
   // ═══════════════════════════════════════════════════════════════
   
-  // Panel arka planı
-  const ledPanelGeo = new THREE.BoxGeometry(0.4, 0.12, 0.02)
-  const ledPanel = new THREE.Mesh(ledPanelGeo, matBlackMaterial)
-  ledPanel.position.set(-0.2, 0, 0.42)
-  conveyorGroup.add(ledPanel)
-
-  // LED'ler
-  const ledGeo = new THREE.CircleGeometry(0.02, 16)
+  // Logo texture yükleme
+  const textureLoader = new THREE.TextureLoader()
+  const logoTexture = textureLoader.load('/images/logo.png')
   
-  // Power (yeşil)
-  const powerLed = new THREE.Mesh(ledGeo, new THREE.MeshStandardMaterial({
-    color: 0x00ff00,
-    emissive: 0x00ff00,
-    emissiveIntensity: 1.2,
-    transparent: true,
-    opacity: 0
-  }))
-  powerLed.position.set(-0.32, 0.04, 0.43)
-  conveyorGroup.add(powerLed)
-
-  // Activity (turkuaz)
-  const activityLed = new THREE.Mesh(ledGeo, new THREE.MeshStandardMaterial({
-    color: 0x3DBAA2,
-    emissive: 0x3DBAA2,
-    emissiveIntensity: 1.0,
-    transparent: true,
-    opacity: 0
-  }))
-  activityLed.position.set(-0.2, 0.04, 0.43)
-  conveyorGroup.add(activityLed)
-
-  // Error (kırmızı)
-  const errorLed = new THREE.Mesh(ledGeo, new THREE.MeshStandardMaterial({
-    color: 0xff0000,
-    emissive: 0xff0000,
-    emissiveIntensity: 0,
-    transparent: true,
-    opacity: 0
-  }))
-  errorLed.position.set(-0.08, 0.04, 0.43)
-  conveyorGroup.add(errorLed)
+  // Logo için plane (düzlem)
+  const logoPlane = new THREE.Mesh(
+    new THREE.PlaneGeometry(0.7, 0.5),  // LED panel boyutunda
+    new THREE.MeshBasicMaterial({
+      map: logoTexture,
+      transparent: true,
+      opacity: 0.9,  // Hafif şeffaf
+      side: THREE.DoubleSide
+    })
+  )
+  
+  // LED panelin olduğu pozisyon
+  logoPlane.position.set(-0.2, 0, 0.43)  // Üst yüzeyde
+  logoPlane.rotation.x = 0  // Düz baksın
+  
+  conveyorGroup.add(logoPlane)
 
   
   const beamMaterial = new THREE.MeshBasicMaterial({
@@ -1430,7 +1414,7 @@ onMounted(async () => {
     
     // Base rotasyon + Mouse parallax
     conveyorGroup.rotation.x = baseRotationX + currentRotation.x
-    conveyorGroup.rotation.y = currentRotation.y
+    conveyorGroup.rotation.y = Math.PI + currentRotation.y
     
     if (scanParticles && particlesMaterial.opacity > 0) {
       const posAttr = particlesGeometry.attributes.position
