@@ -1283,7 +1283,7 @@ onMounted(async () => {
   const textureLoader = new THREE.TextureLoader()
   const logoTexture = textureLoader.load('/images/logo.png')
   
-  // Logo için plane (düzlem)
+  // ÖN TARAF LOGO
   const logoPlane = new THREE.Mesh(
     new THREE.PlaneGeometry(0.7, 0.5),  // LED panel boyutunda
     new THREE.MeshBasicMaterial({
@@ -1294,11 +1294,29 @@ onMounted(async () => {
     })
   )
   
-  // LED panelin olduğu pozisyon
+  // LED panelin olduğu pozisyon (ön taraf)
   logoPlane.position.set(-0.2, 0, 0.43)  // Üst yüzeyde
   logoPlane.rotation.x = 0  // Düz baksın
   
   conveyorGroup.add(logoPlane)
+
+  // ARKA TARAF LOGO (aynı logo, ters tarafta)
+  const logoPlaneBack = new THREE.Mesh(
+    new THREE.PlaneGeometry(0.7, 0.5),  // Aynı boyut
+    new THREE.MeshBasicMaterial({
+      map: logoTexture,
+      transparent: true,
+      opacity: 0.9,
+      side: THREE.DoubleSide
+    })
+  )
+  
+  // Arka taraf pozisyonu (Z ekseninde ters)
+  logoPlaneBack.position.set(-0.2, 0, -0.43)  // Negatif Z = arka taraf
+  logoPlaneBack.rotation.x = 0
+  logoPlaneBack.rotation.y = Math.PI  // 180 derece döndür (logo düzgün görünsün)
+  
+  conveyorGroup.add(logoPlaneBack)
 
   
   const beamMaterial = new THREE.MeshBasicMaterial({
