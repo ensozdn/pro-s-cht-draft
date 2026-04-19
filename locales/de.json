@@ -1,0 +1,26 @@
+{
+  "nav": {
+    "home": "Startseite",
+    "features": "Funktionen",
+    "applications": "Anwendungen",
+    "about": "Über uns",
+    "contact": "Kontakt"
+  },
+  "hero": {
+    "title1": "Erreichen Sie",
+    "title2": "Perfektion in der Produktion",
+    "description": "Produktionsfehler sofort mit KI-gestütztem Qualitätskontrollsystem erkennen",
+    "cta": "Mehr Erkunden"
+  },
+  "stats": {
+    "title": "ProSicht in",
+    "brand": "Zahlen",
+    "accuracy": "Genauigkeitsrate",
+    "responseTime": "Antwortzeit",
+    "throughput": "Teile pro Minute"
+  },
+  "language": {
+    "select": "Sprache Wählen",
+    "current": "Deutsch"
+  }
+}

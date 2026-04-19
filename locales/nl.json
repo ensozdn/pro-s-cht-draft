@@ -1,0 +1,26 @@
+{
+  "nav": {
+    "home": "Home",
+    "features": "Functies",
+    "applications": "Toepassingen",
+    "about": "Over Ons",
+    "contact": "Contact"
+  },
+  "hero": {
+    "title1": "Bereik",
+    "title2": "Perfectie in Productie",
+    "description": "Detecteer productiefouten direct met AI-aangedreven kwaliteitscontrolesysteem",
+    "cta": "Ontdek Meer"
+  },
+  "stats": {
+    "title": "ProSicht in",
+    "brand": "Cijfers",
+    "accuracy": "Nauwkeurigheid",
+    "responseTime": "Reactietijd",
+    "throughput": "Onderdelen per Minuut"
+  },
+  "language": {
+    "select": "Selecteer Taal",
+    "current": "Nederlands"
+  }
+}
