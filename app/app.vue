@@ -521,7 +521,7 @@ import { useTheme } from '../composables/useTheme'
 import '../assets/styles/main.css'
 
 const { isDark, toggleTheme, initTheme } = useTheme()
-const { t: $t } = useI18n()
+const { t, locale } = useI18n()  // locale'i de alıyoruz reactive olması için
 
 provide('toggleTheme', toggleTheme)
 
@@ -573,63 +573,73 @@ const categories = ref([
   }
 ])
 
-// Neden Biz? Features - i18n ile reactive
-const whyUsFeatures = computed(() => [
-  {
-    title: $t('whyUs.speed.title'),
-    desc: $t('whyUs.speed.description'),
-    icon: 'Rocket'
-  },
-  {
-    title: $t('whyUs.ai.title'),
-    desc: $t('whyUs.ai.description'),
-    icon: 'BrainCircuit'
-  },
-  {
-    title: $t('whyUs.support.title'),
-    desc: $t('whyUs.support.description'),
-    icon: 'Users'
-  },
-  {
-    title: $t('whyUs.realtime.title'),
-    desc: $t('whyUs.realtime.description'),
-    icon: 'Activity'
-  }
-])
+// Neden Biz? Features - i18n ile FULL reactive
+const whyUsFeatures = computed(() => {
+  // locale.value'yu kullanarak computed'ın locale değişikliğini izlemesini sağlıyoruz
+  const currentLocale = locale.value
+  
+  return [
+    {
+      title: t('whyUs.speed.title'),
+      desc: t('whyUs.speed.description'),
+      icon: 'Rocket'
+    },
+    {
+      title: t('whyUs.ai.title'),
+      desc: t('whyUs.ai.description'),
+      icon: 'BrainCircuit'
+    },
+    {
+      title: t('whyUs.support.title'),
+      desc: t('whyUs.support.description'),
+      icon: 'Users'
+    },
+    {
+      title: t('whyUs.realtime.title'),
+      desc: t('whyUs.realtime.description'),
+      icon: 'Activity'
+    }
+  ]
+})
 
-// InspectAI'ın İşletmeye Katkıları - i18n ile reactive
-const contributions = computed(() => [
-  {
-    title: $t('contributions.quality.title'),
-    desc: $t('contributions.quality.description'),
-    icon: 'CheckCircle'
-  },
-  {
-    title: $t('contributions.reduce.title'),
-    desc: $t('contributions.reduce.description'),
-    icon: 'TrendingDown'
-  },
-  {
-    title: $t('contributions.satisfaction.title'),
-    desc: $t('contributions.satisfaction.description'),
-    icon: 'Smile'
-  },
-  {
-    title: $t('contributions.recall.title'),
-    desc: $t('contributions.recall.description'),
-    icon: 'ShieldAlert'
-  },
-  {
-    title: $t('contributions.efficiency.title'),
-    desc: $t('contributions.efficiency.description'),
-    icon: 'Zap'
-  },
-  {
-    title: $t('contributions.compliance.title'),
-    desc: $t('contributions.compliance.description'),
-    icon: 'BarChart'
-  }
-])
+// InspectAI'ın İşletmeye Katkıları - i18n ile FULL reactive
+const contributions = computed(() => {
+  // locale.value'yu kullanarak computed'ın locale değişikliğini izlemesini sağlıyoruz
+  const currentLocale = locale.value
+  
+  return [
+    {
+      title: t('contributions.quality.title'),
+      desc: t('contributions.quality.description'),
+      icon: 'CheckCircle'
+    },
+    {
+      title: t('contributions.reduce.title'),
+      desc: t('contributions.reduce.description'),
+      icon: 'TrendingDown'
+    },
+    {
+      title: t('contributions.satisfaction.title'),
+      desc: t('contributions.satisfaction.description'),
+      icon: 'Smile'
+    },
+    {
+      title: t('contributions.recall.title'),
+      desc: t('contributions.recall.description'),
+      icon: 'ShieldAlert'
+    },
+    {
+      title: t('contributions.efficiency.title'),
+      desc: t('contributions.efficiency.description'),
+      icon: 'Zap'
+    },
+    {
+      title: t('contributions.compliance.title'),
+      desc: t('contributions.compliance.description'),
+      icon: 'BarChart'
+    }
+  ]
+})
 
 // İletişim Bilgileri
 const contactInfo = ref([
