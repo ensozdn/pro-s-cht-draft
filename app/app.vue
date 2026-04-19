@@ -1628,6 +1628,163 @@ onMounted(async () => {
       }
     )
   }
+
+  // ═══════════════════════════════════════════════════════
+  // SCROLL REVEAL ANIMATIONS - Organized by Section
+  // ═══════════════════════════════════════════════════════
+
+  // Why Us Section - Feature Cards Stagger
+  const featureCards = document.querySelectorAll('.feature-card')
+  if (featureCards.length > 0) {
+    gsap.fromTo(
+      featureCards,
+      {
+        opacity: 0,
+        y: 60,
+        scale: 0.9
+      },
+      {
+        opacity: 1,
+        y: 0,
+        scale: 1,
+        duration: 0.8,
+        stagger: 0.15,
+        ease: 'power3.out',
+        scrollTrigger: {
+          trigger: '.why-us-grid',
+          start: 'top 75%',
+          once: true
+        }
+      }
+    )
+  }
+
+  // Contributions Section - Cards with Elastic Effect
+  const contributionCards = document.querySelectorAll('.contribution-card')
+  if (contributionCards.length > 0) {
+    gsap.fromTo(
+      contributionCards,
+      {
+        opacity: 0,
+        y: 80,
+        rotateX: -15
+      },
+      {
+        opacity: 1,
+        y: 0,
+        rotateX: 0,
+        duration: 1,
+        stagger: 0.12,
+        ease: 'elastic.out(1, 0.5)',
+        scrollTrigger: {
+          trigger: '.contributions-grid',
+          start: 'top 70%',
+          once: true
+        }
+      }
+    )
+  }
+
+  // Partners Section - Logo Reveal
+  const partnerCards = document.querySelectorAll('.partner-card')
+  if (partnerCards.length > 0) {
+    gsap.fromTo(
+      partnerCards,
+      {
+        opacity: 0,
+        scale: 0.7,
+        rotateY: -25
+      },
+      {
+        opacity: 1,
+        scale: 1,
+        rotateY: 0,
+        duration: 0.7,
+        stagger: 0.08,
+        ease: 'back.out(1.4)',
+        scrollTrigger: {
+          trigger: '.partners-grid',
+          start: 'top 75%',
+          once: true
+        }
+      }
+    )
+  }
+
+  // Blog Section - Bento Grid Reveal
+  const blogCards = document.querySelectorAll('.blog-card')
+  if (blogCards.length > 0) {
+    gsap.fromTo(
+      blogCards,
+      {
+        opacity: 0,
+        y: 50,
+        clipPath: 'inset(10% 10% 10% 10% round 1rem)'
+      },
+      {
+        opacity: 1,
+        y: 0,
+        clipPath: 'inset(0% 0% 0% 0% round 1rem)',
+        duration: 1,
+        stagger: 0.1,
+        ease: 'power2.out',
+        scrollTrigger: {
+          trigger: '.blog-grid',
+          start: 'top 70%',
+          once: true
+        }
+      }
+    )
+  }
+
+  // Section Titles - Fade In from Bottom
+  const sectionTitles = document.querySelectorAll('.why-us-title, .contributions-title, .partners-title, .blog-title')
+  sectionTitles.forEach(title => {
+    gsap.fromTo(
+      title,
+      {
+        opacity: 0,
+        y: 40
+      },
+      {
+        opacity: 1,
+        y: 0,
+        duration: 0.9,
+        ease: 'power3.out',
+        scrollTrigger: {
+          trigger: title,
+          start: 'top 85%',
+          once: true
+        }
+      }
+    )
+  })
+
+  // Stats Cards - Individual Stat Items
+  const statItems = document.querySelectorAll('.stat-item')
+  if (statItems.length > 0) {
+    gsap.fromTo(
+      statItems,
+      {
+        opacity: 0,
+        y: 30,
+        scale: 0.8
+      },
+      {
+        opacity: 1,
+        y: 0,
+        scale: 1,
+        duration: 0.8,
+        stagger: 0.2,
+        ease: 'back.out(1.5)',
+        scrollTrigger: {
+          trigger: '.stats-grid',
+          start: 'top 75%',
+          once: true
+        }
+      }
+    )
+  }
   
   window.addEventListener('resize', handleResize)
 })

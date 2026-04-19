@@ -2434,4 +2434,49 @@ canvas {
   }
 }
 
+/* ═══════════════════════════════════════════════════════
+   SCROLL REVEAL INITIAL STATES
+   ═══════════════════════════════════════════════════════
+   Elements start hidden and animate in via GSAP
+   ══════════════════════════════════════════════════════ */
+
+/* Feature Cards Initial State */
+.feature-card {
+  opacity: 0;
+  will-change: opacity, transform;
+}
+
+/* Contribution Cards Initial State */
+.contribution-card {
+  opacity: 0;
+  will-change: opacity, transform;
+}
+
+/* Partner Cards Initial State */
+.partner-card {
+  opacity: 0;
+  will-change: opacity, transform;
+}
+
+/* Blog Cards Initial State */
+.blog-card {
+  opacity: 0;
+  will-change: opacity, transform, clip-path;
+}
+
+/* Section Titles Initial State */
+.why-us-title,
+.contributions-title,
+.partners-title,
+.blog-title {
+  opacity: 0;
+  will-change: opacity, transform;
+}
+
+/* Stat Items Initial State */
+.stat-item {
+  opacity: 0;
+  will-change: opacity, transform;
+}
+
 /* Force refresh */
