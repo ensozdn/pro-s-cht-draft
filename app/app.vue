@@ -558,15 +558,15 @@
             </p>
             <div class="contact-details">
               <div class="contact-item">
-                <span class="contact-icon"></span>
+                <span class="contact-icon">📧</span>
                 <span>info@prosicht.com</span>
               </div>
               <div class="contact-item">
-                <span class="contact-icon"></span>
+                <span class="contact-icon">📞</span>
                 <span>+90 (212) 555 00 00</span>
               </div>
               <div class="contact-item">
-                <span class="contact-icon"></span>
+                <span class="contact-icon">📍</span>
                 <span>İstanbul, Türkiye</span>
               </div>
             </div>
@@ -623,9 +623,9 @@
           <a href="#terms" class="footer-link">Kullanım Şartları</a>
         </div>
         <div class="footer-social">
-          <a href="#" class="social-link"></a>
-          <a href="#" class="social-link"></a>
-          <a href="#" class="social-link"></a>
+          <a href="#" class="social-link">🔗</a>
+          <a href="#" class="social-link">📘</a>
+          <a href="#" class="social-link">🐦</a>
         </div>
       </div>
     </footer>
@@ -639,7 +639,7 @@
 import { ref, onMounted, onUnmounted, computed } from 'vue'
 import * as THREE from 'three'
 
-
+// Categories Data
 const categories = ref([
   {
     id: 'metal-celik',
@@ -685,7 +685,7 @@ const categories = ref([
   }
 ])
 
-
+// Neden Biz? Features
 const whyUsFeatures = ref([
   {
     title: 'Hızlı Kurulum',
@@ -709,7 +709,7 @@ const whyUsFeatures = ref([
   }
 ])
 
-
+// InspectAI'ın İşletmeye Katkıları
 const contributions = ref([
   {
     title: 'Kalite Kontrolünde Yüksek Hassasiyet',
@@ -743,7 +743,7 @@ const contributions = ref([
   }
 ])
 
-
+// İletişim Bilgileri
 const contactInfo = ref([
   {
     icon: 'MapPin',
@@ -771,12 +771,12 @@ const contactInfo = ref([
   }
 ])
 
-
+// LOKMA 24: Theme Toggle (Light/Dark)
 const isDark = ref(false)
 
 const toggleTheme = () => {
   isDark.value = !isDark.value
-  
+  // Dark mode class'ı body'ye ekle/çıkar
   if (isDark.value) {
     document.documentElement.classList.add('dark')
   } else {
@@ -784,14 +784,14 @@ const toggleTheme = () => {
   }
 }
 
-
+// LOKMA 26: Mobile Menu Drawer
 const isMobileMenuOpen = ref(false)
 
 const closeMobileMenu = () => {
   isMobileMenuOpen.value = false
 }
 
-
+// Bize Ulaşın Formu
 const form = ref({
   firstName: '',
   lastName: '',
@@ -813,10 +813,10 @@ const applicationAreas = ref([
 
 const handleSubmit = () => {
   console.log('Form gönderildi:', form.value)
-  
+  // Form submit logic buraya eklenebilir
   alert('Mesajınız başarıyla gönderildi!')
   
-  
+  // Form reset
   form.value = {
     firstName: '',
     lastName: '',
@@ -827,7 +827,7 @@ const handleSubmit = () => {
   }
 }
 
-
+// LOKMA 22: Partnerler ve İşbirlikleri
 const partners = ref([
   { name: 'KOSGEB', logo: '/images/partners/kosgeb.png' },
   { name: 'TÜBİTAK', logo: '/images/partners/tubitak.png' },
@@ -842,7 +842,7 @@ const partners = ref([
   { name: 'Bilişim Vadisi', logo: '/images/partners/bilisim-vadisi.png' }
 ])
 
-
+// LOKMA 23: Blog & Haberler (Asimetrik Bento Grid)
 const blogPosts = ref([
   {
     id: 1,
@@ -876,16 +876,16 @@ const blogPosts = ref([
 const activeTab = ref('metal-celik')
 const activeCategory = computed(() => categories.value.find(c => c.id === activeTab.value))
 
-
+// Buton pozisyonları - her butonu ayrı ayarla
 const getButtonStyle = (buttonId: string) => {
   const positions: Record<string, string> = {
-    'metal-celik': '0px',    
-    'deri': '0px',           
-    'tekstil': '2px',        
-    'mobilya': '0px',        
-    'mermer': '0px',         
-    'cam': '0px',            
-    'son-kalite': '0px'      
+    'metal-celik': '0px',    // Metal-Çelik
+    'deri': '0px',           // Deri
+    'tekstil': '2px',        // Tekstil (şu an 2px aşağıda)
+    'mobilya': '0px',        // Mobilya
+    'mermer': '0px',         // Mermer
+    'cam': '0px',            // Cam
+    'son-kalite': '0px'      // Son Kalite Kontrol
   }
   
   const translateY = positions[buttonId] || '0px'
@@ -914,12 +914,12 @@ let lenis: any
 let beltMaterial: THREE.MeshStandardMaterial
 let rollerMaterial: THREE.MeshStandardMaterial
 
-
+// Mouse parallax değişkenleri
 const mouse = { x: 0, y: 0 }
 const targetRotation = { x: 0, y: 0 }
 const currentRotation = { x: 0, y: 0 }
 
-
+// Resize handler
 const handleResize = () => {
   if (!camera || !renderer) return
   camera.aspect = window.innerWidth / window.innerHeight
@@ -927,13 +927,13 @@ const handleResize = () => {
   renderer.setSize(window.innerWidth, window.innerHeight)
 }
 
-
+// Mouse move handler - Parallax efekti
 const handleMouseMove = (event: MouseEvent) => {
-  
+  // Fare koordinatlarını normalize et (-1 ile 1 arası)
   mouse.x = (event.clientX / window.innerWidth) * 2 - 1
   mouse.y = -(event.clientY / window.innerHeight) * 2 + 1
   
-  
+  // Hedef rotasyonu hafif bir şekilde ayarla
   targetRotation.x = mouse.y * 0.15
   targetRotation.y = mouse.x * 0.15
 }
@@ -941,12 +941,12 @@ const handleMouseMove = (event: MouseEvent) => {
 onMounted(async () => {
   if (!canvasRef.value) return
 
-  
+  // GSAP'i client-side import et
   const { gsap } = await import('gsap')
   const { ScrollTrigger } = await import('gsap/ScrollTrigger')
   gsap.registerPlugin(ScrollTrigger)
 
-  
+  // Preloader Animasyonu
   const loadingProgress = { value: 0 }
   
   gsap.to(loadingProgress, {
@@ -963,7 +963,7 @@ onMounted(async () => {
       }
     },
     onComplete: () => {
-      
+      // Preloader'ı kaldır
       gsap.to(preloader.value, {
         y: '-100%',
         duration: 0.8,
@@ -973,7 +973,7 @@ onMounted(async () => {
             preloader.value.style.display = 'none'
           }
           
-          
+          // Hero giriş animasyonları
           if (section1.value) {
             const heroElements = section1.value.querySelectorAll('.content-title, .content-description, .cta-button')
             gsap.fromTo(
@@ -989,7 +989,7 @@ onMounted(async () => {
             )
           }
           
-          
+          // 3D model fade-in
           gsap.to([beltMaterial, rollerMaterial], {
             opacity: 1,
             duration: 1.2,
@@ -1000,14 +1000,16 @@ onMounted(async () => {
     }
   })
 
-  
+  // Lenis Smooth Scroll başlat
   const Lenis = (await import('lenis')).default
   lenis = new Lenis({
     duration: 1.2,
-    easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t))
+    easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+    smooth: true,
+    smoothTouch: false
   })
 
-  
+  // Lenis ve GSAP ScrollTrigger senkronizasyonu
   lenis.on('scroll', ScrollTrigger.update)
 
   gsap.ticker.add((time) => {
@@ -1016,10 +1018,10 @@ onMounted(async () => {
 
   gsap.ticker.lagSmoothing(0)
 
-  
+  // Sahne oluştur
   scene = new THREE.Scene()
 
-  
+  // Kamera oluştur
   camera = new THREE.PerspectiveCamera(
     75,
     window.innerWidth / window.innerHeight,
@@ -1029,7 +1031,7 @@ onMounted(async () => {
   camera.position.set(0, 2, 5)
   camera.lookAt(0, 0, 0)
 
-  
+  // Renderer oluştur
   renderer = new THREE.WebGLRenderer({
     canvas: canvasRef.value,
     antialias: true,
@@ -1038,40 +1040,40 @@ onMounted(async () => {
   renderer.setSize(window.innerWidth, window.innerHeight)
   renderer.setPixelRatio(window.devicePixelRatio)
 
-  
-  const ambientLight = new THREE.AmbientLight(0xffffff, 0.4)  
+  // LOKMA 30: Premium Işıklandırma (Metalik Yansımalar İçin)
+  const ambientLight = new THREE.AmbientLight(0xffffff, 0.4)  // Artırıldı
   scene.add(ambientLight)
 
-  
-  const mainLight = new THREE.DirectionalLight(0xffffff, 1.8)  
+  // Ana Directional Light (Güçlü, keskin gölgeler)
+  const mainLight = new THREE.DirectionalLight(0xffffff, 1.8)  // Artırıldı
   mainLight.position.set(6, 10, 8)
   mainLight.castShadow = true
   scene.add(mainLight)
 
-  
+  // Dolgu ışığı (Gölge detayları için)
   const fillLight = new THREE.DirectionalLight(0xaaccff, 0.6)
   fillLight.position.set(-6, 4, -6)
   scene.add(fillLight)
 
-  
-  const spotLight1 = new THREE.SpotLight(0xffffff, 2.0)  
+  // Spot ışık (Metalik highlight için)
+  const spotLight1 = new THREE.SpotLight(0xffffff, 2.0)  // Artırıldı
   spotLight1.position.set(7, 7, 7)
   spotLight1.angle = Math.PI / 3
   scene.add(spotLight1)
 
-  
-  const accentLight = new THREE.SpotLight(0x3DBAA2, 1.2)  
+  // Turkuaz accent ışık
+  const accentLight = new THREE.SpotLight(0x3DBAA2, 1.2)  // Artırıldı
   accentLight.position.set(-4, 5, 4)
   accentLight.angle = Math.PI / 4
   scene.add(accentLight)
 
-  
+  // LOKMA 30: AĞIR SANAYİ ENDÜSTRİYEL YAPAY ZEKA KAMERASI 🏭
   conveyorGroup = new THREE.Group()
 
   
-  
+  // 1. PREMIUM METALİK MATERYALLER
   const titaniumMaterial = new THREE.MeshStandardMaterial({
-    color: 0xaaaaaa,        
+    color: 0xaaaaaa,        // Titanyum/Gümüş
     metalness: 0.85,
     roughness: 0.25,
     transparent: true,
@@ -1079,7 +1081,7 @@ onMounted(async () => {
   })
 
   const matBlackMaterial = new THREE.MeshStandardMaterial({
-    color: 0x1a1a1a,        
+    color: 0x1a1a1a,        // Mat Siyah
     metalness: 0.3,
     roughness: 0.8,
     transparent: true,
@@ -1087,100 +1089,100 @@ onMounted(async () => {
   })
 
   const neonTurquoiseMaterial = new THREE.MeshStandardMaterial({
-    color: 0x3DBAA2,        
+    color: 0x3DBAA2,        // Bizim turkuaz
     emissive: 0x3DBAA2,
-    emissiveIntensity: 1.5, 
+    emissiveIntensity: 1.5, // Parlayan halka
     metalness: 0.4,
     roughness: 0.3,
     transparent: true,
     opacity: 0
   })
 
+  // ═══════════════════════════════════════════════════════════════
+  //  2. KASLI GÖVDE İNŞASI (Köşeli Prizma Yapı)
+  // ═══════════════════════════════════════════════════════════════
   
-  
-  
-  
-  
+  // Ana gövde (8 kenarlı prizma - köşeli)
   const mainBodyGeo = new THREE.CylinderGeometry(0.4, 0.4, 1.2, 8)
   const mainBody = new THREE.Mesh(mainBodyGeo, titaniumMaterial)
-  mainBody.rotation.z = Math.PI / 2  
+  mainBody.rotation.z = Math.PI / 2  // Yatay
   mainBody.position.set(0, 0, 0)
   conveyorGroup.add(mainBody)
 
-  
+  // Ön kalın çerçeve (mat siyah)
   const frontRingGeo = new THREE.CylinderGeometry(0.45, 0.4, 0.15, 8)
   const frontRing = new THREE.Mesh(frontRingGeo, matBlackMaterial)
   frontRing.rotation.z = Math.PI / 2
   frontRing.position.set(0.7, 0, 0)
   conveyorGroup.add(frontRing)
 
-  
+  // Arka kalın segment (titanyum)
   const backSegmentGeo = new THREE.CylinderGeometry(0.38, 0.38, 0.4, 8)
   const backSegment = new THREE.Mesh(backSegmentGeo, titaniumMaterial)
   backSegment.rotation.z = Math.PI / 2
   backSegment.position.set(-0.7, 0, 0)
   conveyorGroup.add(backSegment)
 
+  // ═══════════════════════════════════════════════════════════════
+  //  3. SOĞUTUCU IZGARALAR (Heat Sinks - KALDIRILDI) ❌
+  // ═══════════════════════════════════════════════════════════════
   
+  // Üst parçalar kaldırıldı - daha temiz görünüm
   
-  
-  
-  
-  
-  
+  // Sadece alt kanatçıklar ve paneller kalacak
   const heatSinkGeo = new THREE.BoxGeometry(0.12, 0.5, 0.03)
   const heatSinkPositions = [-0.3, -0.15, 0, 0.15, 0.3]
   
   heatSinkPositions.forEach(xPos => {
+    // Üst kanatçık - KALDIRILDI ❌
+    // const topFin = new THREE.Mesh(heatSinkGeo, matBlackMaterial)
+    // topFin.position.set(xPos, 0.43, 0)
+    // conveyorGroup.add(topFin)
     
-    
-    
-    
-    
-    
+    // Alt kanatçık
     const bottomFin = new THREE.Mesh(heatSinkGeo, matBlackMaterial)
     bottomFin.position.set(xPos, -0.43, 0)
     conveyorGroup.add(bottomFin)
   })
 
-  
+  // Yan soğutucu paneller
   const sidePanelGeo = new THREE.BoxGeometry(0.8, 0.06, 0.48)
   
-  
-  
-  
-  
+  // Üst panel - KALDIRILDI ❌
+  // const topPanel = new THREE.Mesh(sidePanelGeo, matBlackMaterial)
+  // topPanel.position.set(0, 0.46, 0)
+  // conveyorGroup.add(topPanel)
   
   const bottomPanel = new THREE.Mesh(sidePanelGeo, matBlackMaterial)
   bottomPanel.position.set(0, -0.46, 0)
   conveyorGroup.add(bottomPanel)
 
+  // ═══════════════════════════════════════════════════════════════
+  //  4. KADEMELİ LENS KASASI (3 Katman)
+  // ═══════════════════════════════════════════════════════════════
   
-  
-  
-  
-  
+  // Katman 1: Dış (gümüş, büyük)
   const lensHood1Geo = new THREE.CylinderGeometry(0.45, 0.42, 0.2, 16)
   const lensHood1 = new THREE.Mesh(lensHood1Geo, titaniumMaterial)
   lensHood1.rotation.z = Math.PI / 2
   lensHood1.position.set(0.9, 0, 0)
   conveyorGroup.add(lensHood1)
 
-  
+  // Katman 2: Orta (mat siyah, orta)
   const lensHood2Geo = new THREE.CylinderGeometry(0.40, 0.38, 0.15, 16)
   const lensHood2 = new THREE.Mesh(lensHood2Geo, matBlackMaterial)
   lensHood2.rotation.z = Math.PI / 2
   lensHood2.position.set(1.05, 0, 0)
   conveyorGroup.add(lensHood2)
 
-  
+  // Katman 3: İç (turkuaz neon ring)
   const neonRingGeo = new THREE.TorusGeometry(0.35, 0.04, 16, 32)
   const neonRing = new THREE.Mesh(neonRingGeo, neonTurquoiseMaterial)
   neonRing.rotation.y = Math.PI / 2
   neonRing.position.set(1.13, 0, 0)
   conveyorGroup.add(neonRing)
 
-  
+  // Lens cam (koyu, gümüş kenarlı)
   const lensGlassGeo = new THREE.CylinderGeometry(0.32, 0.32, 0.05, 32)
   const lensGlass = new THREE.Mesh(lensGlassGeo, new THREE.MeshPhysicalMaterial({
     color: 0x334455,
@@ -1195,30 +1197,30 @@ onMounted(async () => {
   lensGlass.position.set(1.15, 0, 0)
   conveyorGroup.add(lensGlass)
 
-  
+  // Sensör merkezi
   const sensorGeo = new THREE.CircleGeometry(0.12, 32)
   const sensor = new THREE.Mesh(sensorGeo, matBlackMaterial)
   sensor.rotation.y = Math.PI / 2
   sensor.position.set(1.16, 0, 0)
   conveyorGroup.add(sensor)
 
+  // ═══════════════════════════════════════════════════════════════
+  //  5. MONTAJ BRAKETİ (Kalın L-Braket - Alt)
+  // ═══════════════════════════════════════════════════════════════
   
-  
-  
-  
-  
+  // Ana dikey blok (kalın, köşeli)
   const bracketVerticalGeo = new THREE.BoxGeometry(0.2, 0.6, 0.2)
   const bracketVertical = new THREE.Mesh(bracketVerticalGeo, matBlackMaterial)
   bracketVertical.position.set(0, -0.6, 0)
   conveyorGroup.add(bracketVertical)
 
-  
+  // Yatay montaj plakası
   const bracketHorizontalGeo = new THREE.BoxGeometry(0.7, 0.12, 0.3)
   const bracketHorizontal = new THREE.Mesh(bracketHorizontalGeo, titaniumMaterial)
   bracketHorizontal.position.set(0, -0.9, 0)
   conveyorGroup.add(bracketHorizontal)
 
-  
+  // Yan destek kanatları (L-şekil güçlendirme)
   const supportWingGeo = new THREE.BoxGeometry(0.15, 0.25, 0.08)
   
   const leftWing = new THREE.Mesh(supportWingGeo, matBlackMaterial)
@@ -1231,14 +1233,14 @@ onMounted(async () => {
   rightWing.position.set(-0.15, -0.7, 0.12)
   conveyorGroup.add(rightWing)
 
-  
-  
-  
+  // ═══════════════════════════════════════════════════════════════
+  //  6. VİDALAR VE DETAYLAR (16 Adet Vida)
+  // ═══════════════════════════════════════════════════════════════
   
   const boltGeo = new THREE.CylinderGeometry(0.02, 0.02, 0.05, 6)
   const boltHeadGeo = new THREE.CylinderGeometry(0.03, 0.02, 0.01, 6)
   
-  
+  // 8 vida ön lens çevresinde
   for (let i = 0; i < 8; i++) {
     const angle = (i / 8) * Math.PI * 2
     const bolt = new THREE.Mesh(boltGeo, matBlackMaterial)
@@ -1260,7 +1262,7 @@ onMounted(async () => {
     conveyorGroup.add(boltHead)
   }
 
-  
+  // 8 vida arka segment
   for (let i = 0; i < 8; i++) {
     const angle = (i / 8) * Math.PI * 2
     const bolt = new THREE.Mesh(boltGeo, matBlackMaterial)
@@ -1273,34 +1275,34 @@ onMounted(async () => {
     conveyorGroup.add(bolt)
   }
 
+  // ═══════════════════════════════════════════════════════════════
+  //  7. PRO-SICHT LOGO (Texture) 🏢
+  // ═══════════════════════════════════════════════════════════════
   
-  
-  
-  
-  
+  // Logo texture yükleme
   const textureLoader = new THREE.TextureLoader()
   const logoTexture = textureLoader.load('/images/logo.png')
   
-  
+  // ÖN TARAF LOGO
   const logoPlane = new THREE.Mesh(
-    new THREE.PlaneGeometry(0.7, 0.5),  
+    new THREE.PlaneGeometry(0.7, 0.5),  // LED panel boyutunda
     new THREE.MeshBasicMaterial({
       map: logoTexture,
       transparent: true,
-      opacity: 0.9,  
+      opacity: 0.9,  // Hafif şeffaf
       side: THREE.DoubleSide
     })
   )
   
-  
-  logoPlane.position.set(-0.2, 0, 0.43)  
-  logoPlane.rotation.x = 0  
+  // LED panelin olduğu pozisyon (ön taraf)
+  logoPlane.position.set(-0.2, 0, 0.43)  // Üst yüzeyde
+  logoPlane.rotation.x = 0  // Düz baksın
   
   conveyorGroup.add(logoPlane)
 
-  
+  // ARKA TARAF LOGO (aynı logo, ters tarafta)
   const logoPlaneBack = new THREE.Mesh(
-    new THREE.PlaneGeometry(0.7, 0.5),  
+    new THREE.PlaneGeometry(0.7, 0.5),  // Aynı boyut
     new THREE.MeshBasicMaterial({
       map: logoTexture,
       transparent: true,
@@ -1309,79 +1311,78 @@ onMounted(async () => {
     })
   )
   
-  
-  logoPlaneBack.position.set(-0.2, 0, -0.43)  
+  // Arka taraf pozisyonu (Z ekseninde ters)
+  logoPlaneBack.position.set(-0.2, 0, -0.43)  // Negatif Z = arka taraf
   logoPlaneBack.rotation.x = 0
-  logoPlaneBack.rotation.y = Math.PI  
+  logoPlaneBack.rotation.y = Math.PI  // 180 derece döndür (logo düzgün görünsün)
   
   conveyorGroup.add(logoPlaneBack)
 
   
   const beamMaterial = new THREE.MeshBasicMaterial({
-    color: 0x1A6B5F,  
+    color: 0x3DBAA2,
     transparent: true,
-    opacity: 0,          
+    opacity: 0,
     side: THREE.DoubleSide,
-    blending: THREE.AdditiveBlending,  
+    blending: THREE.AdditiveBlending,
     depthWrite: false
   })
 
-  
- const beamGeometry = new THREE.ConeGeometry(
-    0.4,    
-    4.0,    
-    15,     
+  const beamGeometry = new THREE.ConeGeometry(
+    0.4,
+    4.0,
+    32,
     1,
     true
-)
+  )
   const scanBeam = new THREE.Mesh(beamGeometry, beamMaterial)
-  scanBeam.rotation.z = -Math.PI / 2  
-  scanBeam.position.set(3.5, 0, 0)    
+  scanBeam.rotation.z = -Math.PI / 2
+  scanBeam.position.set(3.5, 0, 0)
   conveyorGroup.add(scanBeam)
 
-  
+  // Işın içi grid pattern (profesyonel tarama efekti) - ELİT
   const gridMaterial = new THREE.MeshBasicMaterial({
-    color: 0x1A6B5F,  
+    color: 0x3DBAA2,
     transparent: true,
     opacity: 0,
     wireframe: true,
     blending: THREE.AdditiveBlending
   })
   const gridBeam = new THREE.Mesh(
-    new THREE.ConeGeometry(0.78, 5.98, 16, 8, true),  
+    new THREE.ConeGeometry(0.78, 5.98, 32, 8, true),
     gridMaterial
   )
-  gridBeam.rotation.z = -Math.PI / 2  
-  gridBeam.position.set(3.5, 0, 0)    
+  gridBeam.rotation.z = -Math.PI / 2
+  gridBeam.position.set(3.5, 0, 0)
   conveyorGroup.add(gridBeam)
 
-  
-  const scanLight = new THREE.SpotLight(0x1A6B5F, 0)  
-  scanLight.position.set(1.2, 0, 0)     
-  scanLight.target.position.set(6.5, 0, 0)  
-  scanLight.angle = Math.PI / 10  
-  scanLight.penumbra = 0.3  
+  // SpotLight (gerçek ışık kaynağı) - ELİT AYARLAR
+  const scanLight = new THREE.SpotLight(0x3DBAA2, 0)
+  scanLight.position.set(1.2, 0, 0)
+  scanLight.target.position.set(6.5, 0, 0)
+  scanLight.angle = Math.PI / 10
+  scanLight.penumbra = 0.3
   scanLight.decay = 1.2
   scanLight.distance = 12
   conveyorGroup.add(scanLight)
   conveyorGroup.add(scanLight.target)
 
-  
-  const particleCount = 15  
+  // Parçacık sistemi (ışın içinde uçuşan noktalar) - DAHA AZ YOĞUN
+  const particleCount = 15  // 50'den 30'a (daha az, elit)
   const particlesGeometry = new THREE.BufferGeometry()
   const particlePositions = new Float32Array(particleCount * 3)
   
   for (let i = 0; i < particleCount; i++) {
-    particlePositions[i * 3] = 1.5 + Math.random() * 5      
-    particlePositions[i * 3 + 1] = (Math.random() - 0.5) * 0.3  
-    particlePositions[i * 3 + 2] = (Math.random() - 0.5) * 0.3  
+    particlePositions[i * 3] = 1.5 + Math.random() * 5      // X (lens → kart, SAĞA pozitif - eski)
+    particlePositions[i * 3 + 1] = (Math.random() - 0.5) * 0.3  // Y spread (daha dar)
+    particlePositions[i * 3 + 2] = (Math.random() - 0.5) * 0.3  // Z spread (daha dar)
   }
   
   particlesGeometry.setAttribute('position', new THREE.BufferAttribute(particlePositions, 3))
   
   const particlesMaterial = new THREE.PointsMaterial({
-    color: 0x1A6B5F,  
-    size: 0.02,  
+    color: 0x3DBAA2,
+    size: 0.02,
     transparent: true,
     opacity: 0,
     blending: THREE.AdditiveBlending,
@@ -1391,20 +1392,20 @@ onMounted(async () => {
   const scanParticles = new THREE.Points(particlesGeometry, particlesMaterial)
   conveyorGroup.add(scanParticles)
 
-  
+  // Kamerayı sahneye ekle
   scene.add(conveyorGroup)
   
-  
-  conveyorGroup.rotation.y = -Math.PI  
+  // BAŞLANGIÇ ROTASYONU: Kamerayı TAM 180 derece çevir (TERS YÖN) 🎯
+  conveyorGroup.rotation.y = -Math.PI  // -180 derece (saat yönü tersine)
 
-  
+  // LED Ring referansını sakla (animasyon için)
   beltMaterial = neonTurquoiseMaterial
   rollerMaterial = titaniumMaterial
 
-  
+  // Scroll progress objesi
   const scrollProgress = { value: 0 }
 
-  
+  // GSAP ScrollTrigger - scroll ile kamerayı döndür
   gsap.to(scrollProgress, {
     value: 1,
     ease: 'none',
@@ -1416,19 +1417,19 @@ onMounted(async () => {
     }
   })
 
-  
+  // Render loop - scroll progress'e göre konveyörü döndür
   const animate = () => {
     animationId = requestAnimationFrame(animate)
     
-    
+    // Lerp (Linear Interpolation) - Yumuşak geçiş
     const lerpFactor = 0.05
     currentRotation.x += (targetRotation.x - currentRotation.x) * lerpFactor
     currentRotation.y += (targetRotation.y - currentRotation.y) * lerpFactor
     
-    
+    // Scroll progress'e göre base rotasyonu ayarla
     const baseRotationX = scrollProgress.value * Math.PI * 2
     
-    
+    // Base rotasyon + Mouse parallax
     conveyorGroup.rotation.x = baseRotationX + currentRotation.x
     conveyorGroup.rotation.y = Math.PI + currentRotation.y
     
@@ -1439,7 +1440,7 @@ onMounted(async () => {
         for (let i = 0; i < particleCount; i++) {
           const idx = i * 3
           if (positions[idx] !== undefined) {
-            positions[idx] += 0.02  
+            positions[idx] += 0.02
             
             if (positions[idx] > 7) {
               positions[idx] = 1.5
@@ -1454,21 +1455,21 @@ onMounted(async () => {
   }
   animate()
 
-  
+  // Mouse parallax event listener ekle
   window.addEventListener('mousemove', handleMouseMove)
 
+  // ═══════════════════════════════════════════════════════════════
+  //  PREMIUM 3D SAHNE + HERO KARTLARI SİNEMATİK DANSI 
+  // ═══════════════════════════════════════════════════════════════
   
-  
-  
-  
-  
+  // Hero Kartları Referansları
   const heroSections = [section1.value, section2.value, section3.value]
   
-  
+  // LOKMA 25: Mobile check için MediaQuery
   const isMobile = window.innerWidth < 768
 
-  
-  
+  // LOKMA 29: Kamera Parçalarını Fade-In Animasyonu
+  // Tüm kamera parçalarını topla ve görünür yap
   conveyorGroup.traverse((child: any) => {
     if (child.isMesh && child.material) {
       gsap.to(child.material, {
@@ -1480,25 +1481,25 @@ onMounted(async () => {
     }
   })
 
+  // LOKMA 29: Kamerayı daha büyük ve belirgin yap
+  conveyorGroup.scale.set(1.8, 1.8, 1.8)  // 1.8x daha büyük
   
-  conveyorGroup.scale.set(1.8, 1.8, 1.8)  
-  
-  
-  
+  // BAŞLANGIÇ POZİSYONU: Kart sol-orta, 3D sağda (dengeli kompozisyon)
+  // LOKMA 26: Mobilde 3D obje yukarıda kalır, kartlar altta
   gsap.set(conveyorGroup.position, { 
-    x: isMobile ? 0 : 3,    
-    y: isMobile ? 1 : 0,    
-    z: isMobile ? -2 : 0    
+    x: isMobile ? 0 : 3,    // Mobilde ortala
+    y: isMobile ? 1 : 0,    // Mobilde yukarı çek
+    z: isMobile ? -2 : 0    // Mobilde daha uzağa
   })
   
-  
+  // STEP 1: İlk Kart → İkinci Kart Geçişi (3D Sahne MERKEZE gelir)
   if (section1.value && section2.value) {
-    
-    
+    // İlk kartı dengeli pozisyonda + hafif 3D ile başlat
+    // LOKMA 25: Mobilde kartlar ortalı
     gsap.set(section1.value, { 
       opacity: 1, 
-      x: isMobile ? 0 : -280,  
-      rotateY: isMobile ? 0 : 2,  
+      x: isMobile ? 0 : -280,  // Mobilde merkez
+      rotateY: isMobile ? 0 : 2,  // Mobilde düz
       transformPerspective: 1200,
       transformStyle: 'preserve-3d'
     })
@@ -1508,7 +1509,7 @@ onMounted(async () => {
       rotateY: isMobile ? 0 : 2 
     })
     
-    
+    // 3D sahneyi ve kartları senkronize et
     const timeline1 = gsap.timeline({
       scrollTrigger: {
         trigger: section1.value,
@@ -1519,47 +1520,40 @@ onMounted(async () => {
       }
     })
     
-    
     timeline1.to(beamMaterial, {
-      opacity: 0.35,  
+      opacity: 0.15,
       duration: 0.8
     }, 0)
     
     timeline1.to(gridMaterial, {
-      opacity: 0.20,  
+      opacity: 0.20,
       duration: 0.8
     }, 0)
     
     timeline1.to(scanLight, {
-      intensity: 3.0,  
+      intensity: 3.0,
       duration: 0.8
     }, 0)
     
     timeline1.to(particlesMaterial, {
-      opacity: 0.8,  
+      opacity: 0.8,
       duration: 0.8
     }, 0)
     
-    
-    
-    
-    
     timeline1.to(conveyorGroup.position, {
-      x: isMobile ? 0 : -4,    
-      y: isMobile ? 1 : 0,     
-      z: isMobile ? -2 : 0,    
+      x: isMobile ? 0 : -4,
+      y: isMobile ? 1 : 0,
+      z: isMobile ? -2 : 0,
       ease: 'power2.inOut'
     }, 0)
-    
     
     timeline1.to(section1.value, {
       opacity: 0,
-      x: isMobile ? 0 : -120,  
-      y: isMobile ? -50 : 0,   
+      x: isMobile ? 0 : -120,
+      y: isMobile ? -50 : 0,
       rotateY: isMobile ? 0 : 4,
       ease: 'power2.inOut'
     }, 0)
-    
     
     timeline1.to([beamMaterial, gridMaterial], {
       opacity: 0,
@@ -1576,7 +1570,7 @@ onMounted(async () => {
       duration: 0.5
     }, 0.3)
     
-    
+    // İkinci kart belirer
     timeline1.to(section2.value, {
       opacity: 1,
       x: isMobile ? 0 : 280,
@@ -1586,7 +1580,7 @@ onMounted(async () => {
     }, 0)
   }
   
-  
+  // STEP 2: İkinci Kart → Üçüncü Kart Geçişi (3D Sahne SAĞA kayar)
   if (section2.value && section3.value) {
     gsap.set(section3.value, { 
       opacity: 0, 
@@ -1604,29 +1598,29 @@ onMounted(async () => {
       }
     })
     
+    // KAMERA ROTASYON: Kaldırıldı (ışınlar sabit pozisyonda)
     
-    
-    
+    // LOKMA 26: Mobilde 3D sahne yukarıda sabit kalır
     timeline2.to(conveyorGroup.position, {
       x: isMobile ? 0 : 4,
-      y: isMobile ? 1 : 0,     
-      z: isMobile ? -2 : 0,    
+      y: isMobile ? 1 : 0,     // Mobilde yukarıda tut
+      z: isMobile ? -2 : 0,    // Mobilde arkada sabit
       ease: 'power2.inOut'
     }, 0)
     
-    
+    // LOKMA 30: Card 2 aktifken - TARAMA IŞINI TEKRAR AÇIK 🔦 (ELİT + KOYU RENK)
     timeline2.to(beamMaterial, {
-      opacity: 0.35,  
+      opacity: 0.35,  // Biraz artırıldı
       duration: 0.8
     }, 0)
     
     timeline2.to(gridMaterial, {
-      opacity: 0.20,  
+      opacity: 0.20,  // Biraz artırıldı
       duration: 0.8
     }, 0)
     
     timeline2.to(scanLight, {
-      intensity: 3.0,  
+      intensity: 3.0,  // Biraz artırıldı
       duration: 0.8
     }, 0)
     
@@ -1635,7 +1629,7 @@ onMounted(async () => {
       duration: 0.8
     }, 0)
     
-    
+    // İkinci kart kaybolur
     timeline2.to(section2.value, {
       opacity: 0,
       x: isMobile ? 0 : 320,
@@ -1644,7 +1638,7 @@ onMounted(async () => {
       ease: 'power2.inOut'
     }, 0)
     
-    
+    // LOKMA 30: Card 2 kaybolurken - IŞIN KAPANIYOR 🔦
     timeline2.to([beamMaterial, gridMaterial], {
       opacity: 0,
       duration: 0.5
@@ -1660,18 +1654,18 @@ onMounted(async () => {
       duration: 0.5
     }, 0.3)
     
-    
+    // Üçüncü kart belirer
     timeline2.to(section3.value, {
       opacity: 1,
-      x: isMobile ? 0 : -280,  
+      x: isMobile ? 0 : -280,  // Mobilde merkez
       y: isMobile ? 0 : 0,
       rotateY: isMobile ? 0 : 2,
       ease: 'power2.inOut'
     }, 0)
   }
   
-  
-  
+  // STEP 3: Stats bölümüne gelince 3D sahneyi merkeze geri getir + IŞIN TAMAMEN KAPALI
+  // LOKMA 26: Mobilde yukarıda sabit kalır
   if (statsSection.value) {
     const timeline3 = gsap.timeline({
       scrollTrigger: {
@@ -1682,15 +1676,15 @@ onMounted(async () => {
       }
     })
     
-    
+    // KAMERA ROTASYON: Kaldırıldı (ışınlar sabit pozisyonda)
     
     timeline3.to(conveyorGroup.position, {
-      x: 0,  
-      y: isMobile ? 1 : 0,     
-      z: isMobile ? -2 : 0    
+      x: 0,  // Hem mobil hem desktop merkezde
+      y: isMobile ? 1 : 0,     // Mobilde yukarıda tut
+      z: isMobile ? -2 : 0    // Mobilde arkada tut
     }, 0)
     
-    
+    // LOKMA 30: Stats bölümünde tarama bitti - ışın kapalı
     timeline3.to([beamMaterial, gridMaterial, particlesMaterial], {
       opacity: 0,
       duration: 0.3
@@ -1702,7 +1696,7 @@ onMounted(async () => {
     }, 0)
   }
 
-  
+  // İstatistik Counter Animasyonları
   if (statsSection.value) {
     const statNumbers = statsSection.value.querySelectorAll('.stat-number')
     
@@ -1726,7 +1720,7 @@ onMounted(async () => {
     })
   }
 
-  
+  // Uygulama Alanları bölümü için basit fade-in animasyonu
   if (sectorsSection.value) {
     gsap.from(sectorsSection.value.querySelectorAll('.tab-button'), {
       opacity: 0,
@@ -1740,7 +1734,7 @@ onMounted(async () => {
     })
   }
 
-  
+  // İletişim Bölümü Fade-Up Animasyonu
   if (contactSection.value) {
     gsap.fromTo(
       contactSection.value.querySelector('.contact-content'),
@@ -1770,28 +1764,28 @@ onUnmounted(async () => {
     cancelAnimationFrame(animationId)
   }
   
-  
+  // Lenis'i durdur
   if (lenis) {
     lenis.destroy()
   }
   
-  
+  // ScrollTrigger'ı temizle
   try {
     const { ScrollTrigger } = await import('gsap/ScrollTrigger')
     ScrollTrigger.getAll().forEach(trigger => trigger.kill())
   } catch (e) {
-    
+    // ignore
   }
   
-  
+  // Event listener'ları temizle
   window.removeEventListener('resize', handleResize)
   window.removeEventListener('mousemove', handleMouseMove)
 })
 </script>
 
 <style>
-
-
+/* ProSicht Premium Colors: Indigo & Turkuaz */
+/* Preloader */
 .preloader {
   position: fixed;
   top: 0;
@@ -1873,7 +1867,7 @@ onUnmounted(async () => {
   color: #f1f5f9;
 }
 
-
+/* Header */
 .header-bar {
   position: fixed;
   top: 0;
@@ -1984,7 +1978,7 @@ onUnmounted(async () => {
   box-shadow: 0 8px 20px rgba(61, 186, 162, 0.3);
 }
 
-
+/* LOKMA 25: Mobile Right Controls (Theme + Hamburger) */
 .mobile-right-controls {
   display: flex;
   align-items: center;
@@ -2010,9 +2004,9 @@ onUnmounted(async () => {
   height: 28px;
 }
 
-
-
-
+/* ═══════════════════════════════════════════════════════════════ */
+/* LOKMA 24: PREMIUM THEME TOGGLE - MIKRO ANİMASYON */
+/* ═══════════════════════════════════════════════════════════════ */
 .theme-toggle {
   position: relative;
   width: 48px;
@@ -2040,7 +2034,7 @@ onUnmounted(async () => {
   transform: scale(0.95);
 }
 
-
+/* İkon Container */
 .theme-icon {
   position: absolute;
   width: 24px;
@@ -2048,7 +2042,7 @@ onUnmounted(async () => {
   transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-
+/* Sun Icon (Light Mode - Default) */
 .sun-icon {
   color: #0D7C6C;
   transform: scale(1) rotate(0deg);
@@ -2060,7 +2054,7 @@ onUnmounted(async () => {
   opacity: 0;
 }
 
-
+/* Moon Icon (Dark Mode) */
 .moon-icon {
   color: #3DBAA2;
   transform: scale(0) rotate(-90deg);
@@ -2072,7 +2066,7 @@ onUnmounted(async () => {
   opacity: 1;
 }
 
-
+/* Dark Mode için buton stil değişimi */
 .dark .theme-toggle {
   background: rgba(30, 41, 59, 0.5);
   border-color: rgba(71, 85, 105, 0.6);
@@ -2083,10 +2077,10 @@ onUnmounted(async () => {
   border-color: rgba(61, 186, 162, 0.4);
 }
 
-
-
+/* Mobile Responsive */
+/* LOKMA 25: PREMIUM MOBİL OPTİMİZASYON */
 @media (max-width: 768px) {
-  
+  /* Navigation mobilde tamamen gizle */
   .nav-menu {
     display: none !important;
   }
@@ -2100,7 +2094,7 @@ onUnmounted(async () => {
   }
   
   .logo-img {
-    height: 60px; 
+    height: 60px; /* Mobilde biraz daha büyük */
   }
   
   .header-content {
@@ -2109,7 +2103,7 @@ onUnmounted(async () => {
     justify-content: space-between;
   }
   
-  
+  /* Theme toggle mobilde küçült */
   .theme-toggle {
     width: 42px;
     height: 42px;
@@ -2120,18 +2114,18 @@ onUnmounted(async () => {
     height: 20px;
   }
   
-  
+  /* Hamburger icon boyutu */
   .hamburger-icon {
     width: 24px;
     height: 24px;
   }
   
-  
+  /* Content wrapper mobilde padding ayarı */
   .content-wrapper {
     padding-top: 70px;
   }
   
-  
+  /* Glass cards mobilde tam genişlik ve küçük padding */
   .glass-card {
     width: 92%;
     max-width: 100%;
@@ -2140,7 +2134,7 @@ onUnmounted(async () => {
     border-radius: 1.5rem;
   }
   
-  
+  /* Title ve description mobilde küçült */
   .content-title {
     font-size: 1.75rem !important;
     line-height: 1.3;
@@ -2151,13 +2145,13 @@ onUnmounted(async () => {
     margin-bottom: 1.5rem;
   }
   
-  
+  /* CTA buton mobilde daha küçük */
   .cta-button {
     padding: 0.75rem 1.75rem;
     font-size: 0.9rem;
   }
   
-  
+  /* Scene container mobilde ortala */
   .scene-container {
     overflow: hidden;
     
@@ -2170,7 +2164,7 @@ onUnmounted(async () => {
   }
 }
 
-
+/* LOKMA 26: Premium Mobile Drawer Styles */
 .mobile-drawer-overlay {
   position: fixed;
   inset: 0;
@@ -2258,7 +2252,7 @@ onUnmounted(async () => {
   transform: scaleY(1);
 }
 
-
+/* Dark mode drawer styles */
 .dark .mobile-drawer-panel {
   background: rgba(15, 23, 42, 0.95);
   border-left-color: rgba(61, 186, 162, 0.2);
@@ -2282,7 +2276,7 @@ onUnmounted(async () => {
   color: #3DBAA2;
 }
 
-
+/* Drawer slide-in animation */
 .drawer-enter-active,
 .drawer-leave-active {
   transition: opacity 0.3s ease;
@@ -2303,9 +2297,9 @@ onUnmounted(async () => {
   transform: translateX(100%);
 }
 
+/* Scene */
 
-
-
+/* Scene */
 .scene-container {
   position: fixed;
   top: 0;
@@ -2328,7 +2322,7 @@ canvas {
   z-index: 10;
   pointer-events: none;
   padding-top: 80px;
-  perspective: 1500px; 
+  perspective: 1500px; /* LOKMA 21: 3D perspektif container */
 }
 
 .content-section {
@@ -2338,8 +2332,8 @@ canvas {
   justify-content: center;
   pointer-events: auto;
   padding: 2rem;
-  position: relative; 
-  transform-style: preserve-3d; 
+  position: relative; /* LOKMA 21: Kartların overlap için */
+  transform-style: preserve-3d; /* LOKMA 21: 3D transform korunur */
 }
 
 .glass-card {
@@ -2352,8 +2346,8 @@ canvas {
   max-width: 900px;
   text-align: center;
   transition: all 0.4s ease;
-  will-change: transform, opacity; 
-  transform-style: preserve-3d; 
+  will-change: transform, opacity; /* LOKMA 21: Performans optimizasyonu */
+  transform-style: preserve-3d; /* LOKMA 21: 3D derinlik */
 }
 
 .glass-card:hover {
@@ -2408,7 +2402,7 @@ canvas {
   background-clip: text;
 }
 
-
+/* CTA Buttons */
 .cta-button {
   display: inline-block;
   padding: 1rem 2.5rem;
@@ -2476,7 +2470,7 @@ canvas {
   height: 0;
 }
 
-
+/* İstatistikler */
 .stats-card {
   max-width: 1100px;
   padding: 4rem 3rem;
@@ -2539,7 +2533,7 @@ canvas {
   color: rgba(226, 232, 240, 0.7);
 }
 
-
+/* Neden Biz? Bölümü */
 .why-us-section {
   position: relative;
   min-height: 100vh;
@@ -2654,7 +2648,7 @@ canvas {
   color: rgba(226, 232, 240, 0.7);
 }
 
-
+/* InspectAI'ın İşletmeye Katkıları */
 .contributions-section {
   position: relative;
   min-height: 100vh;
@@ -2788,7 +2782,7 @@ canvas {
   color: rgba(226, 232, 240, 0.7);
 }
 
-
+/* Uygulama Alanları - Tab Yapısı */
 .applications-section {
   position: relative;
   min-height: 100vh;
@@ -3035,7 +3029,7 @@ canvas {
   }
 }
 
-
+/* İletişim Bölümü */
 .contact-section {
   position: relative;
   min-height: 100vh;
@@ -3081,7 +3075,7 @@ canvas {
   }
 }
 
-
+/* Harita */
 .map-wrapper {
   width: 100%;
   height: 100%;
@@ -3115,7 +3109,7 @@ canvas {
   border-radius: 1rem;
 }
 
-
+/* İletişim Bilgileri */
 .contact-info-wrapper {
   display: flex;
   flex-direction: column;
@@ -3209,7 +3203,7 @@ canvas {
   color: rgba(226, 232, 240, 0.8);
 }
 
-
+/* Eski İletişim Stilleri (Yedek) */
 .old-contact-form-section {
   display: none;
 }
@@ -3343,7 +3337,7 @@ canvas {
     0 0 30px rgba(61, 186, 162, 0.3);
 }
 
-
+/* Bize Ulaşın Formu */
 .contact-form-section {
   position: relative;
   min-height: 100vh;
@@ -3566,9 +3560,9 @@ canvas {
   }
 }
 
-
-
-
+/* ═══════════════════════════════════════════════════════════════ */
+/* LOKMA 22: PARTNERLER VE İŞBİRLİKLERİ - PREMIUM GLASSMORPHISM */
+/* ═══════════════════════════════════════════════════════════════ */
 .partners-section {
   position: relative;
   background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
@@ -3585,7 +3579,7 @@ canvas {
   margin: 0 auto;
 }
 
-
+/* Başlık ve Alt Çizgi */
 .partners-header {
   text-align: center;
   margin-bottom: 4rem;
@@ -3611,33 +3605,33 @@ canvas {
   border-radius: 2px;
 }
 
-
+/* Grid Dizilimi */
 .partners-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);  
+  grid-template-columns: repeat(2, 1fr);  /* Mobil: 2 kolon */
   gap: 2rem;
 }
 
 @media (min-width: 640px) {
   .partners-grid {
-    grid-template-columns: repeat(3, 1fr);  
+    grid-template-columns: repeat(3, 1fr);  /* Tablet: 3 kolon */
   }
 }
 
 @media (min-width: 1024px) {
   .partners-grid {
-    grid-template-columns: repeat(4, 1fr);  
+    grid-template-columns: repeat(4, 1fr);  /* Desktop: 4 kolon */
     gap: 2.5rem;
   }
 }
 
 @media (min-width: 1280px) {
   .partners-grid {
-    grid-template-columns: repeat(5, 1fr);  
+    grid-template-columns: repeat(5, 1fr);  /* Geniş ekran: 5 kolon */
   }
 }
 
-
+/* Elite Glassmorphism Kart */
 .partner-card {
   position: relative;
   background: rgba(255, 255, 255, 0.6);
@@ -3658,7 +3652,7 @@ canvas {
   border: 1px solid rgba(61, 186, 162, 0.2);
 }
 
-
+/* Hover Efekti */
 .partner-card:hover {
   transform: translateY(-8px);
   background: rgba(255, 255, 255, 0.85);
@@ -3673,7 +3667,7 @@ canvas {
   border-color: rgba(61, 186, 162, 0.4);
 }
 
-
+/* Logo Stili - GRAYSCALE Efekti */
 .partner-logo {
   width: 100%;
   height: auto;
@@ -3685,14 +3679,14 @@ canvas {
   transition: all 0.5s ease-out;
 }
 
-
+/* Hover'da Logo Orijinal Renge Döner */
 .partner-card:hover .partner-logo {
   filter: grayscale(0%);
   opacity: 1;
   transform: scale(1.05);
 }
 
-
+/* Responsive Başlık */
 @media (max-width: 768px) {
   .partners-title {
     font-size: 2rem;
@@ -3713,9 +3707,9 @@ canvas {
   }
 }
 
-
-
-
+/* ═══════════════════════════════════════════════════════════════ */
+/* LOKMA 23: BLOG & HABERLER - ASİMETRİK BENTO GRID */
+/* ═══════════════════════════════════════════════════════════════ */
 .blog-section {
   position: relative;
   background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
@@ -3732,7 +3726,7 @@ canvas {
   margin: 0 auto;
 }
 
-
+/* Başlık */
 .blog-header {
   text-align: center;
   margin-bottom: 4rem;
@@ -3749,7 +3743,7 @@ canvas {
   color: #f1f5f9;
 }
 
-
+/* Asimetrik Bento Grid */
 .blog-grid {
   display: grid;
   grid-template-columns: 1fr;
@@ -3762,13 +3756,13 @@ canvas {
     gap: 2.5rem;
   }
   
-  
+  /* Featured post - sol kolon, 2 satır */
   .blog-card-featured {
     grid-row: span 2;
   }
 }
 
-
+/* Premium Glassmorphism Kart */
 .blog-card {
   position: relative;
   background: rgba(255, 255, 255, 0.7);
@@ -3799,7 +3793,7 @@ canvas {
   border-color: rgba(61, 186, 162, 0.4);
 }
 
-
+/* Resim Konteyneri */
 .blog-image-wrapper {
   position: relative;
   width: 100%;
@@ -3852,7 +3846,7 @@ canvas {
   }
 }
 
-
+/* Resim Hover Efekti */
 .blog-image {
   width: 100%;
   height: 100%;
@@ -3864,12 +3858,12 @@ canvas {
   transform: scale(1.05);
 }
 
-
+/* İçerik */
 .blog-content {
   padding: 2rem;
 }
 
-
+/* Etiketler */
 .blog-tags {
   display: flex;
   flex-wrap: wrap;
@@ -3895,7 +3889,7 @@ canvas {
   transform: translateY(-2px);
 }
 
-
+/* Başlık */
 .blog-post-title {
   font-size: 1.5rem;
   font-weight: 700;
@@ -3921,7 +3915,7 @@ canvas {
   font-size: 2rem;
 }
 
-
+/* Meta Bilgileri */
 .blog-meta {
   display: flex;
   align-items: center;
@@ -3969,7 +3963,7 @@ canvas {
   color: #64748b;
 }
 
-
+/* Daha Fazla Göster Butonu */
 .blog-button-wrapper {
   display: flex;
   justify-content: center;
@@ -4024,7 +4018,7 @@ canvas {
   transform: translateX(4px);
 }
 
-
+/* Responsive */
 @media (max-width: 768px) {
   .blog-title {
     font-size: 2rem;
@@ -4047,7 +4041,7 @@ canvas {
   }
 }
 
-
+/* Footer */
 .footer {
   background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
   padding: 2rem;
@@ -4229,5 +4223,5 @@ canvas {
   }
 }
 
-
+/* Force refresh */
 </style>
