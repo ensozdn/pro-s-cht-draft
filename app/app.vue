@@ -216,41 +216,28 @@
     </section>
 
     <!-- Uygulama Alanlarımız - Tab Yapısı -->
-    <section ref="sectorsSection" class="applications-section">
-      <div class="applications-container">
-        <!-- Başlık -->
-        <h2 class="applications-title">Uygulama <span class="text-gradient">Alanlarımız</span></h2>
+    <section ref="sectorsSection" class="applications-section-scroll">
+      <div class="applications-scroll-container">
+        <h2 class="applications-scroll-title">Uygulama <span class="text-gradient">Alanlarımız</span></h2>
         
-        <!-- Tab Butonları -->
-        <div class="tabs-wrapper">
-          <button
-            v-for="category in categories"
-            :key="category.id"
-            @click="activeTab = category.id"
-            :class="['tab-button', { active: activeTab === category.id }]"
-            :style="getButtonStyle(category.id)"
-          >
-            {{ category.title }}
-          </button>
-        </div>
-
-        <!-- İçerik Alanı -->
-        <div class="tab-content">
-          <div class="content-grid">
-            <!-- Sol: Açıklama -->
-            <div class="content-left">
-              <h3 class="content-title">{{ activeCategory?.title }}</h3>
-              <p class="content-description">{{ activeCategory?.description }}</p>
+        <div 
+          v-for="(category, index) in categories" 
+          :key="category.id"
+          :ref="el => { if (el) categoryRefs[index] = el as HTMLElement }"
+          class="category-fullscreen"
+        >
+          <div class="category-content">
+            <div class="category-left">
+              <h3 class="category-title-large">{{ category.title }}</h3>
+              <p class="category-description-large">{{ category.description }}</p>
             </div>
-
-            <!-- Sağ: Görsel Alanı -->
-            <div class="content-right">
-              <div class="image-placeholder">
+            <div class="category-right">
+              <div class="category-image-container">
                 <img 
-                  v-if="activeCategory?.image" 
-                  :src="activeCategory.image" 
-                  :alt="activeCategory.title"
-                  class="category-image"
+                  v-if="category.image" 
+                  :src="category.image" 
+                  :alt="category.title"
+                  class="category-image-large"
                 />
                 <div v-else class="placeholder-icon">
                   <svg class="w-24 h-24 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -873,6 +860,7 @@ const blogPosts = ref([
   }
 ])
 
+const categoryRefs = ref<(HTMLElement | null)[]>([])
 const activeTab = ref('metal-celik')
 const activeCategory = computed(() => categories.value.find(c => c.id === activeTab.value))
 
@@ -1004,9 +992,7 @@ onMounted(async () => {
   const Lenis = (await import('lenis')).default
   lenis = new Lenis({
     duration: 1.2,
-    easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-    smooth: true,
-    smoothTouch: false
+    easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t))
   })
 
   // Lenis ve GSAP ScrollTrigger senkronizasyonu
@@ -1720,21 +1706,32 @@ onMounted(async () => {
     })
   }
 
-  // Uygulama Alanları bölümü için basit fade-in animasyonu
-  if (sectorsSection.value) {
-    gsap.from(sectorsSection.value.querySelectorAll('.tab-button'), {
-      opacity: 0,
-      y: 20,
-      stagger: 0.1,
-      duration: 0.6,
-      scrollTrigger: {
-        trigger: sectorsSection.value,
-        start: 'top 80%'
-      }
+  if (sectorsSection.value && categoryRefs.value.length > 0) {
+    categoryRefs.value.forEach((categoryEl, index) => {
+      if (!categoryEl) return
+      
+      gsap.timeline({
+        scrollTrigger: {
+          trigger: categoryEl,
+          start: 'top top',
+          end: '+=100%',
+          pin: true,
+          scrub: 1,
+          anticipatePin: 1
+        }
+      })
+      .fromTo(categoryEl.querySelector('.category-left'), 
+        { opacity: 0, x: -100 },
+        { opacity: 1, x: 0, duration: 0.5, ease: 'power2.out' }
+      )
+      .fromTo(categoryEl.querySelector('.category-right'), 
+        { opacity: 0, x: 100 },
+        { opacity: 1, x: 0, duration: 0.5, ease: 'power2.out' },
+        '<0.2'
+      )
     })
   }
 
-  // İletişim Bölümü Fade-Up Animasyonu
   if (contactSection.value) {
     gsap.fromTo(
       contactSection.value.querySelector('.contact-content'),
@@ -2343,11 +2340,11 @@ canvas {
   box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
   border-radius: 2rem;
   padding: 3rem 2.5rem;
-  max-width: 900px;
+  max-width: 650px;
   text-align: center;
   transition: all 0.4s ease;
-  will-change: transform, opacity; /* LOKMA 21: Performans optimizasyonu */
-  transform-style: preserve-3d; /* LOKMA 21: 3D derinlik */
+  will-change: transform, opacity;
+  transform-style: preserve-3d;
 }
 
 .glass-card:hover {
@@ -2783,188 +2780,90 @@ canvas {
 }
 
 /* Uygulama Alanları - Tab Yapısı */
-.applications-section {
+.applications-section-scroll {
   position: relative;
-  min-height: 100vh;
   background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
-  padding: 6rem 2rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
-.dark .applications-section {
+.dark .applications-section-scroll {
   background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
 }
 
-.applications-container {
-  max-width: 1400px;
+.applications-scroll-container {
   width: 100%;
-  margin: 0 auto;
-  overflow: visible;
 }
 
-.applications-title {
+.applications-scroll-title {
   font-size: 3rem;
   font-weight: 700;
   color: #1e293b;
   text-align: center;
-  margin-bottom: 3rem;
+  padding: 4rem 2rem 2rem;
   letter-spacing: -0.02em;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
 }
 
-.dark .applications-title {
+.dark .applications-scroll-title {
+  color: #f1f5f9;
+  background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+}
+
+.category-fullscreen {
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 2rem;
+  position: relative;
+}
+
+.category-content {
+  max-width: 1400px;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6rem;
+  align-items: center;
+}
+
+.category-left {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.category-title-large {
+  font-size: 3.5rem;
+  font-weight: 800;
+  color: #1e293b;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+
+.dark .category-title-large {
   color: #f1f5f9;
 }
 
-.tabs-wrapper {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1rem;
-  justify-content: center;
-  align-items: stretch;
-  width: 100%;
-  max-width: 1200px;
-  margin: 0 auto 4rem;
-  padding: 0 2rem;
-  overflow: visible;
-  position: relative;
-  z-index: 10;
-}
-
-@media (max-width: 1024px) {
-  .tabs-wrapper {
-    gap: 0.75rem;
-    padding: 0 1rem;
-  }
-}
-
-@media (max-width: 768px) {
-  .tabs-wrapper {
-    gap: 0.5rem;
-    flex-direction: column;
-  }
-}
-
-.tab-button {
-  padding: 1rem 2rem;
-  font-size: 1rem;
-  font-weight: 600;
-  border: 2px solid #3DBAA2;
-  border-radius: 0.75rem;
-  cursor: pointer;
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  background: white;
-  color: #1e293b;
-  box-shadow: 
-    0 4px 15px rgba(0, 0, 0, 0.1),
-    0 2px 6px rgba(61, 186, 162, 0.15);
-  white-space: nowrap;
-  text-align: center;
-  position: relative;
-  overflow: visible;
-  backdrop-filter: blur(10px);
-  z-index: 1;
-  opacity: 1 !important;
-  visibility: visible !important;
-  flex: 0 0 auto;
-  min-width: 160px;
-  height: auto;
-  align-self: center;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.dark .tab-button {
-  background: rgba(15, 23, 42, 0.8);
-  color: #e2e8f0;
-  border-color: rgba(61, 186, 162, 0.5);
-}
-
-.tab-button::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(135deg, rgba(13, 124, 108, 0.05) 0%, rgba(61, 186, 162, 0.05) 100%);
-  opacity: 0;
-  transition: opacity 0.4s ease;
-}
-
-.tab-button:hover::before {
-  opacity: 1;
-}
-
-.tab-button:hover {
-  background: rgba(255, 255, 255, 1);
-  border-color: #3DBAA2;
-  transform: scale(1.05) translateY(-3px);
-  box-shadow: 
-    0 12px 30px rgba(61, 186, 162, 0.25),
-    0 4px 15px rgba(0, 0, 0, 0.1),
-    0 0 20px rgba(61, 186, 162, 0.15);
-  color: #0D7C6C;
-}
-
-.dark .tab-button:hover {
-  background: rgba(15, 23, 42, 0.95);
-  color: #3DBAA2;
-}
-
-.tab-button.active {
-  background: linear-gradient(135deg, #0D7C6C 0%, #3DBAA2 100%);
-  color: white;
-  font-weight: 700;
-  border-color: transparent;
-  box-shadow: 
-    0 15px 40px rgba(13, 124, 108, 0.4),
-    0 8px 20px rgba(61, 186, 162, 0.3),
-    0 0 30px rgba(61, 186, 162, 0.2);
-  transform: scale(1.08) translateY(-4px);
-}
-
-.tab-button.active::before {
-  opacity: 0;
-}
-
-.tab-content {
-  opacity: 1;
-  transition: opacity 0.3s ease;
-}
-
-.content-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 4rem;
-  align-items: center;
-}
-
-.content-left {
-  animation: fadeInLeft 0.5s ease;
-}
-
-.content-title {
-  font-size: 2.5rem;
-  font-weight: 700;
-  color: #1e293b;
-  margin-bottom: 1.5rem;
-  letter-spacing: -0.02em;
-}
-
-.content-description {
-  font-size: 1.125rem;
+.category-description-large {
+  font-size: 1.25rem;
   color: rgba(30, 41, 59, 0.8);
   line-height: 1.8;
+  max-width: 500px;
 }
 
-.content-right {
-  animation: fadeInRight 0.5s ease;
+.dark .category-description-large {
+  color: rgba(226, 232, 240, 0.8);
 }
 
-.image-placeholder {
+.category-right {
+  position: relative;
+}
+
+.category-image-container {
   aspect-ratio: 4/3;
   background: rgba(255, 255, 255, 0.95);
   border: 2px solid rgba(61, 186, 162, 0.3);
@@ -2979,57 +2878,55 @@ canvas {
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.dark .image-placeholder {
+.dark .category-image-container {
   background: rgba(15, 23, 42, 0.6);
   border-color: rgba(61, 186, 162, 0.4);
 }
 
-.image-placeholder:hover {
-  transform: scale(1.02);
-  box-shadow: 
-    0 25px 60px rgba(0, 0, 0, 0.15),
-    0 10px 25px rgba(61, 186, 162, 0.2);
-  border-color: rgba(61, 186, 162, 0.5);
-}
-
-.category-image {
+.category-image-large {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.image-placeholder:hover .category-image {
-  transform: scale(1.05);
-}
-
-.placeholder-icon {
+.category-image-container .placeholder-icon {
   color: rgba(61, 186, 162, 0.3);
 }
 
-@keyframes fadeInLeft {
-  from {
-    opacity: 0;
-    transform: translateX(-20px);
+@media (max-width: 1024px) {
+  .category-content {
+    grid-template-columns: 1fr;
+    gap: 3rem;
   }
-  to {
-    opacity: 1;
-    transform: translateX(0);
+  
+  .category-title-large {
+    font-size: 2.5rem;
   }
-}
-
-@keyframes fadeInRight {
-  from {
-    opacity: 0;
-    transform: translateX(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
+  
+  .category-description-large {
+    font-size: 1.125rem;
   }
 }
 
-/* İletişim Bölümü */
+@media (max-width: 768px) {
+  .applications-scroll-title {
+    font-size: 2rem;
+    padding: 3rem 1rem 1.5rem;
+  }
+  
+  .category-fullscreen {
+    padding: 0 1rem;
+  }
+  
+  .category-title-large {
+    font-size: 2rem;
+  }
+  
+  .category-description-large {
+    font-size: 1rem;
+  }
+}
+
 .contact-section {
   position: relative;
   min-height: 100vh;
