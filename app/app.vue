@@ -30,13 +30,13 @@
       <section ref="section2" class="content-section">
         <div class="glass-card">
           <h1 class="content-title">
-            <span class="text-gradient">Otonom</span> Karar Sistemi
+            <span class="text-gradient">{{ $t('section2.title1') }}</span> {{ $t('section2.title2') }}
           </h1>
           <p class="content-description">
-            Gerçek zamanlı analiz ve otomatik kalite değerlendirmesi
+            {{ $t('section2.description') }}
           </p>
           <button class="cta-button cta-button-secondary">
-            Sistemi İncele
+            {{ $t('section2.cta') }}
           </button>
         </div>
       </section>
@@ -44,13 +44,13 @@
       <section ref="section3" class="content-section">
         <div class="glass-card">
           <h1 class="content-title">
-            Maliyetleri <span class="text-gradient">Minimuma</span> İndirin
+            {{ $t('section3.title1') }} <span class="text-gradient">{{ $t('section3.title2') }}</span> {{ $t('section3.title3') }}
           </h1>
           <p class="content-description">
-            %40'a varan maliyet tasarrufu ve sıfır kusurlu üretim
+            {{ $t('section3.description') }}
           </p>
           <button class="cta-button">
-            Hemen Başlayın
+            {{ $t('hero.cta') }}
           </button>
         </div>
       </section>
@@ -58,7 +58,7 @@
       <!-- İstatistikler Bölümü -->
       <section ref="statsSection" class="content-section">
         <div class="glass-card stats-card">
-          <h2 class="stats-title">Sayılarla <span class="text-gradient">ProSicht</span></h2>
+          <h2 class="stats-title">{{ $t('stats.title') }} <span class="text-gradient">{{ $t('stats.brand') }}</span></h2>
           
           <div class="stats-grid">
             <div class="stat-item">
@@ -66,7 +66,7 @@
                 <span class="stat-number" data-target="99">0</span>
                 <span class="stat-symbol">%</span>
               </div>
-              <div class="stat-label">Doğruluk Oranı</div>
+              <div class="stat-label">{{ $t('stats.accuracy') }}</div>
             </div>
 
             <div class="stat-item">
@@ -74,7 +74,7 @@
                 <span class="stat-number" data-target="15">0</span>
                 <span class="stat-symbol">ms</span>
               </div>
-              <div class="stat-label">Yanıt Süresi</div>
+              <div class="stat-label">{{ $t('stats.responseTime') }}</div>
             </div>
 
             <div class="stat-item">
@@ -82,7 +82,7 @@
                 <span class="stat-number" data-target="1000">0</span>
                 <span class="stat-symbol">+</span>
               </div>
-              <div class="stat-label">Dakikada Parça</div>
+              <div class="stat-label">{{ $t('stats.throughput') }}</div>
             </div>
           </div>
         </div>
@@ -92,7 +92,7 @@
     <!-- Neden Biz? Bölümü -->
     <section class="why-us-section">
       <div class="why-us-container">
-        <h2 class="why-us-title">Neden <span class="text-gradient">Biz?</span></h2>
+        <h2 class="why-us-title">{{ $t('whyUs.title') }} <span class="text-gradient">{{ $t('whyUs.subtitle') }}</span></h2>
         
         <div class="why-us-grid">
           <div
@@ -124,7 +124,7 @@
     <!-- Uygulama Alanlarımız - Tab Yapısı -->
     <section ref="sectorsSection" class="applications-section-scroll">
       <div class="applications-scroll-container">
-        <h2 class="applications-scroll-title">Uygulama <span class="text-gradient">Alanlarımız</span></h2>
+        <h2 class="applications-scroll-title">{{ $t('applications.title') }} <span class="text-gradient">{{ $t('applications.subtitle') }}</span></h2>
         
         <div 
           v-for="(category, index) in categories" 
@@ -160,7 +160,7 @@
     <!-- InspectAI'ın İşletmeye Katkıları -->
     <section class="contributions-section">
       <div class="contributions-container">
-        <h2 class="contributions-title">InspectAI Ürününün İşletmeye <span class="text-gradient">Katkıları</span></h2>
+        <h2 class="contributions-title">{{ $t('contributions.title') }} <span class="text-gradient">{{ $t('contributions.subtitle') }}</span></h2>
         
         <div class="contributions-grid">
           <div
@@ -521,6 +521,7 @@ import { useTheme } from '../composables/useTheme'
 import '../assets/styles/main.css'
 
 const { isDark, toggleTheme, initTheme } = useTheme()
+const { t: $t } = useI18n()
 
 provide('toggleTheme', toggleTheme)
 
@@ -572,26 +573,26 @@ const categories = ref([
   }
 ])
 
-// Neden Biz? Features
-const whyUsFeatures = ref([
+// Neden Biz? Features - i18n ile reactive
+const whyUsFeatures = computed(() => [
   {
-    title: 'Hızlı Kurulum',
-    desc: 'Sistemimiz, hat yapısını bozmadan hızlı kurulum ile sisteme entegre olur. Üretim hattınızı ve iş akışınızı bozmadan devreye alınabilir.',
+    title: $t('whyUs.speed.title'),
+    desc: $t('whyUs.speed.description'),
     icon: 'Rocket'
   },
   {
-    title: 'Otonom Karar Sistemi',
-    desc: 'Yapay zeka destekli sistem, otomatik ve bağımsız kararlar alarak verimliliği artırır, insan müdahalesini minimuma indirir.',
+    title: $t('whyUs.ai.title'),
+    desc: $t('whyUs.ai.description'),
     icon: 'BrainCircuit'
   },
   {
-    title: 'İşçi Kazancı',
-    desc: 'Verimlilik artışı ve hızlı kusur tespiti, işçi performansını iyileştirir, iş gücü kaynaklarının daha verimli kullanılmasını sağlar.',
+    title: $t('whyUs.support.title'),
+    desc: $t('whyUs.support.description'),
     icon: 'Users'
   },
   {
-    title: 'Kalite Takibi',
-    desc: 'Sistem, sürekli olarak ürünlerin kalitesini izler ve takip eder, bu da ürün kalitesinde sürekli gelişimi sağlar.',
+    title: $t('whyUs.realtime.title'),
+    desc: $t('whyUs.realtime.description'),
     icon: 'Activity'
   }
 ])

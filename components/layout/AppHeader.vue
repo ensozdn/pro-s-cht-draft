@@ -6,11 +6,11 @@
       </div>
 
       <nav class="nav-menu desktop-nav">
-        <a href="#applications" class="nav-link">Uygulama Alanlarımız</a>
-        <a href="#why-us" class="nav-link">Neden Biz</a>
-        <a href="#contributions" class="nav-link">Katkılarımız</a>
+        <a href="#applications" class="nav-link">{{ $t('nav.applications') }}</a>
+        <a href="#why-us" class="nav-link">{{ $t('nav.features') }}</a>
+        <a href="#contributions" class="nav-link">{{ $t('nav.about') }}</a>
         <a href="#blog" class="nav-link">Blog</a>
-        <a href="#contact" class="nav-cta">İletişim</a>
+        <a href="#contact" class="nav-cta">{{ $t('nav.contact') }}</a>
       </nav>
 
       <!-- Desktop Controls -->

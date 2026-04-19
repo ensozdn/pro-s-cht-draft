@@ -9,11 +9,11 @@
         </button>
 
         <nav class="drawer-nav">
-          <a href="#" class="drawer-link" @click="$emit('close')">Anasayfa</a>
-          <a href="#" class="drawer-link" @click="$emit('close')">Uygulamalarımız</a>
-          <a href="#" class="drawer-link" @click="$emit('close')">Hakkımızda</a>
-          <a href="#" class="drawer-link" @click="$emit('close')">Fiyatlandırma</a>
-          <a href="#" class="drawer-link" @click="$emit('close')">İletişim</a>
+          <a href="#" class="drawer-link" @click="$emit('close')">{{ $t('nav.home') }}</a>
+          <a href="#applications" class="drawer-link" @click="$emit('close')">{{ $t('nav.applications') }}</a>
+          <a href="#why-us" class="drawer-link" @click="$emit('close')">{{ $t('nav.features') }}</a>
+          <a href="#contributions" class="drawer-link" @click="$emit('close')">{{ $t('nav.about') }}</a>
+          <a href="#contact" class="drawer-link" @click="$emit('close')">{{ $t('nav.contact') }}</a>
         </nav>
       </div>
     </div>
