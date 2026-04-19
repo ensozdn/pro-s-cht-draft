@@ -12,12 +12,76 @@
     "description": "Produktionsfehler sofort mit KI-gestütztem Qualitätskontrollsystem erkennen",
     "cta": "Mehr Erkunden"
   },
+  "section2": {
+    "title1": "Autonomes",
+    "title2": "Entscheidungssystem",
+    "description": "Echtzeitanalyse und automatische Qualitätsbewertung",
+    "cta": "System Erkunden"
+  },
+  "section3": {
+    "title1": "Minimieren Sie",
+    "title2": "Kosten auf",
+    "title3": "das Minimum",
+    "description": "Bis zu 40% Kosteneinsparungen und fehlerfreie Produktion"
+  },
   "stats": {
     "title": "ProSicht in",
     "brand": "Zahlen",
     "accuracy": "Genauigkeitsrate",
     "responseTime": "Antwortzeit",
     "throughput": "Teile pro Minute"
+  },
+  "whyUs": {
+    "title": "Warum",
+    "subtitle": "Wir?",
+    "speed": {
+      "title": "Schnelle Integration",
+      "description": "Integration in Ihre bestehende Produktionslinie innerhalb von 24 Stunden"
+    },
+    "ai": {
+      "title": "KI-Kraft",
+      "description": "Ständig verbesserte Erkennungsfähigkeiten mit Deep-Learning-Algorithmen"
+    },
+    "support": {
+      "title": "24/7 Support",
+      "description": "Unser Expertenteam ist immer für Sie da"
+    },
+    "realtime": {
+      "title": "Echtzeitanalyse",
+      "description": "Sofortige Berichterstattung und Visualisierung"
+    }
+  },
+  "applications": {
+    "title": "Anwendungs",
+    "subtitle": "bereiche"
+  },
+  "contributions": {
+    "title": "Beiträge des Produkts",
+    "subtitle": "InspectAI für Unternehmen",
+    "quality": {
+      "title": "Hohe Präzision in der Qualitätskontrolle",
+      "description": "KI kann Defekte präziser erkennen als das menschliche Auge. Dies gewährleistet, dass Produkte nach höheren Qualitätsstandards ohne Fehler hergestellt werden."
+    },
+    "reduce": {
+      "title": "Reduzierung von Produktionsprozessfehlern",
+      "description": "Das Defekterkennungssystem identifiziert Fehler früh in der Produktionslinie und verhindert, dass fehlerhafte Produkte in die Produktion gelangen. Dies ermöglicht Kosteneinsparungen."
+    },
+    "satisfaction": {
+      "title": "Steigerung der Kundenzufriedenheit",
+      "description": "Hochwertige, fehlerfreie Produkte erhöhen die Kundenzufriedenheit und reduzieren Beschwerden. Dies ist wichtig zum Schutz des Markenrufs."
+    },
+    "recall": {
+      "title": "Reduzierung der Rückrufkosten",
+      "description": "Die Herstellung fehlerfreier Produkte reduziert die Rückrufkosten. Kosteneinsparungen werden erzielt, da fehlerhafte Produkte nicht zurückgezogen oder reproduziert werden müssen."
+    },
+    "efficiency": {
+      "title": "Effizienzsteigerung",
+      "description": "Automatische Defekterkennung reduziert Arbeitskosten und beschleunigt Produktionsprozesse. Dies erhöht die Effizienz des Herstellers."
+    },
+    "compliance": {
+      "title": "Normenkonformität",
+      "description": "Das Qualitätskontrollsystem stellt sicher, dass die Produktion den Industriestandards entspricht und erleichtert Audit-Prozesse."
+    }
   },
   "language": {
     "select": "Sprache Wählen",

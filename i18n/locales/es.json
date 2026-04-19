@@ -12,12 +12,76 @@
     "description": "Detecte errores de producción instantáneamente con el sistema de control de calidad impulsado por IA",
     "cta": "Explorar Más"
   },
+  "section2": {
+    "title1": "Sistema de",
+    "title2": "Decisión Autónomo",
+    "description": "Análisis en tiempo real y evaluación automática de calidad",
+    "cta": "Explorar Sistema"
+  },
+  "section3": {
+    "title1": "Minimice",
+    "title2": "Costos al",
+    "title3": "Mínimo",
+    "description": "Hasta 40% de ahorro en costos y producción sin defectos"
+  },
   "stats": {
     "title": "ProSicht en",
     "brand": "Números",
     "accuracy": "Tasa de Precisión",
     "responseTime": "Tiempo de Respuesta",
     "throughput": "Piezas por Minuto"
+  },
+  "whyUs": {
+    "title": "Por Qué",
+    "subtitle": "Nosotros?",
+    "speed": {
+      "title": "Integración Rápida",
+      "description": "Integre en su línea de producción existente en 24 horas"
+    },
+    "ai": {
+      "title": "Poder de la IA",
+      "description": "Capacidades de detección en constante mejora con algoritmos de aprendizaje profundo"
+    },
+    "support": {
+      "title": "Soporte 24/7",
+      "description": "Nuestro equipo de expertos está siempre con usted"
+    },
+    "realtime": {
+      "title": "Análisis en Tiempo Real",
+      "description": "Informes instantáneos y visualización"
+    }
+  },
+  "applications": {
+    "title": "Áreas de",
+    "subtitle": "Aplicación"
+  },
+  "contributions": {
+    "title": "Contribuciones del Producto",
+    "subtitle": "InspectAI a los Negocios",
+    "quality": {
+      "title": "Alta Precisión en el Control de Calidad",
+      "description": "La IA puede detectar defectos con más precisión que el ojo humano. Esto garantiza que los productos se fabriquen según estándares de calidad superiores sin errores."
+    },
+    "reduce": {
+      "title": "Reducción de Errores en el Proceso de Producción",
+      "description": "El sistema de detección de defectos identifica errores temprano en la línea de producción, evitando que productos defectuosos entren en producción. Esto proporciona ahorro de costos."
+    },
+    "satisfaction": {
+      "title": "Aumento de la Satisfacción del Cliente",
+      "description": "Productos de alta calidad y sin errores aumentan la satisfacción del cliente y reducen las quejas. Esto es importante para proteger la reputación de la marca."
+    },
+    "recall": {
+      "title": "Reducción de Costos de Retirada",
+      "description": "La fabricación de productos sin defectos reduce los costos de retirada. Se logra ahorro de costos ya que los productos defectuosos no necesitan ser retirados o reproducidos."
+    },
+    "efficiency": {
+      "title": "Aumento de la Eficiencia",
+      "description": "La detección automática de defectos reduce los costos laborales y acelera los procesos de producción. Esto aumenta la eficiencia del fabricante."
+    },
+    "compliance": {
+      "title": "Cumplimiento de Estándares",
+      "description": "El sistema de control de calidad garantiza que la producción cumpla con los estándares de la industria y facilita los procesos de auditoría."
+    }
   },
   "language": {
     "select": "Seleccionar Idioma",

@@ -597,36 +597,36 @@ const whyUsFeatures = computed(() => [
   }
 ])
 
-// InspectAI'ın İşletmeye Katkıları
-const contributions = ref([
+// InspectAI'ın İşletmeye Katkıları - i18n ile reactive
+const contributions = computed(() => [
   {
-    title: 'Kalite Kontrolünde Yüksek Hassasiyet',
-    desc: 'Yapay zeka, insan gözüne göre daha hassas bir şekilde kusurları tespit edebilir. Bu, ürünlerin daha yüksek kalitede ve hatasız olarak üretilmesini sağlar.',
+    title: $t('contributions.quality.title'),
+    desc: $t('contributions.quality.description'),
     icon: 'CheckCircle'
   },
   {
-    title: 'Üretim Sürecindeki Hataları Azaltma',
-    desc: 'Kusur tespiti sistemi, üretim hattındaki hataları erken aşamada tespit ederek hatalı ürünlerin üretime girmesini önler. Bu da maliyet tasarrufu sağlar.',
+    title: $t('contributions.reduce.title'),
+    desc: $t('contributions.reduce.description'),
     icon: 'TrendingDown'
   },
   {
-    title: 'Müşteri Memnuniyetini Artırma',
-    desc: 'Kaliteli ve hatasız ürünler, müşteri memnuniyetini artırır ve müşteri şikayetlerini azaltır. Bu da marka itibarını koruma açısından önemlidir.',
+    title: $t('contributions.satisfaction.title'),
+    desc: $t('contributions.satisfaction.description'),
     icon: 'Smile'
   },
   {
-    title: 'Geri Çağırma Maliyetlerini Azaltma',
-    desc: 'Kusursuz ürünlerin üretilmesi, geri çağırma maliyetlerini azaltır. Hatalı ürünlerin piyasadan çekilmesi veya yeniden üretilmesi gerekmeyeceği için maliyet tasarrufu sağlar.',
+    title: $t('contributions.recall.title'),
+    desc: $t('contributions.recall.description'),
     icon: 'ShieldAlert'
   },
   {
-    title: 'Verimliliği Artırma',
-    desc: 'Otomatik kusur tespiti, işçilik maliyetlerini azaltır ve üretim süreçlerini hızlandırır. Bu, üreticinin verimliliğini artırır.',
+    title: $t('contributions.efficiency.title'),
+    desc: $t('contributions.efficiency.description'),
     icon: 'Zap'
   },
   {
-    title: 'Veri ve Analiz İmkanı',
-    desc: 'Kusur tespiti sistemi, ürünlerin üretim süreci hakkında veri toplar ve analiz eder. Bu veriler, üretim süreçlerini optimize etmek ve gelecekteki geliştirmeler için kullanılabilir.',
+    title: $t('contributions.compliance.title'),
+    desc: $t('contributions.compliance.description'),
     icon: 'BarChart'
   }
 ])

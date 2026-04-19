@@ -12,12 +12,76 @@
     "description": "Rilevare errori di produzione istantaneamente con il sistema di controllo qualità basato su IA",
     "cta": "Esplora di Più"
   },
+  "section2": {
+    "title1": "Sistema di",
+    "title2": "Decisione Autonomo",
+    "description": "Analisi in tempo reale e valutazione automatica della qualità",
+    "cta": "Esplora il Sistema"
+  },
+  "section3": {
+    "title1": "Minimizza",
+    "title2": "i Costi al",
+    "title3": "Minimo",
+    "description": "Fino al 40% di risparmio sui costi e produzione senza difetti"
+  },
   "stats": {
     "title": "ProSicht in",
     "brand": "Numeri",
     "accuracy": "Tasso di Precisione",
     "responseTime": "Tempo di Risposta",
     "throughput": "Pezzi al Minuto"
+  },
+  "whyUs": {
+    "title": "Perché",
+    "subtitle": "Noi?",
+    "speed": {
+      "title": "Integrazione Rapida",
+      "description": "Integra nella tua linea di produzione esistente entro 24 ore"
+    },
+    "ai": {
+      "title": "Potenza dell'IA",
+      "description": "Capacità di rilevamento in continuo miglioramento con algoritmi di deep learning"
+    },
+    "support": {
+      "title": "Supporto 24/7",
+      "description": "Il nostro team di esperti è sempre con te"
+    },
+    "realtime": {
+      "title": "Analisi in Tempo Reale",
+      "description": "Report istantanei e visualizzazione"
+    }
+  },
+  "applications": {
+    "title": "Aree di",
+    "subtitle": "Applicazione"
+  },
+  "contributions": {
+    "title": "Contributi del Prodotto",
+    "subtitle": "InspectAI alle Aziende",
+    "quality": {
+      "title": "Alta Precisione nel Controllo Qualità",
+      "description": "L'IA può rilevare difetti più precisamente dell'occhio umano. Questo garantisce che i prodotti siano fabbricati secondo standard di qualità superiori senza errori."
+    },
+    "reduce": {
+      "title": "Riduzione degli Errori di Processo Produttivo",
+      "description": "Il sistema di rilevamento difetti identifica gli errori precocemente nella linea di produzione, impedendo ai prodotti difettosi di entrare in produzione. Questo fornisce risparmi sui costi."
+    },
+    "satisfaction": {
+      "title": "Aumento della Soddisfazione del Cliente",
+      "description": "Prodotti di alta qualità e senza errori aumentano la soddisfazione del cliente e riducono i reclami. Questo è importante per proteggere la reputazione del marchio."
+    },
+    "recall": {
+      "title": "Riduzione dei Costi di Richiamo",
+      "description": "La produzione di prodotti senza difetti riduce i costi di richiamo. Si ottengono risparmi sui costi poiché i prodotti difettosi non devono essere ritirati o riprodotti."
+    },
+    "efficiency": {
+      "title": "Aumento dell'Efficienza",
+      "description": "Il rilevamento automatico dei difetti riduce i costi del lavoro e accelera i processi produttivi. Questo aumenta l'efficienza del produttore."
+    },
+    "compliance": {
+      "title": "Conformità agli Standard",
+      "description": "Il sistema di controllo qualità garantisce che la produzione soddisfi gli standard del settore e facilita i processi di audit."
+    }
   },
   "language": {
     "select": "Seleziona Lingua",

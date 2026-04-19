@@ -12,12 +12,76 @@
     "description": "Detecte erros de produção instantaneamente com sistema de controle de qualidade alimentado por IA",
     "cta": "Explorar Mais"
   },
+  "section2": {
+    "title1": "Sistema de",
+    "title2": "Decisão Autônomo",
+    "description": "Análise em tempo real e avaliação automática de qualidade",
+    "cta": "Explorar Sistema"
+  },
+  "section3": {
+    "title1": "Minimize",
+    "title2": "Custos ao",
+    "title3": "Mínimo",
+    "description": "Até 40% de economia de custos e produção sem defeitos"
+  },
   "stats": {
     "title": "ProSicht em",
     "brand": "Números",
     "accuracy": "Taxa de Precisão",
     "responseTime": "Tempo de Resposta",
     "throughput": "Peças por Minuto"
+  },
+  "whyUs": {
+    "title": "Por Que",
+    "subtitle": "Nós?",
+    "speed": {
+      "title": "Integração Rápida",
+      "description": "Integre à sua linha de produção existente em 24 horas"
+    },
+    "ai": {
+      "title": "Poder da IA",
+      "description": "Capacidades de detecção em constante melhoria com algoritmos de aprendizado profundo"
+    },
+    "support": {
+      "title": "Suporte 24/7",
+      "description": "Nossa equipe de especialistas está sempre com você"
+    },
+    "realtime": {
+      "title": "Análise em Tempo Real",
+      "description": "Relatórios instantâneos e visualização"
+    }
+  },
+  "applications": {
+    "title": "Áreas de",
+    "subtitle": "Aplicação"
+  },
+  "contributions": {
+    "title": "Contribuições do Produto",
+    "subtitle": "InspectAI para Negócios",
+    "quality": {
+      "title": "Alta Precisão no Controle de Qualidade",
+      "description": "A IA pode detectar defeitos com mais precisão do que o olho humano. Isso garante que os produtos sejam fabricados com padrões de qualidade superiores sem erros."
+    },
+    "reduce": {
+      "title": "Redução de Erros no Processo de Produção",
+      "description": "O sistema de detecção de defeitos identifica erros precocemente na linha de produção, evitando que produtos defeituosos entrem em produção. Isso proporciona economia de custos."
+    },
+    "satisfaction": {
+      "title": "Aumento da Satisfação do Cliente",
+      "description": "Produtos de alta qualidade e sem erros aumentam a satisfação do cliente e reduzem reclamações. Isso é importante para proteger a reputação da marca."
+    },
+    "recall": {
+      "title": "Redução de Custos de Recall",
+      "description": "A fabricação de produtos sem defeitos reduz os custos de recall. A economia de custos é alcançada, pois produtos defeituosos não precisam ser retirados ou reproduzidos."
+    },
+    "efficiency": {
+      "title": "Aumento da Eficiência",
+      "description": "A detecção automática de defeitos reduz os custos de mão de obra e acelera os processos de produção. Isso aumenta a eficiência do fabricante."
+    },
+    "compliance": {
+      "title": "Conformidade com Padrões",
+      "description": "O sistema de controle de qualidade garante que a produção atenda aos padrões da indústria e facilita os processos de auditoria."
+    }
   },
   "language": {
     "select": "Selecionar Idioma",

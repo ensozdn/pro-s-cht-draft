@@ -57,7 +57,31 @@
   },
   "contributions": {
     "title": "InspectAI Product's",
-    "subtitle": "Business Contributions"
+    "subtitle": "Business Contributions",
+    "quality": {
+      "title": "High Precision in Quality Control",
+      "description": "AI can detect defects more precisely than the human eye. This ensures products are manufactured to higher quality standards without errors."
+    },
+    "reduce": {
+      "title": "Reducing Production Process Errors",
+      "description": "The defect detection system identifies errors early in the production line, preventing faulty products from entering production. This provides cost savings."
+    },
+    "satisfaction": {
+      "title": "Increasing Customer Satisfaction",
+      "description": "High-quality, error-free products increase customer satisfaction and reduce complaints. This is important for protecting brand reputation."
+    },
+    "recall": {
+      "title": "Reducing Recall Costs",
+      "description": "Manufacturing defect-free products reduces recall costs. Cost savings are achieved as faulty products don't need to be withdrawn or reproduced."
+    },
+    "efficiency": {
+      "title": "Increasing Efficiency",
+      "description": "Automatic defect detection reduces labor costs and speeds up production processes. This increases manufacturer efficiency."
+    },
+    "compliance": {
+      "title": "Standards Compliance",
+      "description": "The quality control system ensures production meets industry standards and facilitates audit processes."
+    }
   },
   "language": {
     "select": "Select Language",

@@ -12,12 +12,76 @@
     "description": "Detecteer productiefouten direct met AI-aangedreven kwaliteitscontrolesysteem",
     "cta": "Ontdek Meer"
   },
+  "section2": {
+    "title1": "Autonoom",
+    "title2": "Beslissingssysteem",
+    "description": "Realtime analyse en automatische kwaliteitsbeoordeling",
+    "cta": "Ontdek Systeem"
+  },
+  "section3": {
+    "title1": "Minimaliseer",
+    "title2": "Kosten tot het",
+    "title3": "Minimum",
+    "description": "Tot 40% kostenbesparingen en foutloze productie"
+  },
   "stats": {
     "title": "ProSicht in",
     "brand": "Cijfers",
     "accuracy": "Nauwkeurigheid",
     "responseTime": "Reactietijd",
     "throughput": "Onderdelen per Minuut"
+  },
+  "whyUs": {
+    "title": "Waarom",
+    "subtitle": "Wij?",
+    "speed": {
+      "title": "Snelle Integratie",
+      "description": "Integreer binnen 24 uur in uw bestaande productielijn"
+    },
+    "ai": {
+      "title": "AI-Kracht",
+      "description": "Voortdurend verbeterende detectiemogelijkheden met deep learning-algoritmen"
+    },
+    "support": {
+      "title": "24/7 Ondersteuning",
+      "description": "Ons team van experts staat altijd voor u klaar"
+    },
+    "realtime": {
+      "title": "Realtime Analyse",
+      "description": "Directe rapportage en visualisatie"
+    }
+  },
+  "applications": {
+    "title": "Toepassings",
+    "subtitle": "gebieden"
+  },
+  "contributions": {
+    "title": "Bijdragen van het Product",
+    "subtitle": "InspectAI aan Bedrijven",
+    "quality": {
+      "title": "Hoge Precisie in Kwaliteitscontrole",
+      "description": "AI kan defecten nauwkeuriger detecteren dan het menselijk oog. Dit garandeert dat producten worden vervaardigd volgens hogere kwaliteitsnormen zonder fouten."
+    },
+    "reduce": {
+      "title": "Vermindering van Productieproces Fouten",
+      "description": "Het defectdetectiesysteem identificeert fouten vroeg in de productielijn, waardoor defecte producten niet in productie komen. Dit levert kostenbesparingen op."
+    },
+    "satisfaction": {
+      "title": "Verhoging van Klanttevredenheid",
+      "description": "Hoogwaardige, foutloze producten verhogen de klanttevredenheid en verminderen klachten. Dit is belangrijk voor het beschermen van de merkreputatie."
+    },
+    "recall": {
+      "title": "Vermindering van Terugroepkosten",
+      "description": "Het vervaardigen van foutloze producten vermindert de terugroepkosten. Kostenbesparingen worden bereikt omdat defecte producten niet hoeven te worden teruggehaald of gereproduceerd."
+    },
+    "efficiency": {
+      "title": "Verhoging van Efficiëntie",
+      "description": "Automatische defectdetectie vermindert arbeidskosten en versnelt productieprocessen. Dit verhoogt de efficiëntie van de fabrikant."
+    },
+    "compliance": {
+      "title": "Naleving van Normen",
+      "description": "Het kwaliteitscontrolesysteem zorgt ervoor dat de productie voldoet aan industrienormen en vergemakkelijkt auditprocessen."
+    }
   },
   "language": {
     "select": "Selecteer Taal",
