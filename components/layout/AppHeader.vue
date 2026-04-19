@@ -13,6 +13,48 @@
         <a href="#contact" class="nav-cta">İletişim</a>
       </nav>
 
+      <!-- Desktop Controls -->
+      <div class="desktop-controls">
+        <button 
+          @click="toggleTheme"
+          class="theme-toggle"
+          aria-label="Toggle theme"
+        >
+          <svg
+            :class="['theme-icon', 'sun-icon', { 'icon-hidden': isDark }]"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"
+            />
+          </svg>
+
+          <svg
+            :class="['theme-icon', 'moon-icon', { 'icon-visible': isDark }]"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"
+            />
+          </svg>
+        </button>
+
+        <ClientOnly>
+          <LanguageSwitcher />
+        </ClientOnly>
+      </div>
+
+      <!-- Mobile Controls -->
       <div class="mobile-right-controls">
         <button 
           @click="toggleTheme"
@@ -186,8 +228,16 @@ const toggleTheme = inject<() => void>('toggleTheme')
   box-shadow: 0 8px 20px rgba(61, 186, 162, 0.3);
 }
 
-.mobile-right-controls {
+/* Desktop Controls */
+.desktop-controls {
   display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+/* Mobile Controls */
+.mobile-right-controls {
+  display: none;
   align-items: center;
   gap: 0.75rem;
 }
@@ -284,6 +334,16 @@ const toggleTheme = inject<() => void>('toggleTheme')
   
   .desktop-nav {
     display: none;
+  }
+
+  /* Hide desktop controls on mobile */
+  .desktop-controls {
+    display: none;
+  }
+
+  /* Show mobile controls on mobile */
+  .mobile-right-controls {
+    display: flex;
   }
   
   .mobile-menu-btn {

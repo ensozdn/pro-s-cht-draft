@@ -1,12 +1,12 @@
 <template>
   <div class="language-switcher">
     <button
-      @click="isOpen = !isOpen"
+      @click="toggleDropdown"
       class="language-button"
       :class="{ 'active': isOpen }"
     >
-      <span class="language-flag">{{ currentLocale?.flag }}</span>
-      <span class="language-code">{{ currentLocale?.code.toUpperCase() }}</span>
+      <span class="language-flag">{{ currentLocale.flag }}</span>
+      <span class="language-code">{{ currentLocale.code }}</span>
       <svg
         class="chevron"
         :class="{ 'rotate': isOpen }"
@@ -21,16 +21,16 @@
     <Transition name="dropdown">
       <div v-if="isOpen" class="language-dropdown">
         <button
-          v-for="locale in availableLocales"
-          :key="locale.code"
-          @click="switchLanguage(locale.code)"
+          v-for="lang in languages"
+          :key="lang.code"
+          @click="switchLanguage(lang.code)"
           class="language-item"
-          :class="{ 'active': currentLocale?.code === locale.code }"
+          :class="{ 'active': currentLocale.code === lang.code }"
         >
-          <span class="item-flag">{{ locale.flag }}</span>
-          <span class="item-name">{{ locale.name }}</span>
+          <span class="item-flag">{{ lang.flag }}</span>
+          <span class="item-name">{{ lang.name }}</span>
           <svg
-            v-if="currentLocale?.code === locale.code"
+            v-if="currentLocale.code === lang.code"
             class="check-icon"
             fill="none"
             stroke="currentColor"
@@ -45,30 +45,36 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted, onUnmounted } from 'vue'
-// @ts-ignore
-import { useI18n } from '#i18n'
+import { ref, onMounted, onUnmounted } from 'vue'
 
-const { locale, locales, setLocale } = useI18n()
+const languages = [
+  { code: 'TR', name: 'Türkçe', flag: '🇹🇷', dir: 'ltr' },
+  { code: 'EN', name: 'English', flag: '🇬🇧', dir: 'ltr' },
+  { code: 'AR', name: 'العربية', flag: '🇸🇦', dir: 'rtl' },
+  { code: 'FR', name: 'Français', flag: '🇫🇷', dir: 'ltr' },
+  { code: 'DE', name: 'Deutsch', flag: '🇩🇪', dir: 'ltr' },
+  { code: 'IT', name: 'Italiano', flag: '🇮🇹', dir: 'ltr' },
+  { code: 'PT', name: 'Português', flag: '🇵🇹', dir: 'ltr' },
+  { code: 'RU', name: 'Русский', flag: '🇷🇺', dir: 'ltr' },
+  { code: 'ES', name: 'Español', flag: '🇪🇸', dir: 'ltr' },
+  { code: 'NL', name: 'Nederlands', flag: '🇳🇱', dir: 'ltr' }
+]
+
 const isOpen = ref(false)
+const currentLocale = ref(languages[0])
 
-const availableLocales = computed(() => {
-  return locales.value as any[]
-})
+const toggleDropdown = () => {
+  isOpen.value = !isOpen.value
+}
 
-const currentLocale = computed(() => {
-  return availableLocales.value.find(l => l.code === locale.value)
-})
-
-const switchLanguage = async (code: string) => {
-  await setLocale(code)
-  isOpen.value = false
-  
-  const selectedLocale = availableLocales.value.find(l => l.code === code)
+const switchLanguage = (code: string) => {
+  const selectedLocale = languages.find(l => l.code === code)
   if (selectedLocale) {
+    currentLocale.value = selectedLocale
     document.documentElement.setAttribute('dir', selectedLocale.dir)
-    document.documentElement.setAttribute('lang', code)
+    document.documentElement.setAttribute('lang', code.toLowerCase())
   }
+  isOpen.value = false
 }
 
 const closeDropdown = (e: MouseEvent) => {
@@ -78,19 +84,15 @@ const closeDropdown = (e: MouseEvent) => {
   }
 }
 
-onMounted(() => {
-  document.addEventListener('click', closeDropdown)
-  
-  const currentLoc = currentLocale.value
-  if (currentLoc) {
-    document.documentElement.setAttribute('dir', currentLoc.dir)
-    document.documentElement.setAttribute('lang', currentLoc.code)
-  }
-})
+if (process.client) {
+  onMounted(() => {
+    document.addEventListener('click', closeDropdown)
+  })
 
-onUnmounted(() => {
-  document.removeEventListener('click', closeDropdown)
-})
+  onUnmounted(() => {
+    document.removeEventListener('click', closeDropdown)
+  })
+}
 </script>
 
 <style scoped>
