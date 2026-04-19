@@ -819,9 +819,13 @@ onMounted(async () => {
     ease: 'power2.inOut',
     onUpdate: () => {
       const progress = Math.round(loadingProgress.value)
+      
+      // Update progress bar
       if (preloaderComponent.value?.preloaderBarEl) {
         preloaderComponent.value.preloaderBarEl.style.width = `${progress}%`
       }
+      
+      // Update percentage text
       if (preloaderComponent.value?.preloaderTextEl) {
         preloaderComponent.value.preloaderTextEl.textContent = `${progress}%`
       }
@@ -829,6 +833,7 @@ onMounted(async () => {
     onComplete: () => {
       if (!preloaderComponent.value?.preloaderEl) return
       
+      // Exit animation - slide up
       gsap.to(preloaderComponent.value.preloaderEl, {
         y: '-100%',
         duration: 0.8,

@@ -1,7 +1,13 @@
 <template>
   <div ref="preloaderEl" class="preloader">
     <div class="preloader-content">
-      <img src="/images/logo.png" alt="ProSicht Logo" class="preloader-logo-img" />
+      <!-- Logo with wipe reveal and light beam -->
+      <div class="logo-container">
+        <img src="/images/logo.png" alt="ProSicht Logo" class="preloader-logo-img" />
+        <!-- Light beam that scans across the logo -->
+        <div class="light-beam"></div>
+      </div>
+      
       <div class="preloader-bar-wrapper">
         <div ref="preloaderBarEl" class="preloader-bar"></div>
       </div>
@@ -46,24 +52,104 @@ defineExpose({
   text-align: center;
 }
 
+/* ═══════════════════════════════════════════
+   LOGO CONTAINER WITH ANIMATIONS
+   ═══════════════════════════════════════════ */
+
+.logo-container {
+  position: relative;
+  display: inline-block;
+  margin: 6rem auto 3rem;
+}
+
 .preloader-logo-img {
   height: 250px;
   width: auto;
-  margin: 6rem auto 3rem;
   display: block;
   opacity: 0;
-  animation: fadeInLogo 0.8s ease 0.2s forwards;
   filter: drop-shadow(0 10px 30px rgba(13, 124, 108, 0.15));
+  
+  /* Stage 1: Wipe reveal from left to right */
+  clip-path: inset(0 100% 0 0);
+  animation: 
+    wipeReveal 1s ease-out 0.2s forwards,
+    logoFadeIn 0.3s ease 0.2s forwards;
 }
 
-@keyframes fadeInLogo {
-  to {
-    opacity: 1;
-    transform: scale(1);
+.dark .preloader-logo-img {
+  filter: drop-shadow(0 10px 30px rgba(61, 186, 162, 0.25));
+}
+
+/* Stage 1: Wipe from left to right */
+@keyframes wipeReveal {
+  from {
+    clip-path: inset(0 100% 0 0);
   }
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+@keyframes logoFadeIn {
   from {
     opacity: 0;
-    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Stage 2: Light beam scanning across logo */
+.light-beam {
+  position: absolute;
+  top: 0;
+  left: -20%;
+  width: 40%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(61, 186, 162, 0.3) 30%,
+    rgba(61, 186, 162, 0.6) 50%,
+    rgba(61, 186, 162, 0.3) 70%,
+    transparent 100%
+  );
+  opacity: 0;
+  pointer-events: none;
+  mix-blend-mode: screen;
+  filter: blur(8px);
+  
+  /* Start scanning after wipe completes */
+  animation: 
+    beamFadeIn 0.3s ease 1.2s forwards,
+    beamScan 1.5s ease-in-out 1.2s forwards;
+}
+
+.dark .light-beam {
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(93, 212, 191, 0.4) 30%,
+    rgba(93, 212, 191, 0.8) 50%,
+    rgba(93, 212, 191, 0.4) 70%,
+    transparent 100%
+  );
+  box-shadow: 0 0 30px rgba(93, 212, 191, 0.5);
+}
+
+@keyframes beamFadeIn {
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes beamScan {
+  0% {
+    left: -20%;
+  }
+  100% {
+    left: 100%;
+    opacity: 0;
   }
 }
 
