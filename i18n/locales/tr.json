@@ -1,0 +1,66 @@
+{
+  "nav": {
+    "home": "Ana Sayfa",
+    "features": "Özellikler",
+    "applications": "Uygulamalar",
+    "about": "Hakkımızda",
+    "contact": "İletişim"
+  },
+  "hero": {
+    "title1": "Üretimde",
+    "title2": "Mükemmeli Yakalayın",
+    "description": "Yapay zeka destekli kalite kontrol sistemiyle üretim hatalarını anlık tespit edin",
+    "cta": "Daha Fazla Keşfet"
+  },
+  "section2": {
+    "title1": "Otonom",
+    "title2": "Karar Sistemi",
+    "description": "Gerçek zamanlı analiz ve otomatik kalite değerlendirmesi",
+    "cta": "Sistemi İncele"
+  },
+  "section3": {
+    "title1": "Maliyetleri",
+    "title2": "Minimuma",
+    "title3": "İndirin",
+    "description": "%40'a varan maliyet tasarrufu ve sıfır kusurlu üretim"
+  },
+  "stats": {
+    "title": "Sayılarla",
+    "brand": "ProSicht",
+    "accuracy": "Doğruluk Oranı",
+    "responseTime": "Yanıt Süresi",
+    "throughput": "Dakikada Parça"
+  },
+  "whyUs": {
+    "title": "Neden",
+    "subtitle": "Biz?",
+    "speed": {
+      "title": "Hızlı Entegrasyon",
+      "description": "Mevcut üretim hattınıza 24 saat içinde entegre olun"
+    },
+    "ai": {
+      "title": "Yapay Zeka Gücü",
+      "description": "Derin öğrenme algoritmaları ile sürekli gelişen tespit yetenekleri"
+    },
+    "support": {
+      "title": "7/24 Destek",
+      "description": "Uzman ekibimiz her zaman yanınızda"
+    },
+    "realtime": {
+      "title": "Gerçek Zamanlı Analiz",
+      "description": "Anlık raporlama ve görselleştirme"
+    }
+  },
+  "applications": {
+    "title": "Uygulama",
+    "subtitle": "Alanlarımız"
+  },
+  "contributions": {
+    "title": "InspectAI Ürününün İşletmeye",
+    "subtitle": "Katkıları"
+  },
+  "language": {
+    "select": "Dil Seçin",
+    "current": "Türkçe"
+  }
+}

@@ -3,7 +3,7 @@ export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
   devtools: { enabled: true },
   
-  modules: ['@nuxtjs/tailwindcss', '@nuxtjs/google-fonts'],
+  modules: ['@nuxtjs/tailwindcss', '@nuxtjs/google-fonts', '@nuxtjs/i18n'],
   
   googleFonts: {
     families: {
@@ -28,6 +28,37 @@ export default defineNuxtConfig({
           }
         }
       }
+    }
+  },
+
+  // ═══════════════════════════════════════════════════════
+  // i18n Configuration - A-Grade Professional Setup
+  // ═══════════════════════════════════════════════════════
+  i18n: {
+    strategy: 'no_prefix', // Clean URLs without language prefix
+    defaultLocale: 'tr',
+    locales: [
+      { code: 'tr', iso: 'tr-TR', file: 'tr.json', name: 'Türkçe', dir: 'ltr' },
+      { code: 'en', iso: 'en-US', file: 'en.json', name: 'English', dir: 'ltr' },
+      { code: 'ar', iso: 'ar-SA', file: 'ar.json', name: 'العربية', dir: 'rtl' },
+      { code: 'fr', iso: 'fr-FR', file: 'fr.json', name: 'Français', dir: 'ltr' },
+      { code: 'de', iso: 'de-DE', file: 'de.json', name: 'Deutsch', dir: 'ltr' },
+      { code: 'it', iso: 'it-IT', file: 'it.json', name: 'Italiano', dir: 'ltr' },
+      { code: 'pt', iso: 'pt-PT', file: 'pt.json', name: 'Português', dir: 'ltr' },
+      { code: 'ru', iso: 'ru-RU', file: 'ru.json', name: 'Русский', dir: 'ltr' },
+      { code: 'es', iso: 'es-ES', file: 'es.json', name: 'Español', dir: 'ltr' },
+      { code: 'nl', iso: 'nl-NL', file: 'nl.json', name: 'Nederlands', dir: 'ltr' }
+    ],
+    lazy: true,
+    langDir: 'locales', // i18n/locales/ klasöründeki dosyalar
+    detectBrowserLanguage: {
+      useCookie: true,
+      cookieKey: 'prosicht_i18n_locale',
+      redirectOn: 'root',
+      alwaysRedirect: false
+    },
+    compilation: {
+      strictMessage: false
     }
   }
 })

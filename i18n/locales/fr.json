@@ -1,0 +1,26 @@
+{
+  "nav": {
+    "home": "Accueil",
+    "features": "Fonctionnalités",
+    "applications": "Applications",
+    "about": "À propos",
+    "contact": "Contact"
+  },
+  "hero": {
+    "title1": "Atteignez",
+    "title2": "la Perfection en Production",
+    "description": "Détectez les erreurs de production instantanément avec le système de contrôle qualité alimenté par IA",
+    "cta": "Explorer Plus"
+  },
+  "stats": {
+    "title": "ProSicht en",
+    "brand": "Chiffres",
+    "accuracy": "Taux de Précision",
+    "responseTime": "Temps de Réponse",
+    "throughput": "Pièces par Minute"
+  },
+  "language": {
+    "select": "Sélectionner la Langue",
+    "current": "Français"
+  }
+}

@@ -1,0 +1,66 @@
+{
+  "nav": {
+    "home": "Home",
+    "features": "Features",
+    "applications": "Applications",
+    "about": "About",
+    "contact": "Contact"
+  },
+  "hero": {
+    "title1": "Achieve",
+    "title2": "Perfection in Production",
+    "description": "Detect production errors instantly with AI-powered quality control system",
+    "cta": "Explore More"
+  },
+  "section2": {
+    "title1": "Autonomous",
+    "title2": "Decision System",
+    "description": "Real-time analysis and automatic quality assessment",
+    "cta": "Explore System"
+  },
+  "section3": {
+    "title1": "Minimize",
+    "title2": "Costs to",
+    "title3": "The Minimum",
+    "description": "Up to 40% cost savings and zero-defect production"
+  },
+  "stats": {
+    "title": "ProSicht in",
+    "brand": "Numbers",
+    "accuracy": "Accuracy Rate",
+    "responseTime": "Response Time",
+    "throughput": "Parts Per Minute"
+  },
+  "whyUs": {
+    "title": "Why",
+    "subtitle": "Us?",
+    "speed": {
+      "title": "Fast Integration",
+      "description": "Integrate into your existing production line within 24 hours"
+    },
+    "ai": {
+      "title": "AI Power",
+      "description": "Ever-improving detection capabilities with deep learning algorithms"
+    },
+    "support": {
+      "title": "24/7 Support",
+      "description": "Our expert team is always with you"
+    },
+    "realtime": {
+      "title": "Real-Time Analysis",
+      "description": "Instant reporting and visualization"
+    }
+  },
+  "applications": {
+    "title": "Application",
+    "subtitle": "Areas"
+  },
+  "contributions": {
+    "title": "InspectAI Product's",
+    "subtitle": "Business Contributions"
+  },
+  "language": {
+    "select": "Select Language",
+    "current": "English"
+  }
+}

@@ -16,13 +16,13 @@
       <section ref="section1" class="content-section">
         <div class="glass-card">
           <h1 class="content-title">
-            <span class="text-gradient">Üretimde</span> Mükemmeli Yakalayın
+            <span class="text-gradient">{{ $t('hero.title1') }}</span> {{ $t('hero.title2') }}
           </h1>
           <p class="content-description">
-            Yapay zeka destekli kalite kontrol sistemiyle üretim hatalarını anlık tespit edin
+            {{ $t('hero.description') }}
           </p>
           <button class="cta-button">
-            Daha Fazla Keşfet
+            {{ $t('hero.cta') }}
           </button>
         </div>
       </section>

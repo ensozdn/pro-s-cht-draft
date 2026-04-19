@@ -61,7 +61,9 @@ const languages = [
 ]
 
 const isOpen = ref(false)
-const { locale, setLocale, init } = useI18n()
+
+// Use official @nuxtjs/i18n composable
+const { locale, setLocale } = useI18n()
 
 const currentLocale = computed(() => {
   return languages.find(l => l.code === locale.value) || languages[0]
@@ -71,12 +73,16 @@ const toggleDropdown = () => {
   isOpen.value = !isOpen.value
 }
 
-const switchLanguage = async (code: string) => {
+const switchLanguage = (code: string) => {
   const selectedLocale = languages.find(l => l.code === code)
   if (selectedLocale) {
-    await setLocale(code)
-    document.documentElement.setAttribute('dir', selectedLocale.dir)
-    document.documentElement.setAttribute('lang', code.toLowerCase())
+    setLocale(code)
+    
+    // Update HTML attributes for RTL support
+    if (process.client) {
+      document.documentElement.setAttribute('dir', selectedLocale.dir)
+      document.documentElement.setAttribute('lang', code.toLowerCase())
+    }
   }
   isOpen.value = false
 }
@@ -88,20 +94,23 @@ const closeDropdown = (e: MouseEvent) => {
   }
 }
 
-onMounted(async () => {
-  await init()
-  document.addEventListener('click', closeDropdown)
-  
-  // Set initial HTML attributes
-  const current = currentLocale.value
-  if (current) {
-    document.documentElement.setAttribute('dir', current.dir)
-    document.documentElement.setAttribute('lang', current.code.toLowerCase())
+onMounted(() => {
+  if (process.client) {
+    document.addEventListener('click', closeDropdown)
+    
+    // Set initial HTML attributes
+    const current = currentLocale.value
+    if (current) {
+      document.documentElement.setAttribute('dir', current.dir)
+      document.documentElement.setAttribute('lang', current.code.toLowerCase())
+    }
   }
 })
 
 onUnmounted(() => {
-  document.removeEventListener('click', closeDropdown)
+  if (process.client) {
+    document.removeEventListener('click', closeDropdown)
+  }
 })
 </script>
 
