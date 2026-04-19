@@ -5,8 +5,8 @@
       class="language-button"
       :class="{ 'active': isOpen }"
     >
-      <span class="language-flag">{{ currentLocale.flag }}</span>
-      <span class="language-code">{{ currentLocale.code }}</span>
+      <span class="language-flag">{{ currentLocale?.flag }}</span>
+      <span class="language-code">{{ currentLocale?.code.toUpperCase() }}</span>
       <svg
         class="chevron"
         :class="{ 'rotate': isOpen }"
@@ -25,12 +25,12 @@
           :key="lang.code"
           @click="switchLanguage(lang.code)"
           class="language-item"
-          :class="{ 'active': currentLocale.code === lang.code }"
+          :class="{ 'active': currentLocale?.code === lang.code }"
         >
           <span class="item-flag">{{ lang.flag }}</span>
           <span class="item-name">{{ lang.name }}</span>
           <svg
-            v-if="currentLocale.code === lang.code"
+            v-if="currentLocale?.code === lang.code"
             class="check-icon"
             fill="none"
             stroke="currentColor"
@@ -45,32 +45,36 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted } from 'vue'
+import { ref, onMounted, onUnmounted, watch } from 'vue'
 
 const languages = [
-  { code: 'TR', name: 'Türkçe', flag: '🇹🇷', dir: 'ltr' },
-  { code: 'EN', name: 'English', flag: '🇬🇧', dir: 'ltr' },
-  { code: 'AR', name: 'العربية', flag: '🇸🇦', dir: 'rtl' },
-  { code: 'FR', name: 'Français', flag: '🇫🇷', dir: 'ltr' },
-  { code: 'DE', name: 'Deutsch', flag: '🇩🇪', dir: 'ltr' },
-  { code: 'IT', name: 'Italiano', flag: '🇮🇹', dir: 'ltr' },
-  { code: 'PT', name: 'Português', flag: '🇵🇹', dir: 'ltr' },
-  { code: 'RU', name: 'Русский', flag: '🇷🇺', dir: 'ltr' },
-  { code: 'ES', name: 'Español', flag: '🇪🇸', dir: 'ltr' },
-  { code: 'NL', name: 'Nederlands', flag: '🇳🇱', dir: 'ltr' }
+  { code: 'tr', name: 'Türkçe', flag: '🇹🇷', dir: 'ltr' },
+  { code: 'en', name: 'English', flag: '🇬🇧', dir: 'ltr' },
+  { code: 'ar', name: 'العربية', flag: '🇸🇦', dir: 'rtl' },
+  { code: 'fr', name: 'Français', flag: '🇫🇷', dir: 'ltr' },
+  { code: 'de', name: 'Deutsch', flag: '🇩🇪', dir: 'ltr' },
+  { code: 'it', name: 'Italiano', flag: '🇮🇹', dir: 'ltr' },
+  { code: 'pt', name: 'Português', flag: '🇵🇹', dir: 'ltr' },
+  { code: 'ru', name: 'Русский', flag: '🇷🇺', dir: 'ltr' },
+  { code: 'es', name: 'Español', flag: '🇪🇸', dir: 'ltr' },
+  { code: 'nl', name: 'Nederlands', flag: '🇳🇱', dir: 'ltr' }
 ]
 
 const isOpen = ref(false)
-const currentLocale = ref(languages[0])
+const { locale, setLocale, init } = useI18n()
+
+const currentLocale = computed(() => {
+  return languages.find(l => l.code === locale.value) || languages[0]
+})
 
 const toggleDropdown = () => {
   isOpen.value = !isOpen.value
 }
 
-const switchLanguage = (code: string) => {
+const switchLanguage = async (code: string) => {
   const selectedLocale = languages.find(l => l.code === code)
   if (selectedLocale) {
-    currentLocale.value = selectedLocale
+    await setLocale(code)
     document.documentElement.setAttribute('dir', selectedLocale.dir)
     document.documentElement.setAttribute('lang', code.toLowerCase())
   }
@@ -84,15 +88,21 @@ const closeDropdown = (e: MouseEvent) => {
   }
 }
 
-if (process.client) {
-  onMounted(() => {
-    document.addEventListener('click', closeDropdown)
-  })
+onMounted(async () => {
+  await init()
+  document.addEventListener('click', closeDropdown)
+  
+  // Set initial HTML attributes
+  const current = currentLocale.value
+  if (current) {
+    document.documentElement.setAttribute('dir', current.dir)
+    document.documentElement.setAttribute('lang', current.code.toLowerCase())
+  }
+})
 
-  onUnmounted(() => {
-    document.removeEventListener('click', closeDropdown)
-  })
-}
+onUnmounted(() => {
+  document.removeEventListener('click', closeDropdown)
+})
 </script>
 
 <style scoped>

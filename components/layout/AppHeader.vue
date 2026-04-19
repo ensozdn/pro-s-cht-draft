@@ -91,7 +91,9 @@
         </button>
 
         <!-- Language Switcher -->
-        <LanguageSwitcher />
+        <ClientOnly>
+          <LanguageSwitcher />
+        </ClientOnly>
 
         <button class="mobile-menu-btn" @click="$emit('toggle-menu')">
           <svg class="hamburger-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -105,6 +107,7 @@
 
 <script setup lang="ts">
 import { inject } from 'vue'
+import LanguageSwitcher from '../LanguageSwitcher.vue'
 
 defineProps<{
   isDark: boolean

@@ -3,25 +3,7 @@ export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
   devtools: { enabled: true },
   
-  modules: ['@nuxtjs/tailwindcss', '@nuxtjs/google-fonts', '@nuxtjs/i18n'],
-  
-  i18n: {
-    locales: [
-      { code: 'tr', name: 'Türkçe', flag: '🇹🇷', dir: 'ltr' },
-      { code: 'en', name: 'English', flag: '🇬🇧', dir: 'ltr' },
-      { code: 'ar', name: 'العربية', flag: '🇸🇦', dir: 'rtl' },
-      { code: 'fr', name: 'Français', flag: '🇫🇷', dir: 'ltr' },
-      { code: 'de', name: 'Deutsch', flag: '🇩🇪', dir: 'ltr' },
-      { code: 'it', name: 'Italiano', flag: '🇮🇹', dir: 'ltr' },
-      { code: 'pt', name: 'Português', flag: '🇵🇹', dir: 'ltr' },
-      { code: 'ru', name: 'Русский', flag: '🇷🇺', dir: 'ltr' },
-      { code: 'es', name: 'Español', flag: '🇪🇸', dir: 'ltr' },
-      { code: 'nl', name: 'Nederlands', flag: '🇳🇱', dir: 'ltr' }
-    ],
-    defaultLocale: 'tr',
-    strategy: 'no_prefix',
-    detectBrowserLanguage: false
-  } as any,
+  modules: ['@nuxtjs/tailwindcss', '@nuxtjs/google-fonts'],
   
   googleFonts: {
     families: {
