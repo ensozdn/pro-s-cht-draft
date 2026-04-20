@@ -511,7 +511,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted, computed, provide } from 'vue'
+import { ref, onMounted, onUnmounted, computed, provide, watch, nextTick } from 'vue'
 import * as THREE from 'three'
 import AppHeader from '../components/layout/AppHeader.vue'
 import MobileDrawer from '../components/layout/MobileDrawer.vue'
@@ -1661,59 +1661,59 @@ onMounted(async () => {
         scrollTrigger: {
           trigger: '.why-us-grid',
           start: 'top 75%',
-          once: true
+          toggleActions: 'play none none none'
         }
       }
     )
   }
 
-  // Contributions Section - Cards with Elastic Effect
+  // Contributions Section - Cards with Smooth Effect (Optimized)
   const contributionCards = document.querySelectorAll('.contribution-card')
   if (contributionCards.length > 0) {
     gsap.fromTo(
       contributionCards,
       {
         opacity: 0,
-        y: 80,
-        rotateX: -15
+        y: 50,
+        scale: 0.95
       },
       {
         opacity: 1,
         y: 0,
-        rotateX: 0,
-        duration: 1,
-        stagger: 0.12,
-        ease: 'elastic.out(1, 0.5)',
+        scale: 1,
+        duration: 0.7,
+        stagger: 0.1,
+        ease: 'power3.out',
         scrollTrigger: {
           trigger: '.contributions-grid',
           start: 'top 70%',
-          once: true
+          toggleActions: 'play none none none'
         }
       }
     )
   }
 
-  // Partners Section - Logo Reveal
+  // Partners Section - Logo Reveal (Optimized - lighter animation)
   const partnerCards = document.querySelectorAll('.partner-card')
   if (partnerCards.length > 0) {
     gsap.fromTo(
       partnerCards,
       {
         opacity: 0,
-        scale: 0.7,
-        rotateY: -25
+        scale: 0.85,
+        y: 30
       },
       {
         opacity: 1,
         scale: 1,
-        rotateY: 0,
-        duration: 0.7,
-        stagger: 0.08,
-        ease: 'back.out(1.4)',
+        y: 0,
+        duration: 0.6,
+        stagger: 0.06,
+        ease: 'power2.out',
         scrollTrigger: {
           trigger: '.partners-grid',
           start: 'top 75%',
-          once: true
+          toggleActions: 'play none none none'
         }
       }
     )
@@ -1795,6 +1795,62 @@ onMounted(async () => {
   }
   
   window.addEventListener('resize', handleResize)
+})
+
+// Watch locale changes and reapply GSAP visibility settings
+watch(locale, async () => {
+  try {
+    // Wait for DOM to update after locale change
+    await nextTick()
+    
+    // Import GSAP and ScrollTrigger dynamically
+    const gsap = (await import('gsap')).default
+    const { ScrollTrigger } = await import('gsap/ScrollTrigger')
+    
+    // Refresh all ScrollTriggers to recalculate positions after DOM update
+    ScrollTrigger.refresh()
+    
+    // Ensure cards are visible immediately (fallback if user doesn't scroll)
+    const featureCards = document.querySelectorAll('.feature-card')
+    if (featureCards.length > 0) {
+      gsap.set(featureCards, {
+        opacity: 1,
+        y: 0,
+        scale: 1
+      })
+    }
+    
+    const contributionCards = document.querySelectorAll('.contribution-card')
+    if (contributionCards.length > 0) {
+      gsap.set(contributionCards, {
+        opacity: 1,
+        y: 0,
+        scale: 1,
+        rotateX: 0
+      })
+    }
+    
+    const partnerCards = document.querySelectorAll('.partner-card')
+    if (partnerCards.length > 0) {
+      gsap.set(partnerCards, {
+        opacity: 1,
+        y: 0,
+        scale: 1,
+        rotateY: 0
+      })
+    }
+    
+    const blogCards = document.querySelectorAll('.blog-card')
+    if (blogCards.length > 0) {
+      gsap.set(blogCards, {
+        opacity: 1,
+        y: 0,
+        scale: 1
+      })
+    }
+  } catch (error) {
+    console.error('Error reapplying GSAP settings on locale change:', error)
+  }
 })
 
 onUnmounted(async () => {
