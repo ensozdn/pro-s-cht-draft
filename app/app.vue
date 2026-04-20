@@ -229,7 +229,7 @@
       <div class="blog-container">
         <!-- Başlık -->
         <div class="blog-header">
-          <h2 class="blog-title">ProSicht - <span class="text-gradient">Blog</span></h2>
+          <h2 class="blog-title">ProSicht - <span class="text-gradient">{{ $t('blog.title') }}</span></h2>
         </div>
 
         <!-- Asimetrik Bento Grid -->
@@ -281,7 +281,7 @@
         <!-- Daha Fazla Göster Butonu -->
         <div class="blog-button-wrapper">
           <button class="blog-load-more">
-            Daha Fazla Göster
+            {{ $t('blog.allPosts') }}
             <svg class="button-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
             </svg>
@@ -293,7 +293,7 @@
     <!-- İletişim Bölümü -->
     <section ref="contactSection" class="contact-section">
       <div class="contact-container">
-        <h2 class="contact-main-title">İletişim</h2>
+        <h2 class="contact-main-title">{{ $t('nav.contact') }}</h2>
         
         <div class="contact-grid">
           <!-- Sol: Harita -->
@@ -311,7 +311,7 @@
 
           <!-- Sağ: İletişim Bilgileri -->
           <div class="contact-info-wrapper">
-            <h3 class="contact-info-title">İletişim Bilgileri</h3>
+            <h3 class="contact-info-title">{{ $t('contact.title') }}</h3>
             
             <div class="contact-list">
               <div
@@ -343,7 +343,7 @@
     <section class="contact-form-section">
       <div class="form-outer-container">
         <div class="form-glass-card">
-          <h2 class="form-main-title">Bize <span class="text-gradient">Ulaşın</span></h2>
+          <h2 class="form-main-title">{{ $t('nav.contact') }} <span class="text-gradient"></span></h2>
           
           <form @submit.prevent="handleSubmit" class="premium-form">
             <!-- İsim ve Soyisim -->
@@ -352,7 +352,7 @@
                 <input
                   v-model="form.firstName"
                   type="text"
-                  placeholder="Adınız"
+                  :placeholder="$t('form.firstName')"
                   class="form-elite-input"
                   required
                 />
@@ -361,7 +361,7 @@
                 <input
                   v-model="form.lastName"
                   type="text"
-                  placeholder="Soyadınız"
+                  :placeholder="$t('form.lastName')"
                   class="form-elite-input"
                   required
                 />
@@ -374,7 +374,7 @@
                 <input
                   v-model="form.email"
                   type="email"
-                  placeholder="E-posta Adresiniz"
+                  :placeholder="$t('form.email')"
                   class="form-elite-input"
                   required
                 />
@@ -383,7 +383,7 @@
                 <input
                   v-model="form.phone"
                   type="tel"
-                  placeholder="Telefon Numaranız"
+                  :placeholder="$t('form.phone')"
                   class="form-elite-input"
                   required
                 />
@@ -398,7 +398,7 @@
                   class="form-elite-input form-select"
                   required
                 >
-                  <option value="" disabled selected>Uygulama Alanı Seçiniz</option>
+                  <option value="" disabled selected>{{ $t('form.selectArea') }}</option>
                   <option
                     v-for="area in applicationAreas"
                     :key="area.value"
@@ -415,7 +415,7 @@
               <div class="form-field">
                 <textarea
                   v-model="form.message"
-                  placeholder="Mesajınız..."
+                  :placeholder="$t('form.message')"
                   rows="5"
                   class="form-elite-input form-textarea"
                   required
@@ -426,7 +426,7 @@
             <!-- Gönder Butonu -->
             <div class="form-submit-wrapper">
               <button type="submit" class="form-premium-button">
-                <span class="button-text">Gönder</span>
+                <span class="button-text">{{ $t('form.submit') }}</span>
                 <svg class="button-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
                 </svg>
@@ -528,50 +528,54 @@ provide('toggleTheme', toggleTheme)
 const isMobileMenuOpen = ref(false)
 const preloaderComponent = ref<InstanceType<typeof Preloader>>()
 
-const categories = ref([
-  {
-    id: 'metal-celik',
-    title: 'Metal-Çelik',
-    description: 'Yüksek hassasiyetli yüzey kontrolü, kaynak kalitesi tespiti ve çatlak analizi ile üretim süreçlerinizde maksimum güvenilirlik sağlıyoruz.',
-    image: '/images/metal-celik.png'
-  },
-  {
-    id: 'deri',
-    title: 'Deri',
-    description: 'Deri ürünlerinde renk tutarlılığı, yüzey kusurları ve dikiş kalitesi kontrolü ile premium standartları garanti ediyoruz.',
-    image: '/images/deri.png'
-  },
-  {
-    id: 'tekstil',
-    title: 'Tekstil',
-    description: 'Kumaş hataları, renk uyumsuzlukları, desen bozuklukları ve dikiş kalitesi analizinde yapay zeka destekli çözümler sunuyoruz.',
-    image: '/images/tekstil.png'
-  },
-  {
-    id: 'mobilya',
-    title: 'Mobilya',
-    description: 'Ahşap yüzey kalitesi, birleştirme noktaları, boya-vernik uygulamaları ve montaj doğruluğu kontrolünde sektörün öncüsüyüz.',
-    image: '/images/mobilya.png'
-  },
-  {
-    id: 'mermer',
-    title: 'Mermer',
-    description: 'Mermer ve doğal taş ürünlerde damar deseni, renk tonları, yüzey işleme kalitesi ve boyut hassasiyeti kontrolü yapıyoruz.',
-    image: '/images/mermer.png'
-  },
-  {
-    id: 'cam',
-    title: 'Cam',
-    description: 'Cam ürünlerde hava kabarcıkları, çizikler, şeffaflık kontrolü ve kenar işleme kalitesi analizinde uzmanız.',
-    image: '/images/cam.png'
-  },
-  {
-    id: 'son-kalite',
-    title: 'Son Kalite Kontrol',
-    description: 'Tüm sektörlerde üretim hattının son aşamasında, ürünlerinizin piyasaya çıkmadan önce mükemmel standartta olmasını sağlıyoruz.',
-    image: '/images/son-kalite.png'
-  }
-])
+// Categories - i18n ile FULL reactive
+const categories = computed(() => {
+  const currentLocale = locale.value  // Reactive dependency
+  return [
+    {
+      id: 'metal-celik',
+      title: t('categories.metalSteel.title'),
+      description: t('categories.metalSteel.description'),
+      image: '/images/metal-celik.png'
+    },
+    {
+      id: 'deri',
+      title: t('categories.leather.title'),
+      description: t('categories.leather.description'),
+      image: '/images/deri.png'
+    },
+    {
+      id: 'tekstil',
+      title: t('categories.textile.title'),
+      description: t('categories.textile.description'),
+      image: '/images/tekstil.png'
+    },
+    {
+      id: 'mobilya',
+      title: t('categories.furniture.title'),
+      description: t('categories.furniture.description'),
+      image: '/images/mobilya.png'
+    },
+    {
+      id: 'mermer',
+      title: t('categories.marble.title'),
+      description: t('categories.marble.description'),
+      image: '/images/mermer.png'
+    },
+    {
+      id: 'cam',
+      title: t('categories.glass.title'),
+      description: t('categories.glass.description'),
+      image: '/images/cam.png'
+    },
+    {
+      id: 'son-kalite',
+      title: t('categories.finalQuality.title'),
+      description: t('categories.finalQuality.description'),
+      image: '/images/son-kalite.png'
+    }
+  ]
+})
 
 // Neden Biz? Features - i18n ile FULL reactive
 const whyUsFeatures = computed(() => {
@@ -641,33 +645,36 @@ const contributions = computed(() => {
   ]
 })
 
-// İletişim Bilgileri
-const contactInfo = ref([
-  {
-    icon: 'MapPin',
-    text: 'TR - Sakarya Teknokent - Esentepe Mah. Akademiyolu Sk. Teknoloji Geliştirme Bölgeleri Sitesi B Blok No: 10b İç Kapı No: Z05 Serdivan / Sakarya'
-  },
-  {
-    icon: 'MapPin',
-    text: 'TR - Bilişim Vadisi - Muallimköy Mahallesi, Deniz Cd. No:143-5, 41400 Gebze/Kocaeli'
-  },
-  {
-    icon: 'Phone',
-    text: '+90 549 202 90 44'
-  },
-  {
-    icon: 'MapPin',
-    text: 'GER - Wabestr. 8, 38122 Braunschweig / Germany'
-  },
-  {
-    icon: 'Phone',
-    text: '+49 176 32385710'
-  },
-  {
-    icon: 'Mail',
-    text: 'info@prosicht.com'
-  }
-])
+// İletişim Bilgileri - i18n ile FULL reactive
+const contactInfo = computed(() => {
+  const currentLocale = locale.value  // Reactive dependency
+  return [
+    {
+      icon: 'MapPin',
+      text: t('contact.location.tr1')
+    },
+    {
+      icon: 'MapPin',
+      text: t('contact.location.tr2')
+    },
+    {
+      icon: 'Phone',
+      text: t('contact.phone.tr')
+    },
+    {
+      icon: 'MapPin',
+      text: t('contact.location.germany')
+    },
+    {
+      icon: 'Phone',
+      text: t('contact.phone.germany')
+    },
+    {
+      icon: 'Mail',
+      text: t('contact.email')
+    }
+  ]
+})
 
 const form = ref({
   firstName: '',
@@ -678,15 +685,19 @@ const form = ref({
   message: ''
 })
 
-const applicationAreas = ref([
-  { value: 'metal-celik', label: 'Metal-Çelik' },
-  { value: 'deri', label: 'Deri' },
-  { value: 'tekstil', label: 'Tekstil' },
-  { value: 'mobilya', label: 'Mobilya' },
-  { value: 'mermer', label: 'Mermer' },
-  { value: 'cam', label: 'Cam' },
-  { value: 'son-kalite', label: 'Son Kalite Kontrol' }
-])
+// Application Areas - i18n ile FULL reactive
+const applicationAreas = computed(() => {
+  const currentLocale = locale.value  // Reactive dependency
+  return [
+    { value: 'metal-celik', label: t('form.areas.metalSteel') },
+    { value: 'deri', label: t('form.areas.leather') },
+    { value: 'tekstil', label: t('form.areas.textile') },
+    { value: 'mobilya', label: t('form.areas.furniture') },
+    { value: 'mermer', label: t('form.areas.marble') },
+    { value: 'cam', label: t('form.areas.glass') },
+    { value: 'son-kalite', label: t('form.areas.finalQuality') }
+  ]
+})
 
 const handleSubmit = () => {
   console.log('Form gönderildi:', form.value)
@@ -719,36 +730,39 @@ const partners = ref([
   { name: 'Bilişim Vadisi', logo: '/images/partners/bilisim-vadisi.png' }
 ])
 
-// LOKMA 23: Blog & Haberler (Asimetrik Bento Grid)
-const blogPosts = ref([
-  {
-    id: 1,
-    title: 'Doğal Bir "Budak" mı, Yoksa Kritik Bir "Çatlak" mı?',
-    image: '/images/blog/blog1.jpg',
-    tags: ['AI', 'Endüstri 4.0', 'Technology'],
-    author: 'İdil Karabaş',
-    date: '2 ay ago',
-    featured: true
-  },
-  {
-    id: 2,
-    title: 'Otomotiv Üretiminde Yapay Zeka Destekli Kalite Kontrol Dönemi',
-    image: '/images/blog/blog2.jpg',
-    tags: ['AI', 'Endüstri 4.0', 'Technology'],
-    author: 'İdil Karabaş',
-    date: 'Şubat 24, 2026',
-    featured: false
-  },
-  {
-    id: 3,
-    title: 'Pro Sicht ve BIOS\'tan Güç Birliği: Kalite Kontrolde Uçtan Uca Otonom Dönem',
-    image: '/images/blog/blog3.jpg',
-    tags: ['AI', 'Technology'],
-    author: 'İdil Karabaş',
-    date: 'Şubat 24, 2026',
-    featured: false
-  }
-])
+// LOKMA 23: Blog & Haberler (Asimetrik Bento Grid) - i18n ile FULL reactive
+const blogPosts = computed(() => {
+  const currentLocale = locale.value  // Reactive dependency
+  return [
+    {
+      id: 1,
+      title: t('blog.post1.title'),
+      image: '/images/blog/blog1.jpg',
+      tags: ['AI', 'Endüstri 4.0', 'Technology'],  // Tags statik kalabilir
+      author: t('blog.post1.author'),
+      date: t('blog.post1.date'),
+      featured: true
+    },
+    {
+      id: 2,
+      title: t('blog.post2.title'),
+      image: '/images/blog/blog2.jpg',
+      tags: ['AI', 'Endüstri 4.0', 'Technology'],
+      author: t('blog.post2.author'),
+      date: t('blog.post2.date'),
+      featured: false
+    },
+    {
+      id: 3,
+      title: t('blog.post3.title'),
+      image: '/images/blog/blog3.jpg',
+      tags: ['AI', 'Technology'],
+      author: t('blog.post3.author'),
+      date: t('blog.post3.date'),
+      featured: false
+    }
+  ]
+})
 
 const categoryRefs = ref<(HTMLElement | null)[]>([])
 const activeTab = ref('metal-celik')
