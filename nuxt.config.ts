@@ -35,30 +35,27 @@ export default defineNuxtConfig({
   // i18n Configuration - A-Grade Professional Setup
   // ═══════════════════════════════════════════════════════
   i18n: {
-    strategy: 'no_prefix', // Clean URLs without language prefix
+    lazy: false,
+    strategy: 'no_prefix',
     defaultLocale: 'tr',
+    langDir: 'locales',
     locales: [
-      { code: 'tr', iso: 'tr-TR', file: 'tr.json', name: 'Türkçe', dir: 'ltr' },
-      { code: 'en', iso: 'en-US', file: 'en.json', name: 'English', dir: 'ltr' },
-      { code: 'ar', iso: 'ar-SA', file: 'ar.json', name: 'العربية', dir: 'rtl' },
-      { code: 'fr', iso: 'fr-FR', file: 'fr.json', name: 'Français', dir: 'ltr' },
-      { code: 'de', iso: 'de-DE', file: 'de.json', name: 'Deutsch', dir: 'ltr' },
-      { code: 'it', iso: 'it-IT', file: 'it.json', name: 'Italiano', dir: 'ltr' },
-      { code: 'pt', iso: 'pt-PT', file: 'pt.json', name: 'Português', dir: 'ltr' },
-      { code: 'ru', iso: 'ru-RU', file: 'ru.json', name: 'Русский', dir: 'ltr' },
-      { code: 'es', iso: 'es-ES', file: 'es.json', name: 'Español', dir: 'ltr' },
-      { code: 'nl', iso: 'nl-NL', file: 'nl.json', name: 'Nederlands', dir: 'ltr' }
+      { code: 'tr', language: 'tr-TR', file: 'tr.json', name: 'Türkçe', dir: 'ltr' },
+      { code: 'en', language: 'en-US', file: 'en.json', name: 'English', dir: 'ltr' },
+      { code: 'ar', language: 'ar-SA', file: 'ar.json', name: 'العربية', dir: 'rtl' },
+      { code: 'fr', language: 'fr-FR', file: 'fr.json', name: 'Français', dir: 'ltr' },
+      { code: 'de', language: 'de-DE', file: 'de.json', name: 'Deutsch', dir: 'ltr' },
+      { code: 'it', language: 'it-IT', file: 'it.json', name: 'Italiano', dir: 'ltr' },
+      { code: 'pt', language: 'pt-PT', file: 'pt.json', name: 'Português', dir: 'ltr' },
+      { code: 'ru', language: 'ru-RU', file: 'ru.json', name: 'Русский', dir: 'ltr' },
+      { code: 'es', language: 'es-ES', file: 'es.json', name: 'Español', dir: 'ltr' },
+      { code: 'nl', language: 'nl-NL', file: 'nl.json', name: 'Nederlands', dir: 'ltr' }
     ],
-    lazy: true,
-    langDir: 'locales', // i18n/locales/ klasöründeki dosyalar
     detectBrowserLanguage: {
       useCookie: true,
       cookieKey: 'prosicht_i18n_locale',
       redirectOn: 'root',
       alwaysRedirect: false
-    },
-    compilation: {
-      strictMessage: false
     }
   }
 })

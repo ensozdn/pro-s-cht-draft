@@ -55,12 +55,124 @@
     "title": "Uygulama",
     "subtitle": "Alanlarımız"
   },
+  "partners": {
+    "title": "Partnerlerimiz ve İşbirliklerimiz"
+  },
   "contributions": {
     "title": "InspectAI Ürününün İşletmeye",
-    "subtitle": "Katkıları"
+    "subtitle": "Katkıları",
+    "quality": {
+      "title": "Kalite Kontrolünde Yüksek Hassasiyet",
+      "description": "Yapay zeka, insan gözüne göre daha hassas bir şekilde kusurları tespit edebilir. Bu, ürünlerin daha yüksek kalitede ve hatasız olarak üretilmesini sağlar."
+    },
+    "reduce": {
+      "title": "Üretim Sürecindeki Hataları Azaltma",
+      "description": "Kusur tespiti sistemi, üretim hattındaki hataları erken aşamada tespit ederek hatalı ürünlerin üretime girmesini önler. Bu da maliyet tasarrufu sağlar."
+    },
+    "satisfaction": {
+      "title": "Müşteri Memnuniyetini Artırma",
+      "description": "Kaliteli ve hatasız ürünler, müşteri memnuniyetini artırır ve müşteri şikayetlerini azaltır. Bu da marka itibarını koruma açısından önemlidir."
+    },
+    "recall": {
+      "title": "Geri Çağırma Maliyetlerini Azaltma",
+      "description": "Kusursuz ürünlerin üretilmesi, geri çağırma maliyetlerini azaltır. Hatalı ürünlerin piyasadan çekilmesi veya yeniden üretilmesi gerekmeyeceği için maliyet tasarrufu sağlar."
+    },
+    "efficiency": {
+      "title": "Verimliliği Artırma",
+      "description": "Otomatik kusur tespiti, işçilik maliyetlerini azaltır ve üretim süreçlerini hızlandırır. Bu, üreticinin verimliliğini artırır."
+    },
+    "compliance": {
+      "title": "Standartlara Uyum",
+      "description": "Kalite kontrol sistemi, sektör standartlarına uygun üretim yapılmasını sağlar ve denetim süreçlerini kolaylaştırır."
+    }
   },
   "language": {
     "select": "Dil Seçin",
     "current": "Türkçe"
+  },
+  "categories": {
+    "metalSteel": {
+      "title": "Metal-Çelik",
+      "description": "Yüksek hassasiyetli yüzey kontrolü, kaynak kalitesi tespiti ve çatlak analizi ile üretim süreçlerinizde maksimum güvenilirlik sağlıyoruz."
+    },
+    "leather": {
+      "title": "Deri",
+      "description": "Deri ürünlerinde renk tutarlılığı, yüzey kusurları ve dikiş kalitesi kontrolü ile premium standartları garanti ediyoruz."
+    },
+    "textile": {
+      "title": "Tekstil",
+      "description": "Kumaş hataları, renk uyumsuzlukları, desen bozuklukları ve dikiş kalitesi analizinde yapay zeka destekli çözümler sunuyoruz."
+    },
+    "furniture": {
+      "title": "Mobilya",
+      "description": "Ahşap yüzey kalitesi, birleştirme noktaları, boya-vernik uygulamaları ve montaj doğruluğu kontrolünde sektörün öncüsüyüz."
+    },
+    "marble": {
+      "title": "Mermer",
+      "description": "Mermer ve doğal taş ürünlerde damar deseni, renk tonları, yüzey işleme kalitesi ve boyut hassasiyeti kontrolü yapıyoruz."
+    },
+    "glass": {
+      "title": "Cam",
+      "description": "Cam ürünlerde hava kabarcıkları, çizikler, şeffaflık kontrolü ve kenar işleme kalitesi analizinde uzmanız."
+    },
+    "finalQuality": {
+      "title": "Son Kalite Kontrol",
+      "description": "Tüm sektörlerde üretim hattının son aşamasında, ürünlerinizin piyasaya çıkmadan önce mükemmel standartta olmasını sağlıyoruz."
+    }
+  },
+  "blog": {
+    "title": "Blog",
+    "readMore": "Devamını Oku",
+    "allPosts": "Tüm Yazıları Görüntüle",
+    "post1": {
+      "title": "Doğal Bir \"Budak\" mı, Yoksa Kritik Bir \"Çatlak\" mı?",
+      "author": "İdil Karabaş",
+      "date": "2 ay ago",
+      "tags": ["AI", "Endüstri 4.0", "Technology"]
+    },
+    "post2": {
+      "title": "Otomotiv Üretiminde Yapay Zeka Destekli Kalite Kontrol Dönemi",
+      "author": "İdil Karabaş",
+      "date": "Şubat 24, 2026",
+      "tags": ["AI", "Endüstri 4.0", "Technology"]
+    },
+    "post3": {
+      "title": "Pro Sicht ve BIOS'tan Güç Birliği: Kalite Kontrolde Uçtan Uca Otonom Dönem",
+      "author": "İdil Karabaş",
+      "date": "Şubat 24, 2026",
+      "tags": ["AI", "Technology"]
+    }
+  },
+  "contact": {
+    "title": "İletişim Bilgileri",
+    "location": {
+      "tr1": "TR - Sakarya Teknokent - Esentepe Mah. Akademiyolu Sk. Teknoloji Geliştirme Bölgeleri Sitesi B Blok No: 10b İç Kapı No: Z05 Serdivan / Sakarya",
+      "tr2": "TR - Bilişim Vadisi - Muallimköy Mahallesi, Deniz Cd. No:143-5, 41400 Gebze/Kocaeli",
+      "germany": "GER - Wabestr. 8, 38122 Braunschweig / Germany"
+    },
+    "phone": {
+      "tr": "+90 549 202 90 44",
+      "germany": "+49 176 32385710"
+    },
+    "email": "info{'@'}prosicht.com"
+  },
+  "form": {
+    "firstName": "Ad",
+    "lastName": "Soyad",
+    "email": "E-posta",
+    "phone": "Telefon",
+    "applicationArea": "Uygulama Alanı",
+    "message": "Mesaj",
+    "submit": "Gönder",
+    "selectArea": "Bir alan seçin",
+    "areas": {
+      "metalSteel": "Metal-Çelik",
+      "leather": "Deri",
+      "textile": "Tekstil",
+      "furniture": "Mobilya",
+      "marble": "Mermer",
+      "glass": "Cam",
+      "finalQuality": "Son Kalite Kontrol"
+    }
   }
 }

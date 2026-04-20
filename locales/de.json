@@ -12,6 +12,18 @@
     "description": "Produktionsfehler sofort mit KI-gestütztem Qualitätskontrollsystem erkennen",
     "cta": "Mehr Erkunden"
   },
+  "section2": {
+    "title1": "Autonomes",
+    "title2": "Entscheidungssystem",
+    "description": "Echtzeitanalyse und automatische Qualitätsbewertung",
+    "cta": "System Erkunden"
+  },
+  "section3": {
+    "title1": "Minimieren Sie",
+    "title2": "Kosten auf",
+    "title3": "das Minimum",
+    "description": "Bis zu 40% Kosteneinsparungen und fehlerfreie Produktion"
+  },
   "stats": {
     "title": "ProSicht in",
     "brand": "Zahlen",
@@ -19,8 +31,148 @@
     "responseTime": "Antwortzeit",
     "throughput": "Teile pro Minute"
   },
+  "whyUs": {
+    "title": "Warum",
+    "subtitle": "Wir?",
+    "speed": {
+      "title": "Schnelle Integration",
+      "description": "Integration in Ihre bestehende Produktionslinie innerhalb von 24 Stunden"
+    },
+    "ai": {
+      "title": "KI-Kraft",
+      "description": "Ständig verbesserte Erkennungsfähigkeiten mit Deep-Learning-Algorithmen"
+    },
+    "support": {
+      "title": "24/7 Support",
+      "description": "Unser Expertenteam ist immer für Sie da"
+    },
+    "realtime": {
+      "title": "Echtzeitanalyse",
+      "description": "Sofortige Berichterstattung und Visualisierung"
+    }
+  },
+  "applications": {
+    "title": "Anwendungs",
+    "subtitle": "bereiche"
+  },
+  "partners": {
+    "title": "Unsere Partner und Kooperationen"
+  },
+  "contributions": {
+    "title": "Beiträge des Produkts",
+    "subtitle": "InspectAI für Unternehmen",
+    "quality": {
+      "title": "Hohe Präzision in der Qualitätskontrolle",
+      "description": "KI kann Defekte präziser erkennen als das menschliche Auge. Dies gewährleistet, dass Produkte nach höheren Qualitätsstandards ohne Fehler hergestellt werden."
+    },
+    "reduce": {
+      "title": "Reduzierung von Produktionsprozessfehlern",
+      "description": "Das Defekterkennungssystem identifiziert Fehler früh in der Produktionslinie und verhindert, dass fehlerhafte Produkte in die Produktion gelangen. Dies ermöglicht Kosteneinsparungen."
+    },
+    "satisfaction": {
+      "title": "Steigerung der Kundenzufriedenheit",
+      "description": "Hochwertige, fehlerfreie Produkte erhöhen die Kundenzufriedenheit und reduzieren Beschwerden. Dies ist wichtig zum Schutz des Markenrufs."
+    },
+    "recall": {
+      "title": "Reduzierung der Rückrufkosten",
+      "description": "Die Herstellung fehlerfreier Produkte reduziert die Rückrufkosten. Kosteneinsparungen werden erzielt, da fehlerhafte Produkte nicht zurückgezogen oder reproduziert werden müssen."
+    },
+    "efficiency": {
+      "title": "Effizienzsteigerung",
+      "description": "Automatische Defekterkennung reduziert Arbeitskosten und beschleunigt Produktionsprozesse. Dies erhöht die Effizienz des Herstellers."
+    },
+    "compliance": {
+      "title": "Normenkonformität",
+      "description": "Das Qualitätskontrollsystem stellt sicher, dass die Produktion den Industriestandards entspricht und erleichtert Audit-Prozesse."
+    }
+  },
   "language": {
     "select": "Sprache Wählen",
     "current": "Deutsch"
+  },
+  "categories": {
+    "metalSteel": {
+      "title": "Metall-Stahl",
+      "description": "Wir bieten maximale Zuverlässigkeit in Ihren Produktionsprozessen mit hochpräziser Oberflächeninspektion, Schweißqualitätserkennung und Rissanalyse."
+    },
+    "leather": {
+      "title": "Leder",
+      "description": "Wir garantieren Premium-Standards mit Farbkonsistenz, Oberflächenfehlern und Nahtqualitätskontrolle bei Lederprodukten."
+    },
+    "textile": {
+      "title": "Textil",
+      "description": "Wir bieten KI-gestützte Lösungen für Stoffdefekte, Farbinkonsistenzen, Musterverzerrungen und Nahtqualitätsanalyse."
+    },
+    "furniture": {
+      "title": "Möbel",
+      "description": "Wir sind Branchenführer bei der Kontrolle von Holzoberflächenqualität, Verbindungspunkten, Farb-Lackierungen und Montagegenauigkeit."
+    },
+    "marble": {
+      "title": "Marmor",
+      "description": "Wir kontrollieren Aderungsmuster, Farbtöne, Oberflächenbearbeitungsqualität und Maßgenauigkeit bei Marmor- und Natursteinprodukten."
+    },
+    "glass": {
+      "title": "Glas",
+      "description": "Wir sind spezialisiert auf die Analyse von Luftblasen, Kratzern, Transparenzkontrolle und Kantenbearbeitungsqualität bei Glasprodukten."
+    },
+    "finalQuality": {
+      "title": "Endqualitätskontrolle",
+      "description": "In allen Branchen stellen wir in der Endphase der Produktionslinie sicher, dass Ihre Produkte vor der Markteinführung perfekte Standards erfüllen."
+    }
+  },
+  "blog": {
+    "title": "Blog",
+    "readMore": "Weiterlesen",
+    "allPosts": "Alle Beiträge Anzeigen",
+    "post1": {
+      "title": "Ein Natürlicher 'Ast' oder ein Kritischer 'Riss'?",
+      "author": "İdil Karabaş",
+      "date": "vor 2 Monaten",
+      "tags": ["KI", "Industrie 4.0", "Technologie"]
+    },
+    "post2": {
+      "title": "Die Ära der KI-gestützten Qualitätskontrolle in der Automobilproduktion",
+      "author": "İdil Karabaş",
+      "date": "24. Februar 2026",
+      "tags": ["KI", "Industrie 4.0", "Technologie"]
+    },
+    "post3": {
+      "title": "Pro Sicht und BIOS Partnerschaft: End-to-End Autonome Ära in der Qualitätskontrolle",
+      "author": "İdil Karabaş",
+      "date": "24. Februar 2026",
+      "tags": ["KI", "Technologie"]
+    }
+  },
+  "contact": {
+    "title": "Kontaktinformationen",
+    "location": {
+      "tr1": "TR - Sakarya Teknokent - Esentepe Mah. Akademiyolu Sk. Teknoloji Geliştirme Bölgeleri Sitesi B Blok No: 10b İç Kapı No: Z05 Serdivan / Sakarya",
+      "tr2": "TR - Bilişim Vadisi - Muallimköy Mahallesi, Deniz Cd. No:143-5, 41400 Gebze/Kocaeli",
+      "germany": "GER - Wabestr. 8, 38122 Braunschweig / Germany"
+    },
+    "phone": {
+      "tr": "+90 549 202 90 44",
+      "germany": "+49 176 32385710"
+    },
+    "email": "info{'@'}prosicht.com"
+  },
+  "form": {
+    "firstName": "Vorname",
+    "lastName": "Nachname",
+    "email": "E-Mail",
+    "phone": "Telefon",
+    "applicationArea": "Anwendungsbereich",
+    "message": "Nachricht",
+    "submit": "Senden",
+    "selectArea": "Bereich wählen",
+    "areas": {
+      "metalSteel": "Metall-Stahl",
+      "leather": "Leder",
+      "textile": "Textil",
+      "furniture": "Möbel",
+      "marble": "Marmor",
+      "glass": "Glas",
+      "finalQuality": "Endqualitätskontrolle"
+    }
   }
 }

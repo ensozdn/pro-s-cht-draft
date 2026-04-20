@@ -55,12 +55,124 @@
     "title": "Application",
     "subtitle": "Areas"
   },
+  "partners": {
+    "title": "Our Partners and Collaborations"
+  },
   "contributions": {
     "title": "InspectAI Product's",
-    "subtitle": "Business Contributions"
+    "subtitle": "Business Contributions",
+    "quality": {
+      "title": "High Precision in Quality Control",
+      "description": "AI can detect defects more precisely than the human eye. This ensures products are manufactured to higher quality standards without errors."
+    },
+    "reduce": {
+      "title": "Reducing Production Process Errors",
+      "description": "The defect detection system identifies errors early in the production line, preventing faulty products from entering production. This provides cost savings."
+    },
+    "satisfaction": {
+      "title": "Increasing Customer Satisfaction",
+      "description": "High-quality, error-free products increase customer satisfaction and reduce complaints. This is important for protecting brand reputation."
+    },
+    "recall": {
+      "title": "Reducing Recall Costs",
+      "description": "Manufacturing defect-free products reduces recall costs. Cost savings are achieved as faulty products don't need to be withdrawn or reproduced."
+    },
+    "efficiency": {
+      "title": "Increasing Efficiency",
+      "description": "Automatic defect detection reduces labor costs and speeds up production processes. This increases manufacturer efficiency."
+    },
+    "compliance": {
+      "title": "Standards Compliance",
+      "description": "The quality control system ensures production meets industry standards and facilitates audit processes."
+    }
   },
   "language": {
     "select": "Select Language",
     "current": "English"
+  },
+  "categories": {
+    "metalSteel": {
+      "title": "Metal-Steel",
+      "description": "We provide maximum reliability in your production processes with high-precision surface inspection, weld quality detection, and crack analysis."
+    },
+    "leather": {
+      "title": "Leather",
+      "description": "We guarantee premium standards with color consistency, surface defects, and stitch quality control in leather products."
+    },
+    "textile": {
+      "title": "Textile",
+      "description": "We offer AI-powered solutions for fabric defects, color inconsistencies, pattern distortions, and stitch quality analysis."
+    },
+    "furniture": {
+      "title": "Furniture",
+      "description": "We are industry leaders in controlling wood surface quality, joint points, paint-varnish applications, and assembly accuracy."
+    },
+    "marble": {
+      "title": "Marble",
+      "description": "We control vein patterns, color tones, surface processing quality, and dimensional precision in marble and natural stone products."
+    },
+    "glass": {
+      "title": "Glass",
+      "description": "We specialize in analyzing air bubbles, scratches, transparency control, and edge processing quality in glass products."
+    },
+    "finalQuality": {
+      "title": "Final Quality Control",
+      "description": "In all sectors, at the final stage of the production line, we ensure your products meet perfect standards before market release."
+    }
+  },
+  "blog": {
+    "title": "Blog",
+    "readMore": "Read More",
+    "allPosts": "View All Posts",
+    "post1": {
+      "title": "A Natural 'Knot' or a Critical 'Crack'?",
+      "author": "İdil Karabaş",
+      "date": "2 months ago",
+      "tags": ["AI", "Industry 4.0", "Technology"]
+    },
+    "post2": {
+      "title": "The Era of AI-Powered Quality Control in Automotive Production",
+      "author": "İdil Karabaş",
+      "date": "February 24, 2026",
+      "tags": ["AI", "Industry 4.0", "Technology"]
+    },
+    "post3": {
+      "title": "Pro Sicht and BIOS Partnership: End-to-End Autonomous Era in Quality Control",
+      "author": "İdil Karabaş",
+      "date": "February 24, 2026",
+      "tags": ["AI", "Technology"]
+    }
+  },
+  "contact": {
+    "title": "Contact Information",
+    "location": {
+      "tr1": "TR - Sakarya Teknokent - Esentepe Mah. Akademiyolu Sk. Teknoloji Geliştirme Bölgeleri Sitesi B Blok No: 10b İç Kapı No: Z05 Serdivan / Sakarya",
+      "tr2": "TR - Bilişim Vadisi - Muallimköy Mahallesi, Deniz Cd. No:143-5, 41400 Gebze/Kocaeli",
+      "germany": "GER - Wabestr. 8, 38122 Braunschweig / Germany"
+    },
+    "phone": {
+      "tr": "+90 549 202 90 44",
+      "germany": "+49 176 32385710"
+    },
+    "email": "info{'@'}prosicht.com"
+  },
+  "form": {
+    "firstName": "First Name",
+    "lastName": "Last Name",
+    "email": "Email",
+    "phone": "Phone",
+    "applicationArea": "Application Area",
+    "message": "Message",
+    "submit": "Submit",
+    "selectArea": "Select an area",
+    "areas": {
+      "metalSteel": "Metal-Steel",
+      "leather": "Leather",
+      "textile": "Textile",
+      "furniture": "Furniture",
+      "marble": "Marble",
+      "glass": "Glass",
+      "finalQuality": "Final Quality Control"
+    }
   }
 }

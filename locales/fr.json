@@ -12,6 +12,18 @@
     "description": "Détectez les erreurs de production instantanément avec le système de contrôle qualité alimenté par IA",
     "cta": "Explorer Plus"
   },
+  "section2": {
+    "title1": "Système de",
+    "title2": "Décision Autonome",
+    "description": "Analyse en temps réel et évaluation automatique de la qualité",
+    "cta": "Explorer le Système"
+  },
+  "section3": {
+    "title1": "Minimisez",
+    "title2": "les Coûts au",
+    "title3": "Minimum",
+    "description": "Jusqu'à 40% d'économies de coûts et production sans défaut"
+  },
   "stats": {
     "title": "ProSicht en",
     "brand": "Chiffres",
@@ -19,8 +31,148 @@
     "responseTime": "Temps de Réponse",
     "throughput": "Pièces par Minute"
   },
+  "whyUs": {
+    "title": "Pourquoi",
+    "subtitle": "Nous?",
+    "speed": {
+      "title": "Intégration Rapide",
+      "description": "Intégrez dans votre ligne de production existante en 24 heures"
+    },
+    "ai": {
+      "title": "Puissance de l'IA",
+      "description": "Capacités de détection en constante amélioration avec des algorithmes d'apprentissage profond"
+    },
+    "support": {
+      "title": "Support 24/7",
+      "description": "Notre équipe d'experts est toujours avec vous"
+    },
+    "realtime": {
+      "title": "Analyse en Temps Réel",
+      "description": "Rapports instantanés et visualisation"
+    }
+  },
+  "applications": {
+    "title": "Domaines",
+    "subtitle": "d'Application"
+  },
+  "partners": {
+    "title": "Nos Partenaires et Collaborations"
+  },
+  "contributions": {
+    "title": "Contributions du Produit",
+    "subtitle": "InspectAI aux Entreprises",
+    "quality": {
+      "title": "Haute Précision dans le Contrôle Qualité",
+      "description": "L'IA peut détecter les défauts plus précisément que l'œil humain. Cela garantit que les produits sont fabriqués selon des normes de qualité supérieures sans erreurs."
+    },
+    "reduce": {
+      "title": "Réduction des Erreurs de Production",
+      "description": "Le système de détection des défauts identifie les erreurs tôt dans la ligne de production, empêchant les produits défectueux d'entrer en production. Cela permet des économies de coûts."
+    },
+    "satisfaction": {
+      "title": "Augmentation de la Satisfaction Client",
+      "description": "Des produits de haute qualité et sans erreur augmentent la satisfaction client et réduisent les plaintes. C'est important pour protéger la réputation de la marque."
+    },
+    "recall": {
+      "title": "Réduction des Coûts de Rappel",
+      "description": "La fabrication de produits sans défaut réduit les coûts de rappel. Des économies sont réalisées car les produits défectueux n'ont pas besoin d'être retirés ou reproduits."
+    },
+    "efficiency": {
+      "title": "Augmentation de l'Efficacité",
+      "description": "La détection automatique des défauts réduit les coûts de main-d'œuvre et accélère les processus de production. Cela augmente l'efficacité du fabricant."
+    },
+    "compliance": {
+      "title": "Conformité aux Normes",
+      "description": "Le système de contrôle qualité garantit que la production respecte les normes de l'industrie et facilite les processus d'audit."
+    }
+  },
   "language": {
     "select": "Sélectionner la Langue",
     "current": "Français"
+  },
+  "categories": {
+    "metalSteel": {
+      "title": "Métal-Acier",
+      "description": "Nous assurons une fiabilité maximale dans vos processus de production avec inspection de surface haute précision, détection de qualité de soudure et analyse de fissures."
+    },
+    "leather": {
+      "title": "Cuir",
+      "description": "Nous garantissons des standards premium avec cohérence des couleurs, défauts de surface et contrôle de qualité des coutures dans les produits en cuir."
+    },
+    "textile": {
+      "title": "Textile",
+      "description": "Nous proposons des solutions alimentées par l'IA pour les défauts de tissu, incohérences de couleur, distorsions de motifs et analyse de qualité de couture."
+    },
+    "furniture": {
+      "title": "Mobilier",
+      "description": "Nous sommes leaders dans le contrôle de la qualité des surfaces en bois, points de jonction, applications de peinture-vernis et précision d'assemblage."
+    },
+    "marble": {
+      "title": "Marbre",
+      "description": "Nous contrôlons les motifs de veines, tons de couleur, qualité de traitement de surface et précision dimensionnelle dans les produits en marbre et pierre naturelle."
+    },
+    "glass": {
+      "title": "Verre",
+      "description": "Nous sommes spécialisés dans l'analyse des bulles d'air, rayures, contrôle de transparence et qualité de traitement des bords dans les produits en verre."
+    },
+    "finalQuality": {
+      "title": "Contrôle Qualité Final",
+      "description": "Dans tous les secteurs, à l'étape finale de la ligne de production, nous garantissons que vos produits répondent à des standards parfaits avant leur mise sur le marché."
+    }
+  },
+  "blog": {
+    "title": "Blog",
+    "readMore": "Lire Plus",
+    "allPosts": "Voir Tous les Articles",
+    "post1": {
+      "title": "Un 'Nœud' Naturel ou une 'Fissure' Critique?",
+      "author": "İdil Karabaş",
+      "date": "il y a 2 mois",
+      "tags": ["IA", "Industrie 4.0", "Technologie"]
+    },
+    "post2": {
+      "title": "L'Ère du Contrôle Qualité Alimenté par l'IA dans la Production Automobile",
+      "author": "İdil Karabaş",
+      "date": "24 février 2026",
+      "tags": ["IA", "Industrie 4.0", "Technologie"]
+    },
+    "post3": {
+      "title": "Partenariat Pro Sicht et BIOS: Ère Autonome de Bout en Bout dans le Contrôle Qualité",
+      "author": "İdil Karabaş",
+      "date": "24 février 2026",
+      "tags": ["IA", "Technologie"]
+    }
+  },
+  "contact": {
+    "title": "Informations de Contact",
+    "location": {
+      "tr1": "TR - Sakarya Teknokent - Esentepe Mah. Akademiyolu Sk. Teknoloji Geliştirme Bölgeleri Sitesi B Blok No: 10b İç Kapı No: Z05 Serdivan / Sakarya",
+      "tr2": "TR - Bilişim Vadisi - Muallimköy Mahallesi, Deniz Cd. No:143-5, 41400 Gebze/Kocaeli",
+      "germany": "GER - Wabestr. 8, 38122 Braunschweig / Germany"
+    },
+    "phone": {
+      "tr": "+90 549 202 90 44",
+      "germany": "+49 176 32385710"
+    },
+    "email": "info{'@'}prosicht.com"
+  },
+  "form": {
+    "firstName": "Prénom",
+    "lastName": "Nom",
+    "email": "Email",
+    "phone": "Téléphone",
+    "applicationArea": "Domaine d'Application",
+    "message": "Message",
+    "submit": "Envoyer",
+    "selectArea": "Sélectionner un domaine",
+    "areas": {
+      "metalSteel": "Métal-Acier",
+      "leather": "Cuir",
+      "textile": "Textile",
+      "furniture": "Mobilier",
+      "marble": "Marbre",
+      "glass": "Verre",
+      "finalQuality": "Contrôle Qualité Final"
+    }
   }
 }

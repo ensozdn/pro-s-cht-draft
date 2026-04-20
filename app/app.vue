@@ -521,7 +521,7 @@ import { useTheme } from '../composables/useTheme'
 import '../assets/styles/main.css'
 
 const { isDark, toggleTheme, initTheme } = useTheme()
-const { t, locale, tm } = useI18n()  // tm (translation message) ekliyoruz
+const { t, locale } = useI18n()
 
 provide('toggleTheme', toggleTheme)
 

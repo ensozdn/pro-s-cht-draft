@@ -12,6 +12,18 @@
     "description": "Detecteer productiefouten direct met AI-aangedreven kwaliteitscontrolesysteem",
     "cta": "Ontdek Meer"
   },
+  "section2": {
+    "title1": "Autonoom",
+    "title2": "Beslissingssysteem",
+    "description": "Realtime analyse en automatische kwaliteitsbeoordeling",
+    "cta": "Ontdek Systeem"
+  },
+  "section3": {
+    "title1": "Minimaliseer",
+    "title2": "Kosten tot het",
+    "title3": "Minimum",
+    "description": "Tot 40% kostenbesparingen en foutloze productie"
+  },
   "stats": {
     "title": "ProSicht in",
     "brand": "Cijfers",
@@ -19,8 +31,148 @@
     "responseTime": "Reactietijd",
     "throughput": "Onderdelen per Minuut"
   },
+  "whyUs": {
+    "title": "Waarom",
+    "subtitle": "Wij?",
+    "speed": {
+      "title": "Snelle Integratie",
+      "description": "Integreer binnen 24 uur in uw bestaande productielijn"
+    },
+    "ai": {
+      "title": "AI-Kracht",
+      "description": "Voortdurend verbeterende detectiemogelijkheden met deep learning-algoritmen"
+    },
+    "support": {
+      "title": "24/7 Ondersteuning",
+      "description": "Ons team van experts staat altijd voor u klaar"
+    },
+    "realtime": {
+      "title": "Realtime Analyse",
+      "description": "Directe rapportage en visualisatie"
+    }
+  },
+  "applications": {
+    "title": "Toepassings",
+    "subtitle": "gebieden"
+  },
+  "partners": {
+    "title": "Onze Partners en Samenwerkingen"
+  },
+  "contributions": {
+    "title": "Bijdragen van het Product",
+    "subtitle": "InspectAI aan Bedrijven",
+    "quality": {
+      "title": "Hoge Precisie in Kwaliteitscontrole",
+      "description": "AI kan defecten nauwkeuriger detecteren dan het menselijk oog. Dit garandeert dat producten worden vervaardigd volgens hogere kwaliteitsnormen zonder fouten."
+    },
+    "reduce": {
+      "title": "Vermindering van Productieproces Fouten",
+      "description": "Het defectdetectiesysteem identificeert fouten vroeg in de productielijn, waardoor defecte producten niet in productie komen. Dit levert kostenbesparingen op."
+    },
+    "satisfaction": {
+      "title": "Verhoging van Klanttevredenheid",
+      "description": "Hoogwaardige, foutloze producten verhogen de klanttevredenheid en verminderen klachten. Dit is belangrijk voor het beschermen van de merkreputatie."
+    },
+    "recall": {
+      "title": "Vermindering van Terugroepkosten",
+      "description": "Het vervaardigen van foutloze producten vermindert de terugroepkosten. Kostenbesparingen worden bereikt omdat defecte producten niet hoeven te worden teruggehaald of gereproduceerd."
+    },
+    "efficiency": {
+      "title": "Verhoging van Efficiëntie",
+      "description": "Automatische defectdetectie vermindert arbeidskosten en versnelt productieprocessen. Dit verhoogt de efficiëntie van de fabrikant."
+    },
+    "compliance": {
+      "title": "Naleving van Normen",
+      "description": "Het kwaliteitscontrolesysteem zorgt ervoor dat de productie voldoet aan industrienormen en vergemakkelijkt auditprocessen."
+    }
+  },
   "language": {
     "select": "Selecteer Taal",
     "current": "Nederlands"
+  },
+  "categories": {
+    "metalSteel": {
+      "title": "Metaal-Staal",
+      "description": "We bieden maximale betrouwbaarheid in uw productieprocessen met hoogprecieze oppervlakte-inspectie, lasdkwaliteitsdetectie en scheuranalyse."
+    },
+    "leather": {
+      "title": "Leer",
+      "description": "We garanderen premium normen met kleurconsistentie, oppervlaktedefecten en stikselnkwaliteitscontrole in leerproducten."
+    },
+    "textile": {
+      "title": "Textiel",
+      "description": "We bieden AI-aangedreven oplossingen voor stofdefecten, kleurinconsistenties, patroonvervormingen en stikselnkwaliteitsanalyse."
+    },
+    "furniture": {
+      "title": "Meubels",
+      "description": "We zijn industrieleiders in controle van houtoppervlaktekwaliteit, verbindingspunten, verf-laktoepassingen en montagenauwkeurigheid."
+    },
+    "marble": {
+      "title": "Marmer",
+      "description": "We controleren aderpatronen, kleurtonen, oppervlaktebewerkingskwaliteit en dimensionale precisie in marmer en natuursteenproducten."
+    },
+    "glass": {
+      "title": "Glas",
+      "description": "We zijn gespecialiseerd in het analyseren van luchtbellen, krassen, transparantiecontrole en randbewerkinsgkwaliteit in glasproducten."
+    },
+    "finalQuality": {
+      "title": "Eindkwaliteitscontrole",
+      "description": "In alle sectoren, in de laatste fase van de productielijn, zorgen we ervoor dat uw producten aan perfecte normen voldoen voor marktintroductie."
+    }
+  },
+  "blog": {
+    "title": "Blog",
+    "readMore": "Lees Meer",
+    "allPosts": "Bekijk Alle Berichten",
+    "post1": {
+      "title": "Een Natuurlijke 'Knoop' of een Kritieke 'Scheur'?",
+      "author": "İdil Karabaş",
+      "date": "2 maanden geleden",
+      "tags": ["AI", "Industrie 4.0", "Technologie"]
+    },
+    "post2": {
+      "title": "Het Tijdperk van AI-aangedreven Kwaliteitscontrole in Autoproductie",
+      "author": "İdil Karabaş",
+      "date": "24 februari 2026",
+      "tags": ["AI", "Industrie 4.0", "Technologie"]
+    },
+    "post3": {
+      "title": "Pro Sicht en BIOS Partnerschap: End-to-End Autonoom Tijdperk in Kwaliteitscontrole",
+      "author": "İdil Karabaş",
+      "date": "24 februari 2026",
+      "tags": ["AI", "Technologie"]
+    }
+  },
+  "contact": {
+    "title": "Contactinformatie",
+    "location": {
+      "tr1": "TR - Sakarya Teknokent - Esentepe Mah. Akademiyolu Sk. Teknoloji Geliştirme Bölgeleri Sitesi B Blok No: 10b İç Kapı No: Z05 Serdivan / Sakarya",
+      "tr2": "TR - Bilişim Vadisi - Muallimköy Mahallesi, Deniz Cd. No:143-5, 41400 Gebze/Kocaeli",
+      "germany": "GER - Wabestr. 8, 38122 Braunschweig / Germany"
+    },
+    "phone": {
+      "tr": "+90 549 202 90 44",
+      "germany": "+49 176 32385710"
+    },
+    "email": "info{'@'}prosicht.com"
+  },
+  "form": {
+    "firstName": "Voornaam",
+    "lastName": "Achternaam",
+    "email": "E-mail",
+    "phone": "Telefoon",
+    "applicationArea": "Toepassingsgebied",
+    "message": "Bericht",
+    "submit": "Verzenden",
+    "selectArea": "Selecteer een gebied",
+    "areas": {
+      "metalSteel": "Metaal-Staal",
+      "leather": "Leer",
+      "textile": "Textiel",
+      "furniture": "Meubels",
+      "marble": "Marmer",
+      "glass": "Glas",
+      "finalQuality": "Eindkwaliteitscontrole"
+    }
   }
 }

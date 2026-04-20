@@ -12,6 +12,18 @@
     "description": "Detecte erros de produção instantaneamente com sistema de controle de qualidade alimentado por IA",
     "cta": "Explorar Mais"
   },
+  "section2": {
+    "title1": "Sistema de",
+    "title2": "Decisão Autônomo",
+    "description": "Análise em tempo real e avaliação automática de qualidade",
+    "cta": "Explorar Sistema"
+  },
+  "section3": {
+    "title1": "Minimize",
+    "title2": "Custos ao",
+    "title3": "Mínimo",
+    "description": "Até 40% de economia de custos e produção sem defeitos"
+  },
   "stats": {
     "title": "ProSicht em",
     "brand": "Números",
@@ -19,8 +31,148 @@
     "responseTime": "Tempo de Resposta",
     "throughput": "Peças por Minuto"
   },
+  "whyUs": {
+    "title": "Por Que",
+    "subtitle": "Nós?",
+    "speed": {
+      "title": "Integração Rápida",
+      "description": "Integre à sua linha de produção existente em 24 horas"
+    },
+    "ai": {
+      "title": "Poder da IA",
+      "description": "Capacidades de detecção em constante melhoria com algoritmos de aprendizado profundo"
+    },
+    "support": {
+      "title": "Suporte 24/7",
+      "description": "Nossa equipe de especialistas está sempre com você"
+    },
+    "realtime": {
+      "title": "Análise em Tempo Real",
+      "description": "Relatórios instantâneos e visualização"
+    }
+  },
+  "applications": {
+    "title": "Áreas de",
+    "subtitle": "Aplicação"
+  },
+  "partners": {
+    "title": "Nossos Parceiros e Colaborações"
+  },
+  "contributions": {
+    "title": "Contribuições do Produto",
+    "subtitle": "InspectAI para Negócios",
+    "quality": {
+      "title": "Alta Precisão no Controle de Qualidade",
+      "description": "A IA pode detectar defeitos com mais precisão do que o olho humano. Isso garante que os produtos sejam fabricados com padrões de qualidade superiores sem erros."
+    },
+    "reduce": {
+      "title": "Redução de Erros no Processo de Produção",
+      "description": "O sistema de detecção de defeitos identifica erros precocemente na linha de produção, evitando que produtos defeituosos entrem em produção. Isso proporciona economia de custos."
+    },
+    "satisfaction": {
+      "title": "Aumento da Satisfação do Cliente",
+      "description": "Produtos de alta qualidade e sem erros aumentam a satisfação do cliente e reduzem reclamações. Isso é importante para proteger a reputação da marca."
+    },
+    "recall": {
+      "title": "Redução de Custos de Recall",
+      "description": "A fabricação de produtos sem defeitos reduz os custos de recall. A economia de custos é alcançada, pois produtos defeituosos não precisam ser retirados ou reproduzidos."
+    },
+    "efficiency": {
+      "title": "Aumento da Eficiência",
+      "description": "A detecção automática de defeitos reduz os custos de mão de obra e acelera os processos de produção. Isso aumenta a eficiência do fabricante."
+    },
+    "compliance": {
+      "title": "Conformidade com Padrões",
+      "description": "O sistema de controle de qualidade garante que a produção atenda aos padrões da indústria e facilita os processos de auditoria."
+    }
+  },
   "language": {
     "select": "Selecionar Idioma",
     "current": "Português"
+  },
+  "categories": {
+    "metalSteel": {
+      "title": "Metal-Aço",
+      "description": "Fornecemos máxima confiabilidade em seus processos de produção com inspeção de superfície de alta precisão, detecção de qualidade de soldagem e análise de rachaduras."
+    },
+    "leather": {
+      "title": "Couro",
+      "description": "Garantimos padrões premium com consistência de cor, defeitos de superfície e controle de qualidade de costura em produtos de couro."
+    },
+    "textile": {
+      "title": "Têxtil",
+      "description": "Oferecemos soluções alimentadas por IA para defeitos de tecido, inconsistências de cor, distorções de padrão e análise de qualidade de costura."
+    },
+    "furniture": {
+      "title": "Móveis",
+      "description": "Somos líderes do setor no controle de qualidade de superfície de madeira, pontos de junção, aplicações de tinta-verniz e precisão de montagem."
+    },
+    "marble": {
+      "title": "Mármore",
+      "description": "Controlamos padrões de veias, tons de cor, qualidade de processamento de superfície e precisão dimensional em produtos de mármore e pedra natural."
+    },
+    "glass": {
+      "title": "Vidro",
+      "description": "Somos especializados em analisar bolhas de ar, arranhões, controle de transparência e qualidade de processamento de bordas em produtos de vidro."
+    },
+    "finalQuality": {
+      "title": "Controle de Qualidade Final",
+      "description": "Em todos os setores, na fase final da linha de produção, garantimos que seus produtos atendam a padrões perfeitos antes do lançamento no mercado."
+    }
+  },
+  "blog": {
+    "title": "Blog",
+    "readMore": "Ler Mais",
+    "allPosts": "Ver Todas as Publicações",
+    "post1": {
+      "title": "Um 'Nó' Natural ou uma 'Rachadura' Crítica?",
+      "author": "İdil Karabaş",
+      "date": "há 2 meses",
+      "tags": ["IA", "Indústria 4.0", "Tecnologia"]
+    },
+    "post2": {
+      "title": "A Era do Controle de Qualidade Alimentado por IA na Produção Automotiva",
+      "author": "İdil Karabaş",
+      "date": "24 de fevereiro de 2026",
+      "tags": ["IA", "Indústria 4.0", "Tecnologia"]
+    },
+    "post3": {
+      "title": "Parceria Pro Sicht e BIOS: Era Autônoma de Ponta a Ponta no Controle de Qualidade",
+      "author": "İdil Karabaş",
+      "date": "24 de fevereiro de 2026",
+      "tags": ["IA", "Tecnologia"]
+    }
+  },
+  "contact": {
+    "title": "Informações de Contato",
+    "location": {
+      "tr1": "TR - Sakarya Teknokent - Esentepe Mah. Akademiyolu Sk. Teknoloji Geliştirme Bölgeleri Sitesi B Blok No: 10b İç Kapı No: Z05 Serdivan / Sakarya",
+      "tr2": "TR - Bilişim Vadisi - Muallimköy Mahallesi, Deniz Cd. No:143-5, 41400 Gebze/Kocaeli",
+      "germany": "GER - Wabestr. 8, 38122 Braunschweig / Germany"
+    },
+    "phone": {
+      "tr": "+90 549 202 90 44",
+      "germany": "+49 176 32385710"
+    },
+    "email": "info{'@'}prosicht.com"
+  },
+  "form": {
+    "firstName": "Nome",
+    "lastName": "Sobrenome",
+    "email": "E-mail",
+    "phone": "Telefone",
+    "applicationArea": "Área de Aplicação",
+    "message": "Mensagem",
+    "submit": "Enviar",
+    "selectArea": "Selecionar uma área",
+    "areas": {
+      "metalSteel": "Metal-Aço",
+      "leather": "Couro",
+      "textile": "Têxtil",
+      "furniture": "Móveis",
+      "marble": "Mármore",
+      "glass": "Vidro",
+      "finalQuality": "Controle de Qualidade Final"
+    }
   }
 }
