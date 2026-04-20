@@ -202,7 +202,7 @@
       <div class="partners-container">
         <!-- Başlık ve Alt Çizgi -->
         <div class="partners-header">
-          <h2 class="partners-title">Partnerlerimiz ve İşbirliklerimiz</h2>
+          <h2 class="partners-title">{{ $t('partners.title') }}</h2>
           <div class="partners-divider"></div>
         </div>
 
@@ -521,7 +521,7 @@ import { useTheme } from '../composables/useTheme'
 import '../assets/styles/main.css'
 
 const { isDark, toggleTheme, initTheme } = useTheme()
-const { t, locale } = useI18n()  // locale'i de alıyoruz reactive olması için
+const { t, locale, tm } = useI18n()  // tm (translation message) ekliyoruz
 
 provide('toggleTheme', toggleTheme)
 
@@ -529,152 +529,136 @@ const isMobileMenuOpen = ref(false)
 const preloaderComponent = ref<InstanceType<typeof Preloader>>()
 
 // Categories - i18n ile FULL reactive
-const categories = computed(() => {
-  const currentLocale = locale.value  // Reactive dependency
-  return [
-    {
-      id: 'metal-celik',
-      title: t('categories.metalSteel.title'),
-      description: t('categories.metalSteel.description'),
-      image: '/images/metal-celik.png'
-    },
-    {
-      id: 'deri',
-      title: t('categories.leather.title'),
-      description: t('categories.leather.description'),
-      image: '/images/deri.png'
-    },
-    {
-      id: 'tekstil',
-      title: t('categories.textile.title'),
-      description: t('categories.textile.description'),
-      image: '/images/tekstil.png'
-    },
-    {
-      id: 'mobilya',
-      title: t('categories.furniture.title'),
-      description: t('categories.furniture.description'),
-      image: '/images/mobilya.png'
-    },
-    {
-      id: 'mermer',
-      title: t('categories.marble.title'),
-      description: t('categories.marble.description'),
-      image: '/images/mermer.png'
-    },
-    {
-      id: 'cam',
-      title: t('categories.glass.title'),
-      description: t('categories.glass.description'),
-      image: '/images/cam.png'
-    },
-    {
-      id: 'son-kalite',
-      title: t('categories.finalQuality.title'),
-      description: t('categories.finalQuality.description'),
-      image: '/images/son-kalite.png'
-    }
-  ]
-})
+const categories = computed(() => [
+  {
+    id: 'metal-celik',
+    title: t('categories.metalSteel.title', {}, { locale: locale.value }),
+    description: t('categories.metalSteel.description', {}, { locale: locale.value }),
+    image: '/images/metal-celik.png'
+  },
+  {
+    id: 'deri',
+    title: t('categories.leather.title', {}, { locale: locale.value }),
+    description: t('categories.leather.description', {}, { locale: locale.value }),
+    image: '/images/deri.png'
+  },
+  {
+    id: 'tekstil',
+    title: t('categories.textile.title', {}, { locale: locale.value }),
+    description: t('categories.textile.description', {}, { locale: locale.value }),
+    image: '/images/tekstil.png'
+  },
+  {
+    id: 'mobilya',
+    title: t('categories.furniture.title', {}, { locale: locale.value }),
+    description: t('categories.furniture.description', {}, { locale: locale.value }),
+    image: '/images/mobilya.png'
+  },
+  {
+    id: 'mermer',
+    title: t('categories.marble.title', {}, { locale: locale.value }),
+    description: t('categories.marble.description', {}, { locale: locale.value }),
+    image: '/images/mermer.png'
+  },
+  {
+    id: 'cam',
+    title: t('categories.glass.title', {}, { locale: locale.value }),
+    description: t('categories.glass.description', {}, { locale: locale.value }),
+    image: '/images/cam.png'
+  },
+  {
+    id: 'son-kalite',
+    title: t('categories.finalQuality.title', {}, { locale: locale.value }),
+    description: t('categories.finalQuality.description', {}, { locale: locale.value }),
+    image: '/images/son-kalite.png'
+  }
+])
 
 // Neden Biz? Features - i18n ile FULL reactive
-const whyUsFeatures = computed(() => {
-  // locale.value'yu kullanarak computed'ın locale değişikliğini izlemesini sağlıyoruz
-  const currentLocale = locale.value
-  
-  return [
-    {
-      title: t('whyUs.speed.title'),
-      desc: t('whyUs.speed.description'),
-      icon: 'Rocket'
-    },
-    {
-      title: t('whyUs.ai.title'),
-      desc: t('whyUs.ai.description'),
-      icon: 'BrainCircuit'
-    },
-    {
-      title: t('whyUs.support.title'),
-      desc: t('whyUs.support.description'),
-      icon: 'Users'
-    },
-    {
-      title: t('whyUs.realtime.title'),
-      desc: t('whyUs.realtime.description'),
-      icon: 'Activity'
-    }
-  ]
-})
+const whyUsFeatures = computed(() => [
+  {
+    title: t('whyUs.speed.title', {}, { locale: locale.value }),
+    desc: t('whyUs.speed.description', {}, { locale: locale.value }),
+    icon: 'Rocket'
+  },
+  {
+    title: t('whyUs.ai.title', {}, { locale: locale.value }),
+    desc: t('whyUs.ai.description', {}, { locale: locale.value }),
+    icon: 'BrainCircuit'
+  },
+  {
+    title: t('whyUs.support.title', {}, { locale: locale.value }),
+    desc: t('whyUs.support.description', {}, { locale: locale.value }),
+    icon: 'Users'
+  },
+  {
+    title: t('whyUs.realtime.title', {}, { locale: locale.value }),
+    desc: t('whyUs.realtime.description', {}, { locale: locale.value }),
+    icon: 'Activity'
+  }
+])
 
 // InspectAI'ın İşletmeye Katkıları - i18n ile FULL reactive
-const contributions = computed(() => {
-  // locale.value'yu kullanarak computed'ın locale değişikliğini izlemesini sağlıyoruz
-  const currentLocale = locale.value
-  
-  return [
-    {
-      title: t('contributions.quality.title'),
-      desc: t('contributions.quality.description'),
-      icon: 'CheckCircle'
-    },
-    {
-      title: t('contributions.reduce.title'),
-      desc: t('contributions.reduce.description'),
-      icon: 'TrendingDown'
-    },
-    {
-      title: t('contributions.satisfaction.title'),
-      desc: t('contributions.satisfaction.description'),
-      icon: 'Smile'
-    },
-    {
-      title: t('contributions.recall.title'),
-      desc: t('contributions.recall.description'),
-      icon: 'ShieldAlert'
-    },
-    {
-      title: t('contributions.efficiency.title'),
-      desc: t('contributions.efficiency.description'),
-      icon: 'Zap'
-    },
-    {
-      title: t('contributions.compliance.title'),
-      desc: t('contributions.compliance.description'),
-      icon: 'BarChart'
-    }
-  ]
-})
+const contributions = computed(() => [
+  {
+    title: t('contributions.quality.title', {}, { locale: locale.value }),
+    desc: t('contributions.quality.description', {}, { locale: locale.value }),
+    icon: 'CheckCircle'
+  },
+  {
+    title: t('contributions.reduce.title', {}, { locale: locale.value }),
+    desc: t('contributions.reduce.description', {}, { locale: locale.value }),
+    icon: 'TrendingDown'
+  },
+  {
+    title: t('contributions.satisfaction.title', {}, { locale: locale.value }),
+    desc: t('contributions.satisfaction.description', {}, { locale: locale.value }),
+    icon: 'Smile'
+  },
+  {
+    title: t('contributions.recall.title', {}, { locale: locale.value }),
+    desc: t('contributions.recall.description', {}, { locale: locale.value }),
+    icon: 'ShieldAlert'
+  },
+  {
+    title: t('contributions.efficiency.title', {}, { locale: locale.value }),
+    desc: t('contributions.efficiency.description', {}, { locale: locale.value }),
+    icon: 'Zap'
+  },
+  {
+    title: t('contributions.compliance.title', {}, { locale: locale.value }),
+    desc: t('contributions.compliance.description', {}, { locale: locale.value }),
+    icon: 'BarChart'
+  }
+])
 
 // İletişim Bilgileri - i18n ile FULL reactive
-const contactInfo = computed(() => {
-  const currentLocale = locale.value  // Reactive dependency
-  return [
-    {
-      icon: 'MapPin',
-      text: t('contact.location.tr1')
-    },
-    {
-      icon: 'MapPin',
-      text: t('contact.location.tr2')
-    },
-    {
-      icon: 'Phone',
-      text: t('contact.phone.tr')
-    },
-    {
-      icon: 'MapPin',
-      text: t('contact.location.germany')
-    },
-    {
-      icon: 'Phone',
-      text: t('contact.phone.germany')
-    },
-    {
-      icon: 'Mail',
-      text: t('contact.email')
-    }
-  ]
-})
+const contactInfo = computed(() => [
+  {
+    icon: 'MapPin',
+    text: t('contact.location.tr1', {}, { locale: locale.value })
+  },
+  {
+    icon: 'MapPin',
+    text: t('contact.location.tr2', {}, { locale: locale.value })
+  },
+  {
+    icon: 'Phone',
+    text: t('contact.phone.tr', {}, { locale: locale.value })
+  },
+  {
+    icon: 'MapPin',
+    text: t('contact.location.germany', {}, { locale: locale.value })
+  },
+  {
+    icon: 'Phone',
+    text: t('contact.phone.germany', {}, { locale: locale.value })
+  },
+  {
+    icon: 'Mail',
+    text: t('contact.email', {}, { locale: locale.value })
+  }
+])
 
 const form = ref({
   firstName: '',
@@ -686,18 +670,15 @@ const form = ref({
 })
 
 // Application Areas - i18n ile FULL reactive
-const applicationAreas = computed(() => {
-  const currentLocale = locale.value  // Reactive dependency
-  return [
-    { value: 'metal-celik', label: t('form.areas.metalSteel') },
-    { value: 'deri', label: t('form.areas.leather') },
-    { value: 'tekstil', label: t('form.areas.textile') },
-    { value: 'mobilya', label: t('form.areas.furniture') },
-    { value: 'mermer', label: t('form.areas.marble') },
-    { value: 'cam', label: t('form.areas.glass') },
-    { value: 'son-kalite', label: t('form.areas.finalQuality') }
-  ]
-})
+const applicationAreas = computed(() => [
+  { value: 'metal-celik', label: t('form.areas.metalSteel', {}, { locale: locale.value }) },
+  { value: 'deri', label: t('form.areas.leather', {}, { locale: locale.value }) },
+  { value: 'tekstil', label: t('form.areas.textile', {}, { locale: locale.value }) },
+  { value: 'mobilya', label: t('form.areas.furniture', {}, { locale: locale.value }) },
+  { value: 'mermer', label: t('form.areas.marble', {}, { locale: locale.value }) },
+  { value: 'cam', label: t('form.areas.glass', {}, { locale: locale.value }) },
+  { value: 'son-kalite', label: t('form.areas.finalQuality', {}, { locale: locale.value }) }
+])
 
 const handleSubmit = () => {
   console.log('Form gönderildi:', form.value)
@@ -731,38 +712,35 @@ const partners = ref([
 ])
 
 // LOKMA 23: Blog & Haberler (Asimetrik Bento Grid) - i18n ile FULL reactive
-const blogPosts = computed(() => {
-  const currentLocale = locale.value  // Reactive dependency
-  return [
-    {
-      id: 1,
-      title: t('blog.post1.title'),
-      image: '/images/blog/blog1.jpg',
-      tags: ['AI', 'Endüstri 4.0', 'Technology'],  // Tags statik kalabilir
-      author: t('blog.post1.author'),
-      date: t('blog.post1.date'),
-      featured: true
-    },
-    {
-      id: 2,
-      title: t('blog.post2.title'),
-      image: '/images/blog/blog2.jpg',
-      tags: ['AI', 'Endüstri 4.0', 'Technology'],
-      author: t('blog.post2.author'),
-      date: t('blog.post2.date'),
-      featured: false
-    },
-    {
-      id: 3,
-      title: t('blog.post3.title'),
-      image: '/images/blog/blog3.jpg',
-      tags: ['AI', 'Technology'],
-      author: t('blog.post3.author'),
-      date: t('blog.post3.date'),
-      featured: false
-    }
-  ]
-})
+const blogPosts = computed(() => [
+  {
+    id: 1,
+    title: t('blog.post1.title', {}, { locale: locale.value }),
+    image: '/images/blog/blog1.jpg',
+    tags: ['AI', 'Endüstri 4.0', 'Technology'],
+    author: t('blog.post1.author', {}, { locale: locale.value }),
+    date: t('blog.post1.date', {}, { locale: locale.value }),
+    featured: true
+  },
+  {
+    id: 2,
+    title: t('blog.post2.title', {}, { locale: locale.value }),
+    image: '/images/blog/blog2.jpg',
+    tags: ['AI', 'Endüstri 4.0', 'Technology'],
+    author: t('blog.post2.author', {}, { locale: locale.value }),
+    date: t('blog.post2.date', {}, { locale: locale.value }),
+    featured: false
+  },
+  {
+    id: 3,
+    title: t('blog.post3.title', {}, { locale: locale.value }),
+    image: '/images/blog/blog3.jpg',
+    tags: ['AI', 'Technology'],
+    author: t('blog.post3.author', {}, { locale: locale.value }),
+    date: t('blog.post3.date', {}, { locale: locale.value }),
+    featured: false
+  }
+])
 
 const categoryRefs = ref<(HTMLElement | null)[]>([])
 const activeTab = ref('metal-celik')
