@@ -1693,30 +1693,15 @@ onMounted(async () => {
     )
   }
 
-  // Partners Section - Logo Reveal (Optimized - lighter animation)
+  // Partners Section - Simple fade-in without ScrollTrigger (performance)
   const partnerCards = document.querySelectorAll('.partner-card')
   if (partnerCards.length > 0) {
-    gsap.fromTo(
-      partnerCards,
-      {
-        opacity: 0,
-        scale: 0.85,
-        y: 30
-      },
-      {
-        opacity: 1,
-        scale: 1,
-        y: 0,
-        duration: 0.6,
-        stagger: 0.06,
-        ease: 'power2.out',
-        scrollTrigger: {
-          trigger: '.partners-grid',
-          start: 'top 75%',
-          toggleActions: 'play none none none'
-        }
-      }
-    )
+    // Just make them visible immediately - no scroll animation to avoid lag
+    gsap.set(partnerCards, {
+      opacity: 1,
+      y: 0,
+      scale: 1
+    })
   }
 
   // Blog Section - Bento Grid Reveal
@@ -1807,8 +1792,8 @@ watch(locale, async () => {
     const gsap = (await import('gsap')).default
     const { ScrollTrigger } = await import('gsap/ScrollTrigger')
     
-    // Refresh all ScrollTriggers to recalculate positions after DOM update
-    ScrollTrigger.refresh()
+    // DON'T refresh all triggers - too heavy!
+    // Instead, just ensure cards are visible immediately
     
     // Ensure cards are visible immediately (fallback if user doesn't scroll)
     const featureCards = document.querySelectorAll('.feature-card')
@@ -1825,8 +1810,7 @@ watch(locale, async () => {
       gsap.set(contributionCards, {
         opacity: 1,
         y: 0,
-        scale: 1,
-        rotateX: 0
+        scale: 1
       })
     }
     
@@ -1835,8 +1819,7 @@ watch(locale, async () => {
       gsap.set(partnerCards, {
         opacity: 1,
         y: 0,
-        scale: 1,
-        rotateY: 0
+        scale: 1
       })
     }
     

@@ -1856,6 +1856,33 @@ canvas {
   min-height: 140px;
   transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
   cursor: pointer;
+  
+  /* Simple CSS animation - no JS needed, better performance */
+  animation: fadeInUp 0.6s ease-out backwards;
+}
+
+/* Stagger effect with nth-child */
+.partner-card:nth-child(1) { animation-delay: 0.05s; }
+.partner-card:nth-child(2) { animation-delay: 0.1s; }
+.partner-card:nth-child(3) { animation-delay: 0.15s; }
+.partner-card:nth-child(4) { animation-delay: 0.2s; }
+.partner-card:nth-child(5) { animation-delay: 0.25s; }
+.partner-card:nth-child(6) { animation-delay: 0.3s; }
+.partner-card:nth-child(7) { animation-delay: 0.35s; }
+.partner-card:nth-child(8) { animation-delay: 0.4s; }
+.partner-card:nth-child(9) { animation-delay: 0.45s; }
+.partner-card:nth-child(10) { animation-delay: 0.5s; }
+.partner-card:nth-child(11) { animation-delay: 0.55s; }
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
 }
 
 .dark .partner-card {
