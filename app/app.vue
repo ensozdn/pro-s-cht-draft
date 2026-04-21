@@ -121,36 +121,63 @@
       </div>
     </section>
 
-    <!-- Uygulama Alanlarımız - Tab Yapısı -->
-    <section ref="sectorsSection" class="applications-section-scroll">
-      <div class="applications-scroll-container">
-        <h2 class="applications-scroll-title">{{ $t('applications.title') }} <span class="text-gradient">{{ $t('applications.subtitle') }}</span></h2>
-        
+    <!-- LOKMA 35: Uygulama Alanlarımız - Apple Style Horizontal Pinned Scroll -->
+    <section 
+      ref="horizontalSection" 
+      class="horizontal-scroll-section"
+    >
+      <div class="horizontal-scroll-wrapper">
+        <!-- Sticky Title -->
+        <div class="horizontal-title-container">
+          <h2 class="horizontal-scroll-title">
+            {{ $t('applications.title') }} 
+            <span class="text-gradient">{{ $t('applications.subtitle') }}</span>
+          </h2>
+        </div>
+
+        <!-- Horizontal Track - Slides to the left as user scrolls down -->
         <div 
-          v-for="(category, index) in categories" 
-          :key="category.id"
-          :ref="el => { if (el) categoryRefs[index] = el as HTMLElement }"
-          class="category-fullscreen"
+          ref="horizontalTrack" 
+          class="horizontal-track"
         >
-          <div class="category-content">
-            <div class="category-left">
-              <h3 class="category-title-large">{{ category.title }}</h3>
-              <p class="category-description-large">{{ category.description }}</p>
-            </div>
-            <div class="category-right">
-              <div class="category-image-container">
-                <img 
-                  v-if="category.image" 
-                  :src="category.image" 
-                  :alt="category.title"
-                  class="category-image-large"
-                />
-                <div v-else class="placeholder-icon">
-                  <svg class="w-24 h-24 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                  </svg>
+          <div
+            v-for="(category, index) in categories"
+            :key="category.id"
+            class="horizontal-card group"
+          >
+            <!-- Glassmorphism Card -->
+            <div class="horizontal-card-inner">
+              <!-- Category Number Badge -->
+              <div class="category-badge">
+                <span class="category-number">{{ String(index + 1).padStart(2, '0') }}</span>
+              </div>
+
+              <!-- Image Container -->
+              <div class="horizontal-image-container">
+                <div class="horizontal-image-wrapper">
+                  <img 
+                    v-if="category.image" 
+                    :src="category.image" 
+                    :alt="category.title"
+                    class="horizontal-image"
+                  />
+                  <div v-else class="placeholder-icon-horizontal">
+                    <svg class="w-20 h-20 text-teal-300/40" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                    </svg>
+                  </div>
                 </div>
               </div>
+
+              <!-- Content -->
+              <div class="horizontal-card-content">
+                <h3 class="horizontal-card-title">{{ category.title }}</h3>
+                <p class="horizontal-card-description">{{ category.description }}</p>
+              </div>
+
+              <!-- Decorative Elements -->
+              <div class="horizontal-card-glow"></div>
+              <div class="horizontal-card-shine"></div>
             </div>
           </div>
         </div>
@@ -741,6 +768,10 @@ const blogPosts = computed(() => [
     featured: false
   }
 ])
+
+// Horizontal Scroll Refs
+const horizontalSection = ref<HTMLElement | null>(null)
+const horizontalTrack = ref<HTMLElement | null>(null)
 
 const categoryRefs = ref<(HTMLElement | null)[]>([])
 const activeTab = ref('metal-celik')
@@ -1590,29 +1621,71 @@ onMounted(async () => {
     })
   }
 
-  if (sectorsSection.value && categoryRefs.value.length > 0) {
-    categoryRefs.value.forEach((categoryEl, index) => {
-      if (!categoryEl) return
-      
-      gsap.timeline({
+  // ═══════════════════════════════════════════════════════════════
+  // LOKMA 35: Horizontal Pinned Scroll - Apple Style (Desktop Only)
+  // ═══════════════════════════════════════════════════════════════
+  if (horizontalSection.value && horizontalTrack.value) {
+    const mm = gsap.matchMedia()
+
+    // Desktop & Tablet (min-width: 768px) - Horizontal Pinned Scroll
+    mm.add('(min-width: 768px)', () => {
+      const track = horizontalTrack.value
+      if (!track) return
+
+      // Calculate total scroll distance
+      const getScrollDistance = () => {
+        const trackWidth = track.scrollWidth
+        const windowWidth = window.innerWidth
+        return -(trackWidth - windowWidth)
+      }
+
+      gsap.to(track, {
+        x: getScrollDistance,
+        ease: 'none',
         scrollTrigger: {
-          trigger: categoryEl,
+          trigger: horizontalSection.value,
           start: 'top top',
-          end: '+=100%',
+          end: () => `+=${track.scrollWidth * 1.5}`, // Scroll mesafesi UZATILDI - daha yavaş ve smooth
+          scrub: 1.5, // Scrub ARTIRILDI - daha smooth ve kontrollü hareket
           pin: true,
-          scrub: 1,
-          anticipatePin: 1
+          anticipatePin: 1,
+          invalidateOnRefresh: true
         }
       })
-      .fromTo(categoryEl.querySelector('.category-left'), 
-        { opacity: 0, x: -100 },
-        { opacity: 1, x: 0, duration: 0.5, ease: 'power2.out' }
-      )
-      .fromTo(categoryEl.querySelector('.category-right'), 
-        { opacity: 0, x: 100 },
-        { opacity: 1, x: 0, duration: 0.5, ease: 'power2.out' },
-        '<0.2'
-      )
+
+      // Parallax effect for cards - Smooth fade & scale
+      const cards = track.querySelectorAll('.horizontal-card')
+      cards.forEach((card, index) => {
+        gsap.fromTo(card,
+          {
+            opacity: 0.3,
+            scale: 0.92,
+            rotateY: -8,
+            filter: 'blur(4px)'
+          },
+          {
+            opacity: 1,
+            scale: 1,
+            rotateY: 0,
+            filter: 'blur(0px)',
+            ease: 'power2.out',
+            scrollTrigger: {
+              trigger: card,
+              start: 'left 90%', // Daha erken başlasın
+              end: 'left 30%',   // Daha uzun sürsün
+              containerAnimation: gsap.to(track, { x: getScrollDistance }),
+              scrub: 2, // Daha smooth geçiş
+              horizontal: true
+            }
+          }
+        )
+      })
+    })
+
+    // Mobile (max-width: 767px) - Standard vertical scroll, no pin
+    mm.add('(max-width: 767px)', () => {
+      // On mobile, horizontal track becomes vertical flex column via CSS
+      // No GSAP needed, just let it flow naturally
     })
   }
 
