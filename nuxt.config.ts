@@ -35,6 +35,7 @@ export default defineNuxtConfig({
   // i18n Configuration - A-Grade Professional Setup
   // ═══════════════════════════════════════════════════════
   i18n: {
+    // @ts-ignore - lazy property exists in runtime but not in type definitions
     lazy: false,
     strategy: 'no_prefix',
     defaultLocale: 'tr',

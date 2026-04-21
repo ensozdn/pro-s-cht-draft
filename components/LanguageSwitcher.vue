@@ -45,7 +45,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted, watch } from 'vue'
+import { ref, computed, onMounted, onUnmounted, watch } from 'vue'
 
 const languages = [
   { code: 'tr', name: 'Türkçe', flag: '🇹🇷', dir: 'ltr' },
@@ -76,10 +76,10 @@ const toggleDropdown = () => {
 const switchLanguage = (code: string) => {
   const selectedLocale = languages.find(l => l.code === code)
   if (selectedLocale) {
-    setLocale(code)
+    setLocale(code as any) // Type assertion for @nuxtjs/i18n
     
     // Update HTML attributes for RTL support
-    if (process.client) {
+    if (import.meta.client) {
       document.documentElement.setAttribute('dir', selectedLocale.dir)
       document.documentElement.setAttribute('lang', code.toLowerCase())
     }
@@ -95,7 +95,7 @@ const closeDropdown = (e: MouseEvent) => {
 }
 
 onMounted(() => {
-  if (process.client) {
+  if (import.meta.client) {
     document.addEventListener('click', closeDropdown)
     
     // Set initial HTML attributes
@@ -108,7 +108,7 @@ onMounted(() => {
 })
 
 onUnmounted(() => {
-  if (process.client) {
+  if (import.meta.client) {
     document.removeEventListener('click', closeDropdown)
   }
 })
