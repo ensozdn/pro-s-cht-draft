@@ -89,6 +89,14 @@
       </section>
     </div>
 
+    <section class="video-scroll-section">
+      <div class="ipad-container">
+        <div class="ipad-frame">
+          <video ref="ipadVideo" src="/ipad_scroll.mp4" class="ipad-video" muted playsinline preload="auto"></video>
+        </div>
+      </div>
+    </section>
+
     <!-- Neden Biz? Bölümü -->
     <section class="why-us-section">
       <div class="why-us-container">
@@ -799,6 +807,7 @@ const section1 = ref<HTMLElement | null>(null)
 const section2 = ref<HTMLElement | null>(null)
 const section3 = ref<HTMLElement | null>(null)
 const statsSection = ref<HTMLElement | null>(null)
+const ipadVideo = ref<HTMLVideoElement | null>(null)
 const sectorsSection = ref<HTMLElement | null>(null)
 const sectorsContainer = ref<HTMLDivElement | null>(null)
 const contactSection = ref<HTMLElement | null>(null)
@@ -1321,6 +1330,36 @@ onMounted(async () => {
     renderer.render(scene, camera)
   }
   animate()
+
+  if (ipadVideo.value) {
+    const video = ipadVideo.value
+    
+    const setupScrollTrigger = () => {
+      if (!video.duration || isNaN(video.duration)) {
+        console.log('Video duration not ready')
+        return
+      }
+      
+      gsap.timeline({
+        scrollTrigger: {
+          trigger: '.video-scroll-section',
+          start: 'top top',
+          end: 'bottom bottom',
+          scrub: 1,
+          pin: '.ipad-container',
+          onUpdate: (self) => {
+            video.currentTime = video.duration * self.progress
+          }
+        }
+      })
+    }
+    
+    if (video.readyState >= 1) {
+      setupScrollTrigger()
+    } else {
+      video.addEventListener('loadedmetadata', setupScrollTrigger)
+    }
+  }
 
   // Mouse parallax event listener ekle
   window.addEventListener('mousemove', handleMouseMove)
