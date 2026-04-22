@@ -1302,8 +1302,8 @@ onMounted(async () => {
   })
 
   cameraTimeline
-    .to(conveyorGroup.rotation, { y: Math.PI, duration: 1 }, 0)
-    .to(conveyorGroup.rotation, { y: 0, duration: 1 }, 1)
+    .to(conveyorGroup.rotation, { y: Math.PI, duration: 0.5 }, 0)
+    .to(conveyorGroup.rotation, { y: 0, duration: 0.5 }, 1)
 
   const animate = () => {
     animationId = requestAnimationFrame(animate)
