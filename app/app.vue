@@ -557,12 +557,35 @@ import { useTheme } from '../composables/useTheme'
 import '../assets/styles/main.css'
 
 const { isDark, toggleTheme, initTheme } = useTheme()
-const { t, locale } = useI18n()
+const { t, locale, setLocale } = useI18n()
 
 provide('toggleTheme', toggleTheme)
 
 const isMobileMenuOpen = ref(false)
 const preloaderComponent = ref<InstanceType<typeof Preloader>>()
+
+const detectUserLocale = async () => {
+  if (localStorage.getItem('userLocationLang')) return
+  
+  try {
+    const response = await fetch('https://api.country.is')
+    const data = await response.json()
+    const countryMap: Record<string, 'en' | 'de' | 'tr' | 'fr' | 'es' | 'it' | 'pt' | 'nl' | 'ru' | 'ar'> = {
+      DE: 'de', AT: 'de', CH: 'de',
+      FR: 'fr', BE: 'fr',
+      ES: 'es', AR: 'es', MX: 'es', CO: 'es', CL: 'es',
+      IT: 'it',
+      PT: 'pt', BR: 'pt',
+      RU: 'ru', BY: 'ru', KZ: 'ru',
+      NL: 'nl',
+      SA: 'ar', AE: 'ar', EG: 'ar', QA: 'ar', KW: 'ar',
+      TR: 'tr', AZ: 'tr'
+    }
+    const detectedLang = countryMap[data.country as string] || 'en'
+    localStorage.setItem('userLocationLang', detectedLang)
+    setLocale(detectedLang)
+  } catch {}
+}
 
 // Categories - i18n ile FULL reactive
 const categories = computed(() => [
@@ -864,6 +887,7 @@ onMounted(async () => {
   if (!canvasRef.value) return
 
   initTheme()
+  detectUserLocale()
 
   const { gsap } = await import('gsap')
   const { ScrollTrigger } = await import('gsap/ScrollTrigger')
