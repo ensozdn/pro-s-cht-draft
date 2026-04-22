@@ -813,7 +813,6 @@ let beltMaterial: THREE.MeshStandardMaterial
 let rollerMaterial: THREE.MeshStandardMaterial
 
 let scanBeam: THREE.Mesh
-let scanParticles: THREE.Points
 
 const mouse = { x: 0, y: 0 }
 const targetRotation = { x: 0, y: 0 }
@@ -1222,14 +1221,52 @@ onMounted(async () => {
   conveyorGroup.add(logoPlaneBack)
 
   const beamLength = 15
-  const beamGeometry = new THREE.ConeGeometry(4.5, beamLength, 32, 1, true)
+  const beamGeometry = new THREE.ConeGeometry(4.5, beamLength, 64, 1, true)
   
   beamGeometry.translate(0, -beamLength / 2, 0)
 
-  const beamMaterial = new THREE.MeshBasicMaterial({
-    color: 0x5FE3C0,
+  const beamMaterial = new THREE.ShaderMaterial({
+    uniforms: {
+      time: { value: 0 },
+      color: { value: new THREE.Color(0x5FE3C0) },
+      opacity: { value: 0.45 }
+    },
+    vertexShader: `
+      uniform float time;
+      varying vec2 vUv;
+      varying float vWave;
+      
+      void main() {
+        vUv = uv;
+        vec3 pos = position;
+        
+        float wave = sin(pos.y * 3.0 + time * 2.0) * 0.15;
+        float pulse = sin(time * 3.0) * 0.1 + 1.0;
+        
+        pos.x += wave * pulse;
+        pos.z += wave * pulse * 0.5;
+        
+        vWave = wave;
+        
+        gl_Position = projectionMatrix * modelViewMatrix * vec4(pos, 1.0);
+      }
+    `,
+    fragmentShader: `
+      uniform vec3 color;
+      uniform float opacity;
+      uniform float time;
+      varying vec2 vUv;
+      varying float vWave;
+      
+      void main() {
+        float edgeGlow = 1.0 - abs(vWave) * 2.0;
+        float pulse = sin(time * 3.0) * 0.2 + 0.8;
+        float alpha = opacity * edgeGlow * pulse;
+        
+        gl_FragColor = vec4(color, alpha);
+      }
+    `,
     transparent: true,
-    opacity: 0.45,
     side: THREE.DoubleSide,
     blending: THREE.AdditiveBlending,
     depthWrite: false
@@ -1247,36 +1284,6 @@ onMounted(async () => {
   scanLight.target.position.set(scanBeam.position.x + beamLength, 0, 0)
   conveyorGroup.add(scanLight)
   conveyorGroup.add(scanLight.target)
-
-  const particlesGeometry = new THREE.BufferGeometry()
-  const particleCount = 200
-  const positions = new Float32Array(particleCount * 3)
-  
-  for (let i = 0; i < particleCount; i++) {
-    const xPos = scanBeam.position.x + (Math.random() * beamLength)
-    positions[i * 3] = xPos
-    
-    const radiusAtX = (xPos - scanBeam.position.x) * 0.23
-    const theta = Math.random() * Math.PI * 2
-    const r = Math.random() * radiusAtX
-    
-    positions[i * 3 + 1] = scanBeam.position.y + r * Math.cos(theta)
-    positions[i * 3 + 2] = scanBeam.position.z + r * Math.sin(theta)
-  }
-  
-  particlesGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3))
-  
-  const particlesMaterial = new THREE.PointsMaterial({
-    color: 0x5FE3C0,
-    size: 0.06,
-    transparent: true,
-    opacity: 0.8,
-    blending: THREE.AdditiveBlending,
-    depthWrite: false
-  })
-  
-  const scanParticles = new THREE.Points(particlesGeometry, particlesMaterial)
-  conveyorGroup.add(scanParticles)
 
   scene.add(conveyorGroup)
   
@@ -1310,24 +1317,8 @@ onMounted(async () => {
     conveyorGroup.rotation.x = baseRotationX + currentRotation.x
     conveyorGroup.rotation.y = Math.PI + currentRotation.y
     
-    if (scanParticles && scanParticles.geometry && scanParticles.geometry.attributes && scanParticles.geometry.attributes.position) {
-      const positionAttribute = scanParticles.geometry.attributes.position
-      const positions = positionAttribute.array
-      if (positions && positions.length > 0) {
-        for (let i = 0; i < positions.length; i += 3) {
-          const currentX = positions[i]
-          if (typeof currentX === 'number') {
-            positions[i] = currentX + 0.08
-            
-            if ((positions[i] as number) > scanBeam.position.x + beamLength) {
-              positions[i] = scanBeam.position.x
-              positions[i + 1] = scanBeam.position.y + (Math.random() - 0.5) * 0.2
-              positions[i + 2] = scanBeam.position.z + (Math.random() - 0.5) * 0.2
-            }
-          }
-        }
-        positionAttribute.needsUpdate = true
-      }
+    if (scanBeam && scanBeam.material && (scanBeam.material as any).uniforms) {
+      (scanBeam.material as any).uniforms.time.value = performance.now() * 0.001
     }
     
     renderer.render(scene, camera)
