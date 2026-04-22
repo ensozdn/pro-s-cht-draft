@@ -579,12 +579,17 @@ const detectUserLocale = async () => {
       RU: 'ru', BY: 'ru', KZ: 'ru',
       NL: 'nl',
       SA: 'ar', AE: 'ar', EG: 'ar', QA: 'ar', KW: 'ar',
-      TR: 'tr', AZ: 'tr'
+      TR: 'tr', AZ: 'tr',
+      GB: 'en', US: 'en', CA: 'en', AU: 'en', NZ: 'en', IE: 'en'
     }
     const detectedLang = countryMap[data.country as string] || 'en'
+    console.log('🌍 Detected Country:', data.country)
+    console.log('🗣️ Mapped Language:', detectedLang)
     localStorage.setItem('userLocationLang', detectedLang)
     setLocale(detectedLang)
-  } catch {}
+  } catch (error) {
+    console.error('❌ Auto-locale failed:', error)
+  }
 }
 
 // Categories - i18n ile FULL reactive
