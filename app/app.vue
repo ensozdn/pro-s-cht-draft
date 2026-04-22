@@ -1219,87 +1219,10 @@ onMounted(async () => {
   
   conveyorGroup.add(logoPlaneBack)
 
-  
-  const beamMaterial = new THREE.MeshBasicMaterial({
-    color: 0x3DBAA2,
-    transparent: true,
-    opacity: 0,
-    side: THREE.DoubleSide,
-    blending: THREE.AdditiveBlending,
-    depthWrite: false
-  })
-
-  const beamGeometry = new THREE.ConeGeometry(
-    0.4,
-    4.0,
-    32,
-    1,
-    true
-  )
-  const scanBeam = new THREE.Mesh(beamGeometry, beamMaterial)
-  scanBeam.rotation.z = -Math.PI / 2
-  scanBeam.position.set(3.5, 0, 0)
-  conveyorGroup.add(scanBeam)
-
-  // Işın içi grid pattern (profesyonel tarama efekti) - ELİT
-  const gridMaterial = new THREE.MeshBasicMaterial({
-    color: 0x3DBAA2,
-    transparent: true,
-    opacity: 0,
-    wireframe: true,
-    blending: THREE.AdditiveBlending
-  })
-  const gridBeam = new THREE.Mesh(
-    new THREE.ConeGeometry(0.78, 5.98, 32, 8, true),
-    gridMaterial
-  )
-  gridBeam.rotation.z = -Math.PI / 2
-  gridBeam.position.set(3.5, 0, 0)
-  conveyorGroup.add(gridBeam)
-
-  // SpotLight (gerçek ışık kaynağı) - ELİT AYARLAR
-  const scanLight = new THREE.SpotLight(0x3DBAA2, 0)
-  scanLight.position.set(1.2, 0, 0)
-  scanLight.target.position.set(6.5, 0, 0)
-  scanLight.angle = Math.PI / 10
-  scanLight.penumbra = 0.3
-  scanLight.decay = 1.2
-  scanLight.distance = 12
-  conveyorGroup.add(scanLight)
-  conveyorGroup.add(scanLight.target)
-
-  // Parçacık sistemi (ışın içinde uçuşan noktalar) - DAHA AZ YOĞUN
-  const particleCount = 15  // 50'den 30'a (daha az, elit)
-  const particlesGeometry = new THREE.BufferGeometry()
-  const particlePositions = new Float32Array(particleCount * 3)
-  
-  for (let i = 0; i < particleCount; i++) {
-    particlePositions[i * 3] = 1.5 + Math.random() * 5      // X (lens → kart, SAĞA pozitif - eski)
-    particlePositions[i * 3 + 1] = (Math.random() - 0.5) * 0.3  // Y spread (daha dar)
-    particlePositions[i * 3 + 2] = (Math.random() - 0.5) * 0.3  // Z spread (daha dar)
-  }
-  
-  particlesGeometry.setAttribute('position', new THREE.BufferAttribute(particlePositions, 3))
-  
-  const particlesMaterial = new THREE.PointsMaterial({
-    color: 0x3DBAA2,
-    size: 0.02,
-    transparent: true,
-    opacity: 0,
-    blending: THREE.AdditiveBlending,
-    depthWrite: false
-  })
-  
-  const scanParticles = new THREE.Points(particlesGeometry, particlesMaterial)
-  conveyorGroup.add(scanParticles)
-
-  // Kamerayı sahneye ekle
   scene.add(conveyorGroup)
   
-  // BAŞLANGIÇ ROTASYONU: Kamerayı TAM 180 derece çevir (TERS YÖN) 🎯
-  conveyorGroup.rotation.y = -Math.PI  // -180 derece (saat yönü tersine)
+  conveyorGroup.rotation.y = -Math.PI
 
-  // LED Ring referansını sakla (animasyon için)
   beltMaterial = neonTurquoiseMaterial
   rollerMaterial = titaniumMaterial
 
@@ -1330,27 +1253,8 @@ onMounted(async () => {
     // Scroll progress'e göre base rotasyonu ayarla
     const baseRotationX = scrollProgress.value * Math.PI * 2
     
-    // Base rotasyon + Mouse parallax
     conveyorGroup.rotation.x = baseRotationX + currentRotation.x
     conveyorGroup.rotation.y = Math.PI + currentRotation.y
-    
-    if (scanParticles && particlesMaterial.opacity > 0) {
-      const posAttr = particlesGeometry.attributes.position
-      if (posAttr?.array) {
-        const positions = posAttr.array as Float32Array
-        for (let i = 0; i < particleCount; i++) {
-          const idx = i * 3
-          if (positions[idx] !== undefined) {
-            positions[idx] += 0.02
-            
-            if (positions[idx] > 7) {
-              positions[idx] = 1.5
-            }
-          }
-        }
-        posAttr.needsUpdate = true
-      }
-    }
     
     renderer.render(scene, camera)
   }
@@ -1388,9 +1292,9 @@ onMounted(async () => {
   // BAŞLANGIÇ POZİSYONU: Kart sol-orta, 3D sağda (dengeli kompozisyon)
   // LOKMA 26: Mobilde 3D obje yukarıda kalır, kartlar altta
   gsap.set(conveyorGroup.position, { 
-    x: isMobile ? 0 : 3,    // Mobilde ortala
-    y: isMobile ? 1 : 0,    // Mobilde yukarı çek
-    z: isMobile ? -2 : 0    // Mobilde daha uzağa
+    x: isMobile ? 0 : 4.5,
+    y: isMobile ? 1 : 0,
+    z: isMobile ? -2 : 0
   })
   
   // STEP 1: İlk Kart → İkinci Kart Geçişi (3D Sahne MERKEZE gelir)
@@ -1421,26 +1325,6 @@ onMounted(async () => {
       }
     })
     
-    timeline1.to(beamMaterial, {
-      opacity: 0.15,
-      duration: 0.8
-    }, 0)
-    
-    timeline1.to(gridMaterial, {
-      opacity: 0.20,
-      duration: 0.8
-    }, 0)
-    
-    timeline1.to(scanLight, {
-      intensity: 3.0,
-      duration: 0.8
-    }, 0)
-    
-    timeline1.to(particlesMaterial, {
-      opacity: 0.8,
-      duration: 0.8
-    }, 0)
-    
     timeline1.to(conveyorGroup.position, {
       x: isMobile ? 0 : -4,
       y: isMobile ? 1 : 0,
@@ -1456,22 +1340,6 @@ onMounted(async () => {
       ease: 'power2.inOut'
     }, 0)
     
-    timeline1.to([beamMaterial, gridMaterial], {
-      opacity: 0,
-      duration: 0.5
-    }, 0.3)
-    
-    timeline1.to(scanLight, {
-      intensity: 0,
-      duration: 0.5
-    }, 0.3)
-    
-    timeline1.to(particlesMaterial, {
-      opacity: 0,
-      duration: 0.5
-    }, 0.3)
-    
-    // İkinci kart belirer
     timeline1.to(section2.value, {
       opacity: 1,
       x: isMobile ? 0 : 280,
@@ -1499,38 +1367,13 @@ onMounted(async () => {
       }
     })
     
-    // KAMERA ROTASYON: Kaldırıldı (ışınlar sabit pozisyonda)
-    
-    // LOKMA 26: Mobilde 3D sahne yukarıda sabit kalır
     timeline2.to(conveyorGroup.position, {
       x: isMobile ? 0 : 4,
-      y: isMobile ? 1 : 0,     // Mobilde yukarıda tut
-      z: isMobile ? -2 : 0,    // Mobilde arkada sabit
+      y: isMobile ? 1 : 0,
+      z: isMobile ? -2 : 0,
       ease: 'power2.inOut'
     }, 0)
     
-    // LOKMA 30: Card 2 aktifken - TARAMA IŞINI TEKRAR AÇIK 🔦 (ELİT + KOYU RENK)
-    timeline2.to(beamMaterial, {
-      opacity: 0.35,  // Biraz artırıldı
-      duration: 0.8
-    }, 0)
-    
-    timeline2.to(gridMaterial, {
-      opacity: 0.20,  // Biraz artırıldı
-      duration: 0.8
-    }, 0)
-    
-    timeline2.to(scanLight, {
-      intensity: 3.0,  // Biraz artırıldı
-      duration: 0.8
-    }, 0)
-    
-    timeline2.to(particlesMaterial, {
-      opacity: 0.8,
-      duration: 0.8
-    }, 0)
-    
-    // İkinci kart kaybolur
     timeline2.to(section2.value, {
       opacity: 0,
       x: isMobile ? 0 : 320,
@@ -1539,34 +1382,15 @@ onMounted(async () => {
       ease: 'power2.inOut'
     }, 0)
     
-    // LOKMA 30: Card 2 kaybolurken - IŞIN KAPANIYOR 🔦
-    timeline2.to([beamMaterial, gridMaterial], {
-      opacity: 0,
-      duration: 0.5
-    }, 0.3)
-    
-    timeline2.to(scanLight, {
-      intensity: 0,
-      duration: 0.5
-    }, 0.3)
-    
-    timeline2.to(particlesMaterial, {
-      opacity: 0,
-      duration: 0.5
-    }, 0.3)
-    
-    // Üçüncü kart belirer
     timeline2.to(section3.value, {
       opacity: 1,
-      x: isMobile ? 0 : -280,  // Mobilde merkez
+      x: isMobile ? 0 : -280,
       y: isMobile ? 0 : 0,
       rotateY: isMobile ? 0 : 2,
       ease: 'power2.inOut'
     }, 0)
   }
   
-  // STEP 3: Stats bölümüne gelince 3D sahneyi merkeze geri getir + IŞIN TAMAMEN KAPALI
-  // LOKMA 26: Mobilde yukarıda sabit kalır
   if (statsSection.value) {
     const timeline3 = gsap.timeline({
       scrollTrigger: {
@@ -1577,23 +1401,10 @@ onMounted(async () => {
       }
     })
     
-    // KAMERA ROTASYON: Kaldırıldı (ışınlar sabit pozisyonda)
-    
     timeline3.to(conveyorGroup.position, {
-      x: 0,  // Hem mobil hem desktop merkezde
-      y: isMobile ? 1 : 0,     // Mobilde yukarıda tut
-      z: isMobile ? -2 : 0    // Mobilde arkada tut
-    }, 0)
-    
-    // LOKMA 30: Stats bölümünde tarama bitti - ışın kapalı
-    timeline3.to([beamMaterial, gridMaterial, particlesMaterial], {
-      opacity: 0,
-      duration: 0.3
-    }, 0)
-    
-    timeline3.to(scanLight, {
-      intensity: 0,
-      duration: 0.3
+      x: 0,
+      y: isMobile ? 1 : 0,
+      z: isMobile ? -2 : 0
     }, 0)
   }
 
@@ -1632,7 +1443,31 @@ onMounted(async () => {
       const track = horizontalTrack.value
       if (!track) return
 
-      // Calculate total scroll distance
+      const cards = track.querySelectorAll('.horizontal-card')
+
+      // BAŞLANGIÇ ANIMASYONU: Section görünür olduğunda kartları fade-in yap
+      gsap.fromTo(cards,
+        {
+          opacity: 0,
+          scale: 0.9,
+          y: 30
+        },
+        {
+          opacity: 1,
+          scale: 1,
+          y: 0,
+          duration: 0.8,
+          stagger: 0.15,
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: horizontalSection.value,
+            start: 'top 80%',
+            once: true
+          }
+        }
+      )
+
+      // Calculate total scroll distance - her kart tam ekran
       const getScrollDistance = () => {
         const trackWidth = track.scrollWidth
         const windowWidth = window.innerWidth
@@ -1645,37 +1480,64 @@ onMounted(async () => {
         scrollTrigger: {
           trigger: horizontalSection.value,
           start: 'top top',
-          end: () => `+=${track.scrollWidth * 1.5}`, // Scroll mesafesi UZATILDI - daha yavaş ve smooth
-          scrub: 1.5, // Scrub ARTIRILDI - daha smooth ve kontrollü hareket
+          end: () => `+=${track.scrollWidth * 1.5}`,
+          scrub: 1.2,
           pin: true,
           anticipatePin: 1,
-          invalidateOnRefresh: true
+          invalidateOnRefresh: true,
+          snap: {
+            snapTo: 1 / (categories.value.length - 1),
+            duration: { min: 0.3, max: 0.6 },
+            delay: 0.05,
+            ease: 'power2.inOut'
+          }
         }
       })
 
-      // Parallax effect for cards - Smooth fade & scale
-      const cards = track.querySelectorAll('.horizontal-card')
+      // AKTIF KART EFEKTI: Merkezde olan kart daha parlak
       cards.forEach((card, index) => {
-        gsap.fromTo(card,
+        gsap.to(card,
           {
-            opacity: 0.3,
-            scale: 0.92,
-            rotateY: -8,
-            filter: 'blur(4px)'
-          },
-          {
-            opacity: 1,
             scale: 1,
-            rotateY: 0,
-            filter: 'blur(0px)',
-            ease: 'power2.out',
+            opacity: 1,
             scrollTrigger: {
               trigger: card,
-              start: 'left 90%', // Daha erken başlasın
-              end: 'left 30%',   // Daha uzun sürsün
+              start: 'left 50%',
+              end: 'right 50%',
               containerAnimation: gsap.to(track, { x: getScrollDistance }),
-              scrub: 2, // Daha smooth geçiş
-              horizontal: true
+              scrub: 0.5,
+              horizontal: true,
+              onEnter: () => {
+                gsap.to(card, {
+                  scale: 1.02,
+                  duration: 0.3,
+                  ease: 'power2.out'
+                })
+              },
+              onLeave: () => {
+                gsap.to(card, {
+                  scale: 0.98,
+                  opacity: 0.7,
+                  duration: 0.3,
+                  ease: 'power2.in'
+                })
+              },
+              onEnterBack: () => {
+                gsap.to(card, {
+                  scale: 1.02,
+                  opacity: 1,
+                  duration: 0.3,
+                  ease: 'power2.out'
+                })
+              },
+              onLeaveBack: () => {
+                gsap.to(card, {
+                  scale: 0.98,
+                  opacity: 0.7,
+                  duration: 0.3,
+                  ease: 'power2.in'
+                })
+              }
             }
           }
         )
