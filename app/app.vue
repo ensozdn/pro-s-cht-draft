@@ -1192,7 +1192,7 @@ onMounted(async () => {
     new THREE.MeshBasicMaterial({
       map: logoTexture,
       transparent: true,
-      opacity: 0.9,  // Hafif şeffaf
+      opacity: 0.5,  // Hafif şeffaf
       side: THREE.DoubleSide
     })
   )
@@ -1209,7 +1209,7 @@ onMounted(async () => {
     new THREE.MeshBasicMaterial({
       map: logoTexture,
       transparent: true,
-      opacity: 0.9,
+      opacity: 0.5,
       side: THREE.DoubleSide
     })
   )
@@ -1222,14 +1222,14 @@ onMounted(async () => {
   conveyorGroup.add(logoPlaneBack)
 
   const beamLength = 15
-  const beamGeometry = new THREE.ConeGeometry(3.5, beamLength, 32, 1, true)
+  const beamGeometry = new THREE.ConeGeometry(4.5, beamLength, 32, 1, true)
   
   beamGeometry.translate(0, -beamLength / 2, 0)
 
   const beamMaterial = new THREE.MeshBasicMaterial({
     color: 0x5FE3C0,
     transparent: true,
-    opacity: 0.25,
+    opacity: 0.45,
     side: THREE.DoubleSide,
     blending: THREE.AdditiveBlending,
     depthWrite: false
@@ -1242,7 +1242,7 @@ onMounted(async () => {
   scanBeam.rotation.z = Math.PI / 2
   conveyorGroup.add(scanBeam)
 
-  const scanLight = new THREE.SpotLight(0x5FE3C0, 3, 30, Math.PI / 6, 0.5, 2)
+  const scanLight = new THREE.SpotLight(0x5FE3C0, 5, 30, Math.PI / 6, 0.5, 2)
   scanLight.position.copy(scanBeam.position)
   scanLight.target.position.set(scanBeam.position.x + beamLength, 0, 0)
   conveyorGroup.add(scanLight)
