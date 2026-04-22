@@ -1226,7 +1226,62 @@ onMounted(async () => {
   beltMaterial = neonTurquoiseMaterial
   rollerMaterial = titaniumMaterial
 
-  // Scroll progress objesi
+  const beamGeometry = new THREE.CylinderGeometry(0.05, 3, 18, 32, 1, true)
+  const beamMaterial = new THREE.MeshBasicMaterial({
+    color: 0x00ffff,
+    transparent: true,
+    opacity: 0.35,
+    side: THREE.DoubleSide,
+    blending: THREE.AdditiveBlending
+  })
+  const scanBeam = new THREE.Mesh(beamGeometry, beamMaterial)
+  scanBeam.position.set(0.2, 5, 9)
+  scanBeam.rotation.x = 0
+  scanBeam.rotation.y = 0
+  scanBeam.rotation.z = 0
+  conveyorGroup.add(scanBeam)
+
+  const gridBeam = new THREE.Mesh(
+    beamGeometry.clone(),
+    new THREE.MeshBasicMaterial({
+      color: 0x00ffff,
+      transparent: true,
+      opacity: 0.12,
+      wireframe: true,
+      blending: THREE.AdditiveBlending
+    })
+  )
+  gridBeam.position.copy(scanBeam.position)
+  gridBeam.rotation.copy(scanBeam.rotation)
+  conveyorGroup.add(gridBeam)
+
+  const scanLight = new THREE.PointLight(0x00ffff, 3, 25)
+  scanLight.position.set(1.2, 0, 12)
+  conveyorGroup.add(scanLight)
+
+  const particlesGeometry = new THREE.BufferGeometry()
+  const particleCount = 300
+  const positions = new Float32Array(particleCount * 3)
+  
+  for (let i = 0; i < particleCount; i++) {
+    positions[i * 3] = 1.2 + (Math.random() - 0.5) * 0.4
+    positions[i * 3 + 1] = (Math.random() - 0.5) * 3
+    positions[i * 3 + 2] = (Math.random() * 18)
+  }
+  
+  particlesGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3))
+  
+  const particlesMaterial = new THREE.PointsMaterial({
+    color: 0x00ffff,
+    size: 0.08,
+    transparent: true,
+    opacity: 0.85,
+    blending: THREE.AdditiveBlending
+  })
+  
+  const scanParticles = new THREE.Points(particlesGeometry, particlesMaterial)
+  conveyorGroup.add(scanParticles)
+
   const scrollProgress = { value: 0 }
 
   // GSAP ScrollTrigger - scroll ile kamerayı döndür
@@ -1256,6 +1311,23 @@ onMounted(async () => {
     conveyorGroup.rotation.x = baseRotationX + currentRotation.x
     conveyorGroup.rotation.y = Math.PI + currentRotation.y
     
+    if (scanParticles && scanParticles.geometry && scanParticles.geometry.attributes && scanParticles.geometry.attributes.position) {
+      const positionAttribute = scanParticles.geometry.attributes.position
+      const positions = positionAttribute.array
+      if (positions && positions.length > 0) {
+        for (let i = 0; i < positions.length; i += 3) {
+          const currentZ = positions[i + 2]
+          if (typeof currentZ === 'number') {
+            positions[i + 2] = currentZ + 0.08
+            if ((positions[i + 2] as number) > 18) {
+              positions[i + 2] = 0
+            }
+          }
+        }
+        positionAttribute.needsUpdate = true
+      }
+    }
+    
     renderer.render(scene, camera)
   }
   animate()
@@ -1263,18 +1335,10 @@ onMounted(async () => {
   // Mouse parallax event listener ekle
   window.addEventListener('mousemove', handleMouseMove)
 
-  // ═══════════════════════════════════════════════════════════════
-  //  PREMIUM 3D SAHNE + HERO KARTLARI SİNEMATİK DANSI 
-  // ═══════════════════════════════════════════════════════════════
-  
-  // Hero Kartları Referansları
   const heroSections = [section1.value, section2.value, section3.value]
   
-  // LOKMA 25: Mobile check için MediaQuery
   const isMobile = window.innerWidth < 768
 
-  // LOKMA 29: Kamera Parçalarını Fade-In Animasyonu
-  // Tüm kamera parçalarını topla ve görünür yap
   conveyorGroup.traverse((child: any) => {
     if (child.isMesh && child.material) {
       gsap.to(child.material, {
@@ -1286,25 +1350,19 @@ onMounted(async () => {
     }
   })
 
-  // LOKMA 29: Kamerayı daha büyük ve belirgin yap
-  conveyorGroup.scale.set(1.8, 1.8, 1.8)  // 1.8x daha büyük
+  conveyorGroup.scale.set(1.8, 1.8, 1.8)
   
-  // BAŞLANGIÇ POZİSYONU: Kart sol-orta, 3D sağda (dengeli kompozisyon)
-  // LOKMA 26: Mobilde 3D obje yukarıda kalır, kartlar altta
   gsap.set(conveyorGroup.position, { 
     x: isMobile ? 0 : 4.5,
     y: isMobile ? 1 : 0,
     z: isMobile ? -2 : 0
   })
   
-  // STEP 1: İlk Kart → İkinci Kart Geçişi (3D Sahne MERKEZE gelir)
   if (section1.value && section2.value) {
-    // İlk kartı dengeli pozisyonda + hafif 3D ile başlat
-    // LOKMA 25: Mobilde kartlar ortalı
     gsap.set(section1.value, { 
       opacity: 1, 
-      x: isMobile ? 0 : -280,  // Mobilde merkez
-      rotateY: isMobile ? 0 : 2,  // Mobilde düz
+      x: isMobile ? 0 : -280,
+      rotateY: isMobile ? 0 : 2,
       transformPerspective: 1200,
       transformStyle: 'preserve-3d'
     })
@@ -1314,7 +1372,6 @@ onMounted(async () => {
       rotateY: isMobile ? 0 : 2 
     })
     
-    // 3D sahneyi ve kartları senkronize et
     const timeline1 = gsap.timeline({
       scrollTrigger: {
         trigger: section1.value,
