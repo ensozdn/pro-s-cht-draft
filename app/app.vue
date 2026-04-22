@@ -812,7 +812,9 @@ let lenis: any
 let beltMaterial: THREE.MeshStandardMaterial
 let rollerMaterial: THREE.MeshStandardMaterial
 
-// Mouse parallax değişkenleri
+let scanBeam: THREE.Mesh
+let scanParticles: THREE.Points
+
 const mouse = { x: 0, y: 0 }
 const targetRotation = { x: 0, y: 0 }
 const currentRotation = { x: 0, y: 0 }
@@ -1219,6 +1221,78 @@ onMounted(async () => {
   
   conveyorGroup.add(logoPlaneBack)
 
+  const beamLength = 14
+  const beamGeometry = new THREE.ConeGeometry(3.5, beamLength, 32, 1, true)
+  
+  beamGeometry.translate(0, -beamLength / 2, 0)
+
+  const beamMaterial = new THREE.MeshBasicMaterial({
+    color: 0x3DBAA2,
+    transparent: true,
+    opacity: 0.15,
+    side: THREE.DoubleSide,
+    blending: THREE.AdditiveBlending,
+    depthWrite: false
+  })
+  
+  const scanBeam = new THREE.Mesh(beamGeometry, beamMaterial)
+  
+  scanBeam.position.set(0, 0, 0)
+  
+  scanBeam.rotation.z = Math.PI / 2
+  conveyorGroup.add(scanBeam)
+
+  const gridBeam = new THREE.Mesh(
+    beamGeometry,
+    new THREE.MeshBasicMaterial({
+      color: 0x3DBAA2,
+      transparent: true,
+      opacity: 0.08,
+      wireframe: true,
+      blending: THREE.AdditiveBlending,
+      depthWrite: false
+    })
+  )
+  gridBeam.position.copy(scanBeam.position)
+  gridBeam.rotation.copy(scanBeam.rotation)
+  conveyorGroup.add(gridBeam)
+
+  const scanLight = new THREE.SpotLight(0x3DBAA2, 3, 30, Math.PI / 6, 0.5, 2)
+  scanLight.position.copy(scanBeam.position)
+  scanLight.target.position.set(scanBeam.position.x + beamLength, 0, 0)
+  conveyorGroup.add(scanLight)
+  conveyorGroup.add(scanLight.target)
+
+  const particlesGeometry = new THREE.BufferGeometry()
+  const particleCount = 200
+  const positions = new Float32Array(particleCount * 3)
+  
+  for (let i = 0; i < particleCount; i++) {
+    const xPos = scanBeam.position.x + (Math.random() * beamLength)
+    positions[i * 3] = xPos
+    
+    const radiusAtX = (xPos - scanBeam.position.x) * 0.23
+    const theta = Math.random() * Math.PI * 2
+    const r = Math.random() * radiusAtX
+    
+    positions[i * 3 + 1] = scanBeam.position.y + r * Math.cos(theta)
+    positions[i * 3 + 2] = scanBeam.position.z + r * Math.sin(theta)
+  }
+  
+  particlesGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3))
+  
+  const particlesMaterial = new THREE.PointsMaterial({
+    color: 0x3DBAA2,
+    size: 0.06,
+    transparent: true,
+    opacity: 0.8,
+    blending: THREE.AdditiveBlending,
+    depthWrite: false
+  })
+  
+  const scanParticles = new THREE.Points(particlesGeometry, particlesMaterial)
+  conveyorGroup.add(scanParticles)
+
   scene.add(conveyorGroup)
   
   conveyorGroup.rotation.y = -Math.PI
@@ -1226,65 +1300,8 @@ onMounted(async () => {
   beltMaterial = neonTurquoiseMaterial
   rollerMaterial = titaniumMaterial
 
-  const beamGeometry = new THREE.CylinderGeometry(0.05, 3, 18, 32, 1, true)
-  const beamMaterial = new THREE.MeshBasicMaterial({
-    color: 0x00ffff,
-    transparent: true,
-    opacity: 0.35,
-    side: THREE.DoubleSide,
-    blending: THREE.AdditiveBlending
-  })
-  const scanBeam = new THREE.Mesh(beamGeometry, beamMaterial)
-  scanBeam.position.set(0.2, 5, 9)
-  scanBeam.rotation.x = 0
-  scanBeam.rotation.y = 0
-  scanBeam.rotation.z = 0
-  conveyorGroup.add(scanBeam)
-
-  const gridBeam = new THREE.Mesh(
-    beamGeometry.clone(),
-    new THREE.MeshBasicMaterial({
-      color: 0x00ffff,
-      transparent: true,
-      opacity: 0.12,
-      wireframe: true,
-      blending: THREE.AdditiveBlending
-    })
-  )
-  gridBeam.position.copy(scanBeam.position)
-  gridBeam.rotation.copy(scanBeam.rotation)
-  conveyorGroup.add(gridBeam)
-
-  const scanLight = new THREE.PointLight(0x00ffff, 3, 25)
-  scanLight.position.set(1.2, 0, 12)
-  conveyorGroup.add(scanLight)
-
-  const particlesGeometry = new THREE.BufferGeometry()
-  const particleCount = 300
-  const positions = new Float32Array(particleCount * 3)
-  
-  for (let i = 0; i < particleCount; i++) {
-    positions[i * 3] = 1.2 + (Math.random() - 0.5) * 0.4
-    positions[i * 3 + 1] = (Math.random() - 0.5) * 3
-    positions[i * 3 + 2] = (Math.random() * 18)
-  }
-  
-  particlesGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3))
-  
-  const particlesMaterial = new THREE.PointsMaterial({
-    color: 0x00ffff,
-    size: 0.08,
-    transparent: true,
-    opacity: 0.85,
-    blending: THREE.AdditiveBlending
-  })
-  
-  const scanParticles = new THREE.Points(particlesGeometry, particlesMaterial)
-  conveyorGroup.add(scanParticles)
-
   const scrollProgress = { value: 0 }
 
-  // GSAP ScrollTrigger - scroll ile kamerayı döndür
   gsap.to(scrollProgress, {
     value: 1,
     ease: 'none',
@@ -1296,16 +1313,13 @@ onMounted(async () => {
     }
   })
 
-  // Render loop - scroll progress'e göre konveyörü döndür
   const animate = () => {
     animationId = requestAnimationFrame(animate)
     
-    // Lerp (Linear Interpolation) - Yumuşak geçiş
     const lerpFactor = 0.05
     currentRotation.x += (targetRotation.x - currentRotation.x) * lerpFactor
     currentRotation.y += (targetRotation.y - currentRotation.y) * lerpFactor
     
-    // Scroll progress'e göre base rotasyonu ayarla
     const baseRotationX = scrollProgress.value * Math.PI * 2
     
     conveyorGroup.rotation.x = baseRotationX + currentRotation.x
@@ -1316,11 +1330,14 @@ onMounted(async () => {
       const positions = positionAttribute.array
       if (positions && positions.length > 0) {
         for (let i = 0; i < positions.length; i += 3) {
-          const currentZ = positions[i + 2]
-          if (typeof currentZ === 'number') {
-            positions[i + 2] = currentZ + 0.08
-            if ((positions[i + 2] as number) > 18) {
-              positions[i + 2] = 0
+          const currentX = positions[i]
+          if (typeof currentX === 'number') {
+            positions[i] = currentX + 0.08
+            
+            if ((positions[i] as number) > scanBeam.position.x + beamLength) {
+              positions[i] = scanBeam.position.x
+              positions[i + 1] = scanBeam.position.y + (Math.random() - 0.5) * 0.2
+              positions[i + 2] = scanBeam.position.z + (Math.random() - 0.5) * 0.2
             }
           }
         }

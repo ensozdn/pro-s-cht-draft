@@ -1,9 +1,9 @@
 <template>
   <header class="header-bar">
     <div class="header-content">
-      <div class="logo-container">
+      <a href="#" @click.prevent="scrollToTop" class="logo-container">
         <img src="/images/logo.png" alt="ProSicht Logo" class="logo-img" />
-      </div>
+      </a>
 
       <nav class="nav-menu desktop-nav">
         <a href="#applications" class="nav-link">{{ $t('nav.applications') }}</a>
@@ -118,6 +118,13 @@ defineEmits<{
 }>()
 
 const toggleTheme = inject<() => void>('toggleTheme')
+
+const scrollToTop = () => {
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth'
+  })
+}
 </script>
 
 <style scoped>
@@ -151,6 +158,8 @@ const toggleTheme = inject<() => void>('toggleTheme')
   display: flex;
   align-items: center;
   gap: 0.5rem;
+  text-decoration: none;
+  cursor: pointer;
 }
 
 .logo-img {
