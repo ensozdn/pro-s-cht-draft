@@ -2,6 +2,9 @@
   <div :class="isDark ? 'bg-slate-900' : 'bg-slate-50'" class="overflow-x-hidden w-full">
     <Preloader ref="preloaderComponent" />
     
+    <!-- Scroll Progress Indicator -->
+    <div class="scroll-progress-bar" :style="{ width: scrollProgress + '%' }"></div>
+    
     <AppHeader :is-dark="isDark" @toggle-menu="isMobileMenuOpen = true" />
     
     <MobileDrawer :is-open="isMobileMenuOpen" @close="isMobileMenuOpen = false" />
@@ -542,6 +545,18 @@
 
     <AppFooter />
 
+    <!-- Back to Top Button -->
+    <button 
+      v-show="showBackToTop"
+      @click="scrollToTop"
+      class="back-to-top-btn"
+      aria-label="Back to top"
+    >
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M12 19V5M5 12l7-7 7 7"/>
+      </svg>
+    </button>
+
     <div ref="scrollAreaRef" class="scroll-area"></div>
   </div>
 </template>
@@ -857,6 +872,9 @@ const targetRotation = { x: 0, y: 0 }
 const currentRotation = { x: 0, y: 0 }
 let isPageVisible = true
 
+const scrollProgress = ref(0)
+const showBackToTop = ref(false)
+
 let animate: () => void
 
 // Resize handler
@@ -879,13 +897,26 @@ const handleVisibilityChange = () => {
 
 // Mouse move handler - Parallax efekti
 const handleMouseMove = (event: MouseEvent) => {
-  // Fare koordinatlarını normalize et (-1 ile 1 arası)
   mouse.x = (event.clientX / window.innerWidth) * 2 - 1
   mouse.y = -(event.clientY / window.innerHeight) * 2 + 1
   
-  // Hedef rotasyonu hafif bir şekilde ayarla
   targetRotation.x = mouse.y * 0.15
   targetRotation.y = mouse.x * 0.15
+}
+
+const updateScrollProgress = () => {
+  const scrollTop = window.scrollY
+  const docHeight = document.documentElement.scrollHeight - window.innerHeight
+  scrollProgress.value = (scrollTop / docHeight) * 100
+  showBackToTop.value = scrollTop > 500
+}
+
+const scrollToTop = () => {
+  if (lenis) {
+    lenis.scrollTo(0, { duration: 1.5, easing: (t: number) => 1 - Math.pow(1 - t, 3) })
+  } else {
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
 }
 
 onMounted(async () => {
@@ -893,6 +924,10 @@ onMounted(async () => {
 
   initTheme()
   detectUserLocale()
+
+  window.addEventListener('scroll', updateScrollProgress)
+  window.addEventListener('resize', updateScrollProgress)
+  updateScrollProgress()
 
   const { gsap } = await import('gsap')
   const { ScrollTrigger } = await import('gsap/ScrollTrigger')
@@ -1847,6 +1882,15 @@ onMounted(async () => {
   }
   
   window.addEventListener('resize', handleResize)
+})
+
+onUnmounted(() => {
+  window.removeEventListener('scroll', updateScrollProgress)
+  window.removeEventListener('resize', updateScrollProgress)
+  window.removeEventListener('resize', handleResize)
+  window.removeEventListener('mousemove', handleMouseMove)
+  document.removeEventListener('visibilitychange', handleVisibilityChange)
+  if (animationId) cancelAnimationFrame(animationId)
 })
 
 // Watch locale changes - sadece DOM güncellemesi bekle, GSAP import etme
