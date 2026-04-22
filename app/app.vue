@@ -829,6 +829,8 @@ const targetRotation = { x: 0, y: 0 }
 const currentRotation = { x: 0, y: 0 }
 let isPageVisible = true
 
+let animate: () => void
+
 // Resize handler
 const handleResize = () => {
   if (!camera || !renderer) return
@@ -1326,7 +1328,8 @@ onMounted(async () => {
     .to(conveyorGroup.rotation, { y: Math.PI, duration: 0.5 }, 0)
     .to(conveyorGroup.rotation, { y: 0, duration: 0.5 }, 1)
 
-  const animate = () => {
+  // Animation loop assignment
+  animate = () => {
     if (!isPageVisible) return
     
     animationId = requestAnimationFrame(animate)
