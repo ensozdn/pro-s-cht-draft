@@ -88,10 +88,11 @@
   left: 0;
   right: 0;
   z-index: 50;
-  backdrop-filter: blur(16px) saturate(180%);
+  backdrop-filter: blur(8px) saturate(180%);
   background: rgba(255, 255, 255, 0.7);
   border-bottom: 1px solid rgba(61, 186, 162, 0.1);
   transition: all 0.3s ease;
+  will-change: transform;
 }
 
 .dark .header-bar {
@@ -395,12 +396,13 @@
   max-width: 280px;
   height: 100%;
   background: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(20px) saturate(180%);
+  backdrop-filter: blur(10px) saturate(180%);
   border-left: 1px solid rgba(13, 124, 108, 0.2);
   box-shadow: -10px 0 40px rgba(0, 0, 0, 0.2);
   padding: 2rem 1.5rem;
   display: flex;
   flex-direction: column;
+  will-change: transform;
 }
 
 .drawer-close-btn {
@@ -551,7 +553,7 @@ canvas {
 }
 
 .glass-card {
-  backdrop-filter: blur(16px) saturate(180%);
+  backdrop-filter: blur(8px) saturate(180%);
   background: rgba(255, 255, 255, 0.15);
   border: 1px solid rgba(61, 186, 162, 0.2);
   box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
@@ -2646,6 +2648,10 @@ canvas {
   z-index: 10;
 }
 
+.dark .video-scroll-section {
+  background: #0f172a;
+}
+
 .ipad-container {
   position: sticky;
   top: 0;
@@ -2654,6 +2660,10 @@ canvas {
   align-items: center;
   justify-content: center;
   background: #ffffff;
+}
+
+.dark .ipad-container {
+  background: #0f172a;
 }
 
 .ipad-frame {

@@ -89,6 +89,7 @@
       </section>
     </div>
 
+    <!-- iPad Mockup Video Section -->
     <section class="video-scroll-section">
       <div class="ipad-container">
         <div class="ipad-frame">
@@ -826,6 +827,7 @@ let scanBeam: THREE.Mesh
 const mouse = { x: 0, y: 0 }
 const targetRotation = { x: 0, y: 0 }
 const currentRotation = { x: 0, y: 0 }
+let isPageVisible = true
 
 // Resize handler
 const handleResize = () => {
@@ -833,6 +835,16 @@ const handleResize = () => {
   camera.aspect = window.innerWidth / window.innerHeight
   camera.updateProjectionMatrix()
   renderer.setSize(window.innerWidth, window.innerHeight)
+}
+
+// Visibility handler - sayfa gizliyken animasyonu durdur
+const handleVisibilityChange = () => {
+  isPageVisible = !document.hidden
+  if (!isPageVisible && animationId) {
+    cancelAnimationFrame(animationId)
+  } else if (isPageVisible) {
+    animate()
+  }
 }
 
 // Mouse move handler - Parallax efekti
@@ -916,7 +928,7 @@ onMounted(async () => {
   // Lenis Smooth Scroll başlat
   const Lenis = (await import('lenis')).default
   lenis = new Lenis({
-    duration: 1.2,
+    duration: 0.8,
     easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t))
   })
 
@@ -1315,6 +1327,8 @@ onMounted(async () => {
     .to(conveyorGroup.rotation, { y: 0, duration: 0.5 }, 1)
 
   const animate = () => {
+    if (!isPageVisible) return
+    
     animationId = requestAnimationFrame(animate)
     
     const lerpFactor = 0.05
@@ -1331,12 +1345,12 @@ onMounted(async () => {
   }
   animate()
 
+  // iPad Video ScrollTrigger
   if (ipadVideo.value) {
     const video = ipadVideo.value
     
     const setupScrollTrigger = () => {
       if (!video.duration || isNaN(video.duration)) {
-        console.log('Video duration not ready')
         return
       }
       
@@ -1360,6 +1374,9 @@ onMounted(async () => {
       video.addEventListener('loadedmetadata', setupScrollTrigger)
     }
   }
+
+  // Visibility listener ekle
+  document.addEventListener('visibilitychange', handleVisibilityChange)
 
   // Mouse parallax event listener ekle
   window.addEventListener('mousemove', handleMouseMove)
@@ -1800,57 +1817,21 @@ onMounted(async () => {
   window.addEventListener('resize', handleResize)
 })
 
-// Watch locale changes and reapply GSAP visibility settings
+// Watch locale changes - sadece DOM güncellemesi bekle, GSAP import etme
 watch(locale, async () => {
   try {
-    // Wait for DOM to update after locale change
     await nextTick()
     
-    // Import GSAP and ScrollTrigger dynamically
-    const gsap = (await import('gsap')).default
-    const { ScrollTrigger } = await import('gsap/ScrollTrigger')
-    
-    // DON'T refresh all triggers - too heavy!
-    // Instead, just ensure cards are visible immediately
-    
-    // Ensure cards are visible immediately (fallback if user doesn't scroll)
-    const featureCards = document.querySelectorAll('.feature-card')
-    if (featureCards.length > 0) {
-      gsap.set(featureCards, {
-        opacity: 1,
-        y: 0,
-        scale: 1
-      })
-    }
-    
-    const contributionCards = document.querySelectorAll('.contribution-card')
-    if (contributionCards.length > 0) {
-      gsap.set(contributionCards, {
-        opacity: 1,
-        y: 0,
-        scale: 1
-      })
-    }
-    
-    const partnerCards = document.querySelectorAll('.partner-card')
-    if (partnerCards.length > 0) {
-      gsap.set(partnerCards, {
-        opacity: 1,
-        y: 0,
-        scale: 1
-      })
-    }
-    
-    const blogCards = document.querySelectorAll('.blog-card')
-    if (blogCards.length > 0) {
-      gsap.set(blogCards, {
-        opacity: 1,
-        y: 0,
-        scale: 1
+    // Kartları görünür yap (GSAP zaten yüklü, tekrar import etme)
+    const cards = document.querySelectorAll('.feature-card, .contribution-card, .partner-card, .blog-card')
+    if (cards.length > 0) {
+      cards.forEach(card => {
+        (card as HTMLElement).style.opacity = '1'
+        ;(card as HTMLElement).style.transform = 'translateY(0) scale(1)'
       })
     }
   } catch (error) {
-    console.error('Error reapplying GSAP settings on locale change:', error)
+    console.error('Error updating cards on locale change:', error)
   }
 })
 
@@ -1875,5 +1856,6 @@ onUnmounted(async () => {
   // Event listener'ları temizle
   window.removeEventListener('resize', handleResize)
   window.removeEventListener('mousemove', handleMouseMove)
+  document.removeEventListener('visibilitychange', handleVisibilityChange)
 })
 </script>
