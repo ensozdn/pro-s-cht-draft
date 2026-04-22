@@ -1221,15 +1221,15 @@ onMounted(async () => {
   
   conveyorGroup.add(logoPlaneBack)
 
-  const beamLength = 5.5
-  const beamGeometry = new THREE.ConeGeometry(1.0, beamLength, 32, 1, true)
+  const beamLength = 15
+  const beamGeometry = new THREE.ConeGeometry(3.5, beamLength, 32, 1, true)
   
   beamGeometry.translate(0, -beamLength / 2, 0)
 
   const beamMaterial = new THREE.MeshBasicMaterial({
-    color: 0x3DBAA2,
+    color: 0x5FE3C0,
     transparent: true,
-    opacity: 0.15,
+    opacity: 0.25,
     side: THREE.DoubleSide,
     blending: THREE.AdditiveBlending,
     depthWrite: false
@@ -1237,27 +1237,12 @@ onMounted(async () => {
   
   const scanBeam = new THREE.Mesh(beamGeometry, beamMaterial)
   
-  scanBeam.position.set(0, 0, 0)
+  scanBeam.position.set(0.8, 0, 0)
   
   scanBeam.rotation.z = Math.PI / 2
   conveyorGroup.add(scanBeam)
 
-  const gridBeam = new THREE.Mesh(
-    beamGeometry,
-    new THREE.MeshBasicMaterial({
-      color: 0x3DBAA2,
-      transparent: true,
-      opacity: 0.08,
-      wireframe: true,
-      blending: THREE.AdditiveBlending,
-      depthWrite: false
-    })
-  )
-  gridBeam.position.copy(scanBeam.position)
-  gridBeam.rotation.copy(scanBeam.rotation)
-  conveyorGroup.add(gridBeam)
-
-  const scanLight = new THREE.SpotLight(0x3DBAA2, 3, 30, Math.PI / 6, 0.5, 2)
+  const scanLight = new THREE.SpotLight(0x5FE3C0, 3, 30, Math.PI / 6, 0.5, 2)
   scanLight.position.copy(scanBeam.position)
   scanLight.target.position.set(scanBeam.position.x + beamLength, 0, 0)
   conveyorGroup.add(scanLight)
@@ -1282,7 +1267,7 @@ onMounted(async () => {
   particlesGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3))
   
   const particlesMaterial = new THREE.PointsMaterial({
-    color: 0x3DBAA2,
+    color: 0x5FE3C0,
     size: 0.06,
     transparent: true,
     opacity: 0.8,
@@ -1506,9 +1491,6 @@ onMounted(async () => {
     })
   }
 
-  // ═══════════════════════════════════════════════════════════════
-  // LOKMA 35: Horizontal Pinned Scroll - Apple Style (Desktop Only)
-  // ═══════════════════════════════════════════════════════════════
   if (horizontalSection.value && horizontalTrack.value) {
     const mm = gsap.matchMedia()
 
