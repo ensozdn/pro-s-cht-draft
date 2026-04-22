@@ -1292,18 +1292,18 @@ onMounted(async () => {
   beltMaterial = neonTurquoiseMaterial
   rollerMaterial = titaniumMaterial
 
-  const scrollProgress = { value: 0 }
-
-  gsap.to(scrollProgress, {
-    value: 1,
-    ease: 'none',
+  const cameraTimeline = gsap.timeline({
     scrollTrigger: {
-      trigger: '.content-wrapper',
+      trigger: '.main-content',
       start: 'top top',
       end: 'bottom bottom',
       scrub: 1
     }
   })
+
+  cameraTimeline
+    .to(conveyorGroup.rotation, { y: Math.PI, duration: 1 }, 0)
+    .to(conveyorGroup.rotation, { y: 0, duration: 1 }, 1)
 
   const animate = () => {
     animationId = requestAnimationFrame(animate)
@@ -1312,10 +1312,7 @@ onMounted(async () => {
     currentRotation.x += (targetRotation.x - currentRotation.x) * lerpFactor
     currentRotation.y += (targetRotation.y - currentRotation.y) * lerpFactor
     
-    const baseRotationX = scrollProgress.value * Math.PI * 2
-    
-    conveyorGroup.rotation.x = baseRotationX + currentRotation.x
-    conveyorGroup.rotation.y = Math.PI + currentRotation.y
+    conveyorGroup.rotation.x = currentRotation.x
     
     if (scanBeam && scanBeam.material && (scanBeam.material as any).uniforms) {
       (scanBeam.material as any).uniforms.time.value = performance.now() * 0.001
