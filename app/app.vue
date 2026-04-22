@@ -1221,8 +1221,8 @@ onMounted(async () => {
   
   conveyorGroup.add(logoPlaneBack)
 
-  const beamLength = 14
-  const beamGeometry = new THREE.ConeGeometry(3.5, beamLength, 32, 1, true)
+  const beamLength = 5.5
+  const beamGeometry = new THREE.ConeGeometry(1.0, beamLength, 32, 1, true)
   
   beamGeometry.translate(0, -beamLength / 2, 0)
 
