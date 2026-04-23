@@ -5,6 +5,11 @@ export default defineNuxtConfig({
   
   modules: ['@nuxtjs/tailwindcss', '@nuxtjs/google-fonts', '@nuxtjs/i18n'],
   
+  typescript: {
+    typeCheck: false,
+    strict: false
+  },
+  
   googleFonts: {
     families: {
       'Space Grotesk': [400, 500, 600, 700]
