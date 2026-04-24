@@ -1,3 +1,5 @@
+let _preloaderShown = false
+
 export function useScrollAnimations() {
   const setupAnimations = async (opts: {
     gsap: any
@@ -25,8 +27,8 @@ export function useScrollAnimations() {
     } = opts
 
     const isMobile = window.innerWidth < 768
-    const isFirstVisit = !sessionStorage.getItem('prosicht_visited')
-    if (isFirstVisit) sessionStorage.setItem('prosicht_visited', '1')
+    const isFirstVisit = !_preloaderShown
+    if (isFirstVisit) _preloaderShown = true
 
     // ── Preloader ────────────────────────────────────────────────
     if (!isFirstVisit) {
