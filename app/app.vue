@@ -141,17 +141,17 @@ const contactInfo = computed(() => [
 ])
 
 const partners = ref([
-  { name: 'KOSGEB', logo: '/images/partners/kosgeb.png' },
-  { name: 'TÜBİTAK', logo: '/images/partners/tubitak.png' },
-  { name: 'BTM', logo: '/images/partners/btm.png' },
-  { name: 'Sakarya Uygulamalı Bilimler Üniversitesi', logo: '/images/partners/subu.png' },
+  { name: 'KOSGEB', logo: '/images/partners/kosgeb.jpeg' },
+  { name: 'TÜBİTAK', logo: '/images/partners/tübitak.jpg' },
+  { name: 'BTM', logo: '/images/partners/btm.jpg' },
+  { name: 'Sakarya Uygulamalı Bilimler Üniversitesi', logo: '/images/partners/sakarya uygulamalı bilimler üniversitesi .webp' },
   { name: 'TOYOTA', logo: '/images/partners/toyota.png' },
-  { name: 'İTÜ Çekirdek', logo: '/images/partners/itu-cekirdek.png' },
+  { name: 'İTÜ Çekirdek', logo: '/images/partners/itüçekirdek.png' },
   { name: 'Ford', logo: '/images/partners/ford.png' },
-  { name: 'Sakarya Üniversitesi', logo: '/images/partners/sau.png' },
-  { name: 'Sakarya Teknokent', logo: '/images/partners/sakarya-teknokent.png' },
-  { name: 'NVIDIA Inception Program', logo: '/images/partners/nvidia.png' },
-  { name: 'Bilişim Vadisi', logo: '/images/partners/bilisim-vadisi.png' }
+  { name: 'Sakarya Üniversitesi', logo: '/images/partners/saü.jpg' },
+  { name: 'Sakarya Teknokent', logo: '/images/partners/sakarya teknokent.svg' },
+  { name: 'NVIDIA Inception Program', logo: '/images/partners/nvıdıa.png' },
+  { name: 'Bilişim Vadisi', logo: '/images/partners/bilişim vadisi .jpg' }
 ])
 
 const blogPosts = computed(() => [
