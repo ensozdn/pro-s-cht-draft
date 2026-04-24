@@ -53,12 +53,15 @@
 <script setup lang="ts">
 const { locale } = useI18n()
 
-const { data: posts } = useAsyncData(
-  `blog-section-${locale.value}`,
-  () => queryCollection('blog')
-    .where('locale', '=', locale.value)
-    .order('date', 'DESC')
-    .limit(3)
-    .all()
-)
+// TEMP: Static data for crash diagnosis
+const posts = ref([])
+// const { data: posts } = useAsyncData(
+//   `blog-section-${locale.value}`,
+//   () => queryCollection('blog')
+//     .where('locale', '=', locale.value)
+//     .order('date', 'DESC')
+//     .limit(3)
+//     .all(),
+//   { server: false }
+// )
 </script>
