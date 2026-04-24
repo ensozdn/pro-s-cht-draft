@@ -53,7 +53,7 @@
 <script setup lang="ts">
 const { locale } = useI18n()
 
-const { data: posts } = await useAsyncData(
+const { data: posts } = useAsyncData(
   `blog-section-${locale.value}`,
   () => queryCollection('blog')
     .where('locale', '=', locale.value)
