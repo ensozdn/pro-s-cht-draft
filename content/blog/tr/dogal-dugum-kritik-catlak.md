@@ -1,12 +1,15 @@
 ---
-title: "Doğal Bir 'Düğüm' mü, Kritik Bir 'Çatlak' mı?"
-description: "Ahşap yüzeylerinde yapay zeka ile mikro çatlak ve düğüm ayrımını nasıl yapıyoruz? ProSicht'in derin öğrenme modeli bu soruyu saniyeler içinde yanıtlıyor."
-date: "2026-02-24"
-author: "İdil Karabaş"
-tags: ["AI", "Endüstri 4.0", "Teknoloji"]
-image: "/images/blog/blog1.jpg"
-locale: "tr"
+title: Doğal Bir 'Düğüm' mü, Kritik Bir 'Çatlak' mı?
+author: İdil Karabaş
+date: 2026-02-24
+description: Ahşap yüzeylerinde yapay zeka ile mikro çatlak ve düğüm ayrımını nasıl yapıyoruz? ProSicht'in derin öğrenme modeli bu soruyu saniyeler içinde yanıtlıyor.
 featured: true
+image: /images/blog/blog1.jpg
+locale: tr
+tags:
+  - AI
+  - Endüstri 4.0
+  - Teknoloji
 ---
 
 Mobilya ve ahşap sektöründe üretim kalitesi, gözle yapılan denetimin çok ötesine geçti. Geleneksel yöntemlerde bir operatörün gözden kaçırabileceği mikro düzeydeki yüzey kusurları, artık ProSicht'in AI destekli görüntü işleme sistemi sayesinde anında tespit ediliyor.
