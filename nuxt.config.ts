@@ -3,27 +3,15 @@ export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
   devtools: { enabled: true },
   
-  modules: ['@nuxtjs/tailwindcss', '@nuxtjs/google-fonts', '@nuxtjs/i18n', '@nuxt/content', 'nuxt-studio'],
+  modules: ['@nuxtjs/tailwindcss', '@nuxtjs/google-fonts', '@nuxtjs/i18n', '@nuxt/content'],
+
+  experimental: {
+    viteEnvironmentApi: true
+  },
 
   content: {
     experimental: {
-      nativeSqlite: true,
-      sqliteConnector: 'native'
-    }
-  },
-
-  vite: {
-    ssr: {
-      external: ['better-sqlite3', 'db0', 'db0/connectors/better-sqlite3']
-    },
-    optimizeDeps: {
-      exclude: ['better-sqlite3', 'db0']
-    }
-  },
-
-  nitro: {
-    experimental: {
-      asyncContext: true
+      nativeSqlite: true
     }
   },
 
