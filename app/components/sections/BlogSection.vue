@@ -8,73 +8,57 @@
 
       <!-- Asimetrik Bento Grid -->
       <div class="blog-grid">
-        <article
-          v-for="post in blogPosts"
-          :key="post.id"
+        <NuxtLink
+          v-for="post in posts"
+          :key="post.path"
+          :to="`/blog/${post.stem?.split('/').pop()}`"
           :class="['blog-card', 'group', { 'blog-card-featured': post.featured }]"
         >
-          <!-- Resim Konteyneri -->
           <div class="blog-image-wrapper">
-            <img
-              :src="post.image"
-              :alt="post.title"
-              class="blog-image"
-            />
+            <img :src="post.image" :alt="post.title" class="blog-image" />
           </div>
 
-          <!-- İçerik -->
           <div class="blog-content">
-            <!-- Etiketler -->
             <div class="blog-tags">
-              <span
-                v-for="tag in post.tags"
-                :key="tag"
-                class="blog-tag"
-              >
-                {{ tag }}
-              </span>
+              <span v-for="tag in post.tags" :key="tag" class="blog-tag">{{ tag }}</span>
             </div>
 
-            <!-- Başlık -->
             <h3 class="blog-post-title">{{ post.title }}</h3>
 
-            <!-- Yazar ve Tarih -->
             <div class="blog-meta">
               <div class="blog-author">
                 <div class="author-avatar">
-                  <span class="author-initial">İ</span>
+                  <span class="author-initial">{{ post.author?.charAt(0) }}</span>
                 </div>
                 <span class="author-name">{{ post.author }}</span>
               </div>
               <span class="blog-date">{{ post.date }}</span>
             </div>
           </div>
-        </article>
+        </NuxtLink>
       </div>
 
-      <!-- Daha Fazla Göster Butonu -->
       <div class="blog-button-wrapper">
-        <button class="blog-load-more">
+        <NuxtLink to="/blog" class="blog-load-more">
           {{ $t('blog.allPosts') }}
           <svg class="button-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
           </svg>
-        </button>
+        </NuxtLink>
       </div>
     </div>
   </section>
 </template>
 
 <script setup lang="ts">
-defineProps<{
-  blogPosts: Array<{
-    id: number
-    title: string
-    image: string
-    tags: string[]
-    author: string
-    date: string
-    featured: boolean
-  }>
-}>()
+const { locale } = useI18n()
+
+const { data: posts } = await useAsyncData(
+  `blog-section-${locale.value}`,
+  () => queryCollection('blog')
+    .where('locale', '=', locale.value)
+    .order('date', 'DESC')
+    .limit(3)
+    .all()
+)
 </script>

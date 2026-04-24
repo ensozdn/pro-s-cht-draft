@@ -20,7 +20,7 @@
     <ApplicationsSection ref="appSectionRef" :categories="categories" />
     <ContributionsSection :contributions="contributions" />
     <PartnersSection :partners="partners" />
-    <BlogSection :blog-posts="blogPosts" />
+    <BlogSection />
     <ContactSection ref="contactSectionRef" :contact-info="contactInfo" />
     <ContactFormSection />
 
@@ -152,12 +152,6 @@ const partners = ref([
   { name: 'Sakarya Teknokent', logo: '/images/partners/sakarya teknokent.svg' },
   { name: 'NVIDIA Inception Program', logo: '/images/partners/nvıdıa.png' },
   { name: 'Bilişim Vadisi', logo: '/images/partners/bilişim vadisi .jpg' }
-])
-
-const blogPosts = computed(() => [
-  { id: 1, title: t('blog.post1.title', {}, { locale: locale.value }), image: '/images/blog/blog1.jpg', tags: ['AI', 'Endüstri 4.0', 'Technology'], author: t('blog.post1.author', {}, { locale: locale.value }), date: t('blog.post1.date', {}, { locale: locale.value }), featured: true },
-  { id: 2, title: t('blog.post2.title', {}, { locale: locale.value }), image: '/images/blog/blog2.jpg', tags: ['AI', 'Endüstri 4.0', 'Technology'], author: t('blog.post2.author', {}, { locale: locale.value }), date: t('blog.post2.date', {}, { locale: locale.value }), featured: false },
-  { id: 3, title: t('blog.post3.title', {}, { locale: locale.value }), image: '/images/blog/blog3.jpg', tags: ['AI', 'Technology'], author: t('blog.post3.author', {}, { locale: locale.value }), date: t('blog.post3.date', {}, { locale: locale.value }), featured: false }
 ])
 
 // ── Scroll Utilities ──────────────────────────────────────────────
