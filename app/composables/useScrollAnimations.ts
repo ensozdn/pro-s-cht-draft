@@ -25,8 +25,13 @@ export function useScrollAnimations() {
     } = opts
 
     const isMobile = window.innerWidth < 768
+    const isFirstVisit = !sessionStorage.getItem('prosicht_visited')
+    if (isFirstVisit) sessionStorage.setItem('prosicht_visited', '1')
 
     // ── Preloader ────────────────────────────────────────────────
+    if (!isFirstVisit) {
+      if (preloaderComponent?.preloaderEl) preloaderComponent.preloaderEl.style.display = 'none'
+    } else {
     const loadingProgress = { value: 0 }
     gsap.to(loadingProgress, {
       value: 100, duration: 2, ease: 'power2.inOut',
@@ -50,6 +55,7 @@ export function useScrollAnimations() {
         })
       }
     })
+    }
 
     // ── 3D Model position/scale ───────────────────────────────────
     conveyorGroup.scale.set(1.8, 1.8, 1.8)

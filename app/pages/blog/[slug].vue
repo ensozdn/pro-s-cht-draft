@@ -2,12 +2,20 @@
   <main class="blog-detail-page">
     <div class="blog-detail-container">
 
-      <NuxtLink to="/blog" class="back-link">
-        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" class="back-icon">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 12H5M12 19l-7-7 7-7" />
-        </svg>
-        Blog
-      </NuxtLink>
+      <div class="blog-nav-links">
+        <NuxtLink to="/" class="back-link">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" class="back-icon">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12h18M3 12l7-7M3 12l7 7" />
+          </svg>
+          {{ $t('nav.home') }}
+        </NuxtLink>
+        <NuxtLink to="/blog" class="back-link">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" class="back-icon">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 12H5M12 19l-7-7 7-7" />
+          </svg>
+          Blog
+        </NuxtLink>
+      </div>
 
       <article v-if="post" class="blog-article">
         <header class="blog-article-header">
@@ -90,6 +98,12 @@ if (post.value) {
   max-width: 800px;
   margin: 0 auto;
   padding: 0 2rem;
+}
+
+.blog-nav-links {
+  display: flex;
+  gap: 1.5rem;
+  margin-bottom: 2.5rem;
 }
 
 .back-link {

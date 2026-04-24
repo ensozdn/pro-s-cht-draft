@@ -11,7 +11,11 @@ export default defineNuxtConfig({
     '/blog/**': { prerender: true }
   },
 
-  modules: ['@nuxtjs/tailwindcss', '@nuxtjs/google-fonts', '@nuxtjs/i18n'],
+  modules: ['@nuxtjs/tailwindcss', '@nuxtjs/google-fonts', '@nuxtjs/i18n', '@nuxt/content', '@nuxthq/studio'],
+
+  studio: {
+    enabled: true
+  },
 
   typescript: {
     typeCheck: false,
