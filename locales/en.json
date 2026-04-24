@@ -128,20 +128,32 @@
       "title": "A Natural 'Knot' or a Critical 'Crack'?",
       "author": "İdil Karabaş",
       "date": "2 months ago",
-      "tags": ["AI", "Industry 4.0", "Technology"]
+      "tags": [
+        "AI",
+        "Industry 4.0",
+        "Technology"
+      ]
     },
     "post2": {
       "title": "The Era of AI-Powered Quality Control in Automotive Production",
       "author": "İdil Karabaş",
       "date": "February 24, 2026",
-      "tags": ["AI", "Industry 4.0", "Technology"]
+      "tags": [
+        "AI",
+        "Industry 4.0",
+        "Technology"
+      ]
     },
     "post3": {
       "title": "Pro Sicht and BIOS Partnership: End-to-End Autonomous Era in Quality Control",
       "author": "İdil Karabaş",
       "date": "February 24, 2026",
-      "tags": ["AI", "Technology"]
-    }
+      "tags": [
+        "AI",
+        "Technology"
+      ]
+    },
+    "empty": "No posts found."
   },
   "contact": {
     "title": "Contact Information",

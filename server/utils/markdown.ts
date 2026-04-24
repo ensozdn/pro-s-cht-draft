@@ -20,13 +20,14 @@ const CONTENT_DIR = join(process.cwd(), 'content', 'blog')
 
 export function getBlogPosts(locale: string): BlogPost[] {
   const dir = join(CONTENT_DIR, locale)
-  if (!existsSync(dir)) return []
+  const resolvedDir = existsSync(dir) ? dir : join(CONTENT_DIR, 'tr')
+  if (!existsSync(resolvedDir)) return []
 
-  return readdirSync(dir)
+  return readdirSync(resolvedDir)
     .filter(f => f.endsWith('.md'))
     .map(file => {
       const slug = file.replace('.md', '')
-      const raw = readFileSync(join(dir, file), 'utf-8')
+      const raw = readFileSync(join(resolvedDir, file), 'utf-8')
       const { data } = matter(raw)
       return {
         slug,
@@ -44,7 +45,10 @@ export function getBlogPosts(locale: string): BlogPost[] {
 }
 
 export function getBlogPost(locale: string, slug: string): BlogPost | null {
-  const filePath = join(CONTENT_DIR, locale, `${slug}.md`)
+  let filePath = join(CONTENT_DIR, locale, `${slug}.md`)
+  if (!existsSync(filePath)) {
+    filePath = join(CONTENT_DIR, 'tr', `${slug}.md`)
+  }
   if (!existsSync(filePath)) return null
 
   const raw = readFileSync(filePath, 'utf-8')

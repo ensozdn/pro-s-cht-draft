@@ -128,20 +128,32 @@
       "title": "Een Natuurlijke 'Knoop' of een Kritieke 'Scheur'?",
       "author": "İdil Karabaş",
       "date": "2 maanden geleden",
-      "tags": ["AI", "Industrie 4.0", "Technologie"]
+      "tags": [
+        "AI",
+        "Industrie 4.0",
+        "Technologie"
+      ]
     },
     "post2": {
       "title": "Het Tijdperk van AI-aangedreven Kwaliteitscontrole in Autoproductie",
       "author": "İdil Karabaş",
       "date": "24 februari 2026",
-      "tags": ["AI", "Industrie 4.0", "Technologie"]
+      "tags": [
+        "AI",
+        "Industrie 4.0",
+        "Technologie"
+      ]
     },
     "post3": {
       "title": "Pro Sicht en BIOS Partnerschap: End-to-End Autonoom Tijdperk in Kwaliteitscontrole",
       "author": "İdil Karabaş",
       "date": "24 februari 2026",
-      "tags": ["AI", "Technologie"]
-    }
+      "tags": [
+        "AI",
+        "Technologie"
+      ]
+    },
+    "empty": "Geen artikelen gevonden."
   },
   "contact": {
     "title": "Contactinformatie",

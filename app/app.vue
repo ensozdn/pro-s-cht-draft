@@ -1,7 +1,9 @@
 <template>
   <div>
     <canvas ref="cursorCanvas" class="cursor-trail-canvas"></canvas>
-    <NuxtPage />
+    <NuxtLayout>
+      <NuxtPage />
+    </NuxtLayout>
   </div>
 </template>
 

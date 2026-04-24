@@ -15,7 +15,8 @@
           :class="['blog-card', 'group', { 'blog-card-featured': post.featured }]"
         >
           <div class="blog-image-wrapper">
-            <img :src="post.image" :alt="post.title" class="blog-image" />
+            <img v-if="post.image" :src="post.image" :alt="post.title" class="blog-image" />
+            <div v-else class="blog-image-placeholder" />
           </div>
 
           <div class="blog-content">

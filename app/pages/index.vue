@@ -54,6 +54,9 @@ import { useScrollAnimations } from '../composables/useScrollAnimations'
 import { useCursorTrail } from '../composables/useCursorTrail'
 
 const { isDark, toggleTheme, initTheme } = useTheme()
+
+definePageMeta({ layout: false })
+
 const { t, locale, setLocale } = useI18n()
 provide('toggleTheme', toggleTheme)
 

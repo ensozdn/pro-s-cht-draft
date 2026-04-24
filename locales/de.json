@@ -128,20 +128,32 @@
       "title": "Ein Natürlicher 'Ast' oder ein Kritischer 'Riss'?",
       "author": "İdil Karabaş",
       "date": "vor 2 Monaten",
-      "tags": ["KI", "Industrie 4.0", "Technologie"]
+      "tags": [
+        "KI",
+        "Industrie 4.0",
+        "Technologie"
+      ]
     },
     "post2": {
       "title": "Die Ära der KI-gestützten Qualitätskontrolle in der Automobilproduktion",
       "author": "İdil Karabaş",
       "date": "24. Februar 2026",
-      "tags": ["KI", "Industrie 4.0", "Technologie"]
+      "tags": [
+        "KI",
+        "Industrie 4.0",
+        "Technologie"
+      ]
     },
     "post3": {
       "title": "Pro Sicht und BIOS Partnerschaft: End-to-End Autonome Ära in der Qualitätskontrolle",
       "author": "İdil Karabaş",
       "date": "24. Februar 2026",
-      "tags": ["KI", "Technologie"]
-    }
+      "tags": [
+        "KI",
+        "Technologie"
+      ]
+    },
+    "empty": "Keine Beiträge gefunden."
   },
   "contact": {
     "title": "Kontaktinformationen",

@@ -46,6 +46,8 @@
 </template>
 
 <script setup lang="ts">
+definePageMeta({ layout: 'blog' })
+
 interface BlogPost {
   slug: string
   title: string

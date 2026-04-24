@@ -6,7 +6,15 @@
         <p class="blog-page-subtitle">{{ $t('blog.title') }}</p>
       </div>
 
-      <div class="blog-page-grid">
+      <div v-if="pending" class="blog-page-grid">
+        <div v-for="i in 3" :key="i" class="blog-page-skeleton" />
+      </div>
+
+      <div v-else-if="!posts?.length" class="blog-empty">
+        <p>{{ $t('blog.empty') }}</p>
+      </div>
+
+      <div v-else class="blog-page-grid">
         <NuxtLink
           v-for="post in posts"
           :key="post.slug"
@@ -36,6 +44,8 @@
 </template>
 
 <script setup lang="ts">
+definePageMeta({ layout: 'blog' })
+
 interface BlogPost {
   slug: string
   title: string
@@ -50,8 +60,8 @@ interface BlogPost {
 
 const { locale } = useI18n()
 
-const { data: posts } = await useFetch<BlogPost[]>('/api/content/blogs', {
-  query: { locale: locale.value },
+const { data: posts, pending } = await useFetch<BlogPost[]>('/api/content/blogs', {
+  query: computed(() => ({ locale: locale.value })),
   default: () => [] as BlogPost[]
 })
 
@@ -205,6 +215,35 @@ useSeoMeta({
 
 .dark .blog-page-card-meta {
   color: rgba(226, 232, 240, 0.5);
+}
+
+.blog-empty {
+  text-align: center;
+  padding: 4rem 0;
+  color: rgba(30, 41, 59, 0.5);
+  font-size: 1rem;
+}
+
+.dark .blog-empty {
+  color: rgba(226, 232, 240, 0.5);
+}
+
+.blog-page-skeleton {
+  height: 380px;
+  border-radius: 1.25rem;
+  background: linear-gradient(90deg, rgba(203,213,225,0.4) 25%, rgba(226,232,240,0.6) 50%, rgba(203,213,225,0.4) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+.dark .blog-page-skeleton {
+  background: linear-gradient(90deg, rgba(30,41,59,0.6) 25%, rgba(51,65,85,0.8) 50%, rgba(30,41,59,0.6) 75%);
+  background-size: 200% 100%;
+}
+
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
 }
 
 @media (max-width: 768px) {
