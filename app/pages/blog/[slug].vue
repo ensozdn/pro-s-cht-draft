@@ -31,8 +31,8 @@
           <img :src="post.image" :alt="post.title" />
         </div>
 
-        <div class="blog-article-body">
-          <ContentRenderer :value="post" />
+        <div class="blog-article-body prose">
+          <div v-html="post.body" />
         </div>
       </article>
 
@@ -46,16 +46,25 @@
 </template>
 
 <script setup lang="ts">
+interface BlogPost {
+  slug: string
+  title: string
+  description: string
+  date: string
+  author: string
+  tags: string[]
+  image: string
+  locale: string
+  featured: boolean
+  body: string
+}
+
 const route = useRoute()
 const { locale } = useI18n()
 
-const { data: post } = await useAsyncData(
-  `blog-post-${route.params.slug}`,
-  () => queryCollection('blog')
-    .where('locale', '=', locale.value)
-    .path(`/blog/${locale.value}/${route.params.slug}`)
-    .first()
-)
+const { data: post } = await useFetch<BlogPost>(`/api/content/blog/${route.params.slug}`, {
+  query: { locale: locale.value },
+})
 
 if (post.value) {
   useSeoMeta({

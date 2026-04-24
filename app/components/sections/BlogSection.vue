@@ -10,8 +10,8 @@
       <div class="blog-grid">
         <NuxtLink
           v-for="post in posts"
-          :key="post.path"
-          :to="`/blog/${post.stem?.split('/').pop()}`"
+          :key="post.slug"
+          :to="`/blog/${post.slug}`"
           :class="['blog-card', 'group', { 'blog-card-featured': post.featured }]"
         >
           <div class="blog-image-wrapper">
@@ -51,17 +51,23 @@
 </template>
 
 <script setup lang="ts">
+interface BlogPost {
+  slug: string
+  title: string
+  description: string
+  date: string
+  author: string
+  tags: string[]
+  image: string
+  locale: string
+  featured: boolean
+}
+
 const { locale } = useI18n()
 
-// TEMP: Static data for crash diagnosis
-const posts = ref([])
-// const { data: posts } = useAsyncData(
-//   `blog-section-${locale.value}`,
-//   () => queryCollection('blog')
-//     .where('locale', '=', locale.value)
-//     .order('date', 'DESC')
-//     .limit(3)
-//     .all(),
-//   { server: false }
-// )
+const { data: posts } = await useFetch<BlogPost[]>('/api/content/blogs', {
+  query: { locale: locale.value, limit: 3 },
+  server: false,
+  default: () => [] as BlogPost[]
+})
 </script>

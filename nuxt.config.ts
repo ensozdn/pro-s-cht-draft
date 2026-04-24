@@ -2,18 +2,16 @@
 export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
   devtools: { enabled: true },
-  
-  modules: ['@nuxtjs/tailwindcss', '@nuxtjs/google-fonts', '@nuxtjs/i18n', '@nuxt/content'],
 
-  experimental: {
-    viteEnvironmentApi: true
+  // SSR devre dışı — vite-node SSR runner Nuxt4+Node22 kombinasyonunda crash ediyor
+  // Blog SEO'su için routeRules ile prerender kullanılıyor
+  ssr: false,
+
+  routeRules: {
+    '/blog/**': { prerender: true }
   },
 
-  content: {
-    experimental: {
-      nativeSqlite: true
-    }
-  },
+  modules: ['@nuxtjs/tailwindcss', '@nuxtjs/google-fonts', '@nuxtjs/i18n'],
 
   typescript: {
     typeCheck: false,

@@ -9,8 +9,8 @@
       <div class="blog-page-grid">
         <NuxtLink
           v-for="post in posts"
-          :key="post.path"
-          :to="`/blog/${post.stem?.split('/').pop()}`"
+          :key="post.slug"
+          :to="`/blog/${post.slug}`"
           class="blog-page-card group"
           :class="{ 'blog-page-card-featured': post.featured }"
         >
@@ -36,17 +36,24 @@
 </template>
 
 <script setup lang="ts">
-import { useI18n } from 'vue-i18n'
+interface BlogPost {
+  slug: string
+  title: string
+  description: string
+  date: string
+  author: string
+  tags: string[]
+  image: string
+  locale: string
+  featured: boolean
+}
 
 const { locale } = useI18n()
 
-const { data: posts } = await useAsyncData(
-  `blog-${locale.value}`,
-  () => queryCollection('blog')
-    .where('locale', '=', locale.value)
-    .order('date', 'DESC')
-    .all()
-)
+const { data: posts } = await useFetch<BlogPost[]>('/api/content/blogs', {
+  query: { locale: locale.value },
+  default: () => [] as BlogPost[]
+})
 
 useSeoMeta({
   title: 'Blog | ProSicht',
