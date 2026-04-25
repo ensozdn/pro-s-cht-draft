@@ -186,5 +186,10 @@
       "glass": "Glas",
       "finalQuality": "Endqualitätskontrolle"
     }
+  },
+  "footer": {
+    "tagline": "Null-Fehler-Produktion mit KI-gestützten visuellen Qualitätskontrollsystemen.",
+    "rights": "Alle Rechte vorbehalten.",
+    "nav": "Entdecken"
   }
 }

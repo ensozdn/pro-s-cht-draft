@@ -28,7 +28,7 @@
         </div>
 
         <div class="footer-col">
-          <h4 class="footer-col-title">{{ $t('footer.quickLinks') }}</h4>
+          <h4 class="footer-col-title">{{ $t('footer.nav') }}</h4>
           <ul class="footer-list">
             <li><a href="/#applications" class="footer-nav-link">{{ $t('nav.applications') }}</a></li>
             <li><a href="/#why-us" class="footer-nav-link">{{ $t('nav.features') }}</a></li>
@@ -71,7 +71,7 @@
         </div>
 
         <div class="footer-col">
-          <h4 class="footer-col-title">{{ $t('footer.latestPosts') }}</h4>
+          <h4 class="footer-col-title">Blog</h4>
           <ul class="footer-list footer-blog-list">
             <li v-for="post in recentPosts" :key="post.slug">
               <NuxtLink :to="`/blog/${post.slug}`" class="footer-blog-link">
@@ -91,10 +91,6 @@
     <div class="footer-bottom">
       <div class="footer-bottom-inner">
         <span class="footer-copyright">© {{ currentYear }} ProSicht. {{ $t('footer.rights') }}</span>
-        <div class="footer-legal">
-          <a href="#" class="footer-legal-link">{{ $t('footer.privacy') }}</a>
-          <a href="#" class="footer-legal-link">{{ $t('footer.terms') }}</a>
-        </div>
       </div>
     </div>
   </footer>
@@ -120,6 +116,8 @@ const currentYear = new Date().getFullYear()
 
 <style scoped>
 .footer {
+  position: relative;
+  z-index: 10;
   background: linear-gradient(180deg, #0f172a 0%, #0a0f1e 100%);
   border-top: 1px solid rgba(61, 186, 162, 0.15);
   color: #e2e8f0;

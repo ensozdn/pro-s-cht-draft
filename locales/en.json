@@ -186,5 +186,10 @@
       "glass": "Glass",
       "finalQuality": "Final Quality Control"
     }
+  },
+  "footer": {
+    "tagline": "Zero defect manufacturing with AI-powered visual quality control systems.",
+    "rights": "All rights reserved.",
+    "nav": "Explore"
   }
 }

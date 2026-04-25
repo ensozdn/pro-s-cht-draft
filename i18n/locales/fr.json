@@ -128,19 +128,30 @@
       "title": "Un 'Nœud' Naturel ou une 'Fissure' Critique?",
       "author": "İdil Karabaş",
       "date": "il y a 2 mois",
-      "tags": ["IA", "Industrie 4.0", "Technologie"]
+      "tags": [
+        "IA",
+        "Industrie 4.0",
+        "Technologie"
+      ]
     },
     "post2": {
       "title": "L'Ère du Contrôle Qualité Alimenté par l'IA dans la Production Automobile",
       "author": "İdil Karabaş",
       "date": "24 février 2026",
-      "tags": ["IA", "Industrie 4.0", "Technologie"]
+      "tags": [
+        "IA",
+        "Industrie 4.0",
+        "Technologie"
+      ]
     },
     "post3": {
       "title": "Partenariat Pro Sicht et BIOS: Ère Autonome de Bout en Bout dans le Contrôle Qualité",
       "author": "İdil Karabaş",
       "date": "24 février 2026",
-      "tags": ["IA", "Technologie"]
+      "tags": [
+        "IA",
+        "Technologie"
+      ]
     }
   },
   "contact": {
@@ -174,5 +185,8 @@
       "glass": "Verre",
       "finalQuality": "Contrôle Qualité Final"
     }
+  },
+  "footer": {
+    "nav": "Explorer"
   }
 }

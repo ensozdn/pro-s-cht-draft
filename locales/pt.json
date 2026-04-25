@@ -186,5 +186,10 @@
       "glass": "Vidro",
       "finalQuality": "Controle de Qualidade Final"
     }
+  },
+  "footer": {
+    "tagline": "Fabricação sem defeitos com sistemas de controlo de qualidade visual por IA.",
+    "rights": "Todos os direitos reservados.",
+    "nav": "Explorar"
   }
 }

@@ -128,19 +128,30 @@
       "title": "¿Un 'Nudo' Natural o una 'Grieta' Crítica?",
       "author": "İdil Karabaş",
       "date": "hace 2 meses",
-      "tags": ["IA", "Industria 4.0", "Tecnología"]
+      "tags": [
+        "IA",
+        "Industria 4.0",
+        "Tecnología"
+      ]
     },
     "post2": {
       "title": "La Era del Control de Calidad Impulsado por IA en la Producción Automotriz",
       "author": "İdil Karabaş",
       "date": "24 de febrero de 2026",
-      "tags": ["IA", "Industria 4.0", "Tecnología"]
+      "tags": [
+        "IA",
+        "Industria 4.0",
+        "Tecnología"
+      ]
     },
     "post3": {
       "title": "Asociación Pro Sicht y BIOS: Era Autónoma de Extremo a Extremo en Control de Calidad",
       "author": "İdil Karabaş",
       "date": "24 de febrero de 2026",
-      "tags": ["IA", "Tecnología"]
+      "tags": [
+        "IA",
+        "Tecnología"
+      ]
     }
   },
   "contact": {
@@ -174,5 +185,8 @@
       "glass": "Vidrio",
       "finalQuality": "Control de Calidad Final"
     }
+  },
+  "footer": {
+    "nav": "Explorar"
   }
 }

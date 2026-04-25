@@ -189,10 +189,7 @@
   },
   "footer": {
     "tagline": "Yapay zeka destekli görsel kalite kontrol sistemleri ile üretimde sıfır hata hedefi.",
-    "quickLinks": "Hızlı Bağlantılar",
-    "latestPosts": "Son Yazılar",
     "rights": "Tüm hakları saklıdır.",
-    "privacy": "Gizlilik Politikası",
-    "terms": "Kullanım Şartları"
+    "nav": "Keşfet"
   }
 }

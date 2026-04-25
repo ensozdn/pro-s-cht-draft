@@ -186,5 +186,10 @@
       "glass": "Verre",
       "finalQuality": "Contrôle Qualité Final"
     }
+  },
+  "footer": {
+    "tagline": "Zéro défaut en production avec des systèmes de contrôle qualité visuel alimentés par l'IA.",
+    "rights": "Tous droits réservés.",
+    "nav": "Explorer"
   }
 }

@@ -128,19 +128,30 @@
       "title": "Doğal Bir \"Budak\" mı, Yoksa Kritik Bir \"Çatlak\" mı?",
       "author": "İdil Karabaş",
       "date": "2 ay ago",
-      "tags": ["AI", "Endüstri 4.0", "Technology"]
+      "tags": [
+        "AI",
+        "Endüstri 4.0",
+        "Technology"
+      ]
     },
     "post2": {
       "title": "Otomotiv Üretiminde Yapay Zeka Destekli Kalite Kontrol Dönemi",
       "author": "İdil Karabaş",
       "date": "Şubat 24, 2026",
-      "tags": ["AI", "Endüstri 4.0", "Technology"]
+      "tags": [
+        "AI",
+        "Endüstri 4.0",
+        "Technology"
+      ]
     },
     "post3": {
       "title": "Pro Sicht ve BIOS'tan Güç Birliği: Kalite Kontrolde Uçtan Uca Otonom Dönem",
       "author": "İdil Karabaş",
       "date": "Şubat 24, 2026",
-      "tags": ["AI", "Technology"]
+      "tags": [
+        "AI",
+        "Technology"
+      ]
     }
   },
   "contact": {
@@ -174,5 +185,8 @@
       "glass": "Cam",
       "finalQuality": "Son Kalite Kontrol"
     }
+  },
+  "footer": {
+    "nav": "Keşfet"
   }
 }

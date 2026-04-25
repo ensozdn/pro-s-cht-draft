@@ -186,5 +186,10 @@
       "glass": "Vetro",
       "finalQuality": "Controllo Qualità Finale"
     }
+  },
+  "footer": {
+    "tagline": "Produzione a zero difetti con sistemi di controllo qualità visivo basati sull'IA.",
+    "rights": "Tutti i diritti riservati.",
+    "nav": "Esplora"
   }
 }

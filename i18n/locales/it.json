@@ -128,19 +128,30 @@
       "title": "Un 'Nodo' Naturale o una 'Crepa' Critica?",
       "author": "İdil Karabaş",
       "date": "2 mesi fa",
-      "tags": ["IA", "Industria 4.0", "Tecnologia"]
+      "tags": [
+        "IA",
+        "Industria 4.0",
+        "Tecnologia"
+      ]
     },
     "post2": {
       "title": "L'Era del Controllo Qualità Basato sull'IA nella Produzione Automobilistica",
       "author": "İdil Karabaş",
       "date": "24 febbraio 2026",
-      "tags": ["IA", "Industria 4.0", "Tecnologia"]
+      "tags": [
+        "IA",
+        "Industria 4.0",
+        "Tecnologia"
+      ]
     },
     "post3": {
       "title": "Partnership Pro Sicht e BIOS: Era Autonoma End-to-End nel Controllo Qualità",
       "author": "İdil Karabaş",
       "date": "24 febbraio 2026",
-      "tags": ["IA", "Tecnologia"]
+      "tags": [
+        "IA",
+        "Tecnologia"
+      ]
     }
   },
   "contact": {
@@ -174,5 +185,8 @@
       "glass": "Vetro",
       "finalQuality": "Controllo Qualità Finale"
     }
+  },
+  "footer": {
+    "nav": "Esplora"
   }
 }

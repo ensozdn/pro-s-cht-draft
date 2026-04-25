@@ -186,5 +186,10 @@
       "glass": "Vidrio",
       "finalQuality": "Control de Calidad Final"
     }
+  },
+  "footer": {
+    "tagline": "Fabricación sin defectos con sistemas de control de calidad visual impulsados por IA.",
+    "rights": "Todos los derechos reservados.",
+    "nav": "Explorar"
   }
 }

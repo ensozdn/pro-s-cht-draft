@@ -128,19 +128,30 @@
       "title": "Um 'Nó' Natural ou uma 'Rachadura' Crítica?",
       "author": "İdil Karabaş",
       "date": "há 2 meses",
-      "tags": ["IA", "Indústria 4.0", "Tecnologia"]
+      "tags": [
+        "IA",
+        "Indústria 4.0",
+        "Tecnologia"
+      ]
     },
     "post2": {
       "title": "A Era do Controle de Qualidade Alimentado por IA na Produção Automotiva",
       "author": "İdil Karabaş",
       "date": "24 de fevereiro de 2026",
-      "tags": ["IA", "Indústria 4.0", "Tecnologia"]
+      "tags": [
+        "IA",
+        "Indústria 4.0",
+        "Tecnologia"
+      ]
     },
     "post3": {
       "title": "Parceria Pro Sicht e BIOS: Era Autônoma de Ponta a Ponta no Controle de Qualidade",
       "author": "İdil Karabaş",
       "date": "24 de fevereiro de 2026",
-      "tags": ["IA", "Tecnologia"]
+      "tags": [
+        "IA",
+        "Tecnologia"
+      ]
     }
   },
   "contact": {
@@ -174,5 +185,8 @@
       "glass": "Vidro",
       "finalQuality": "Controle de Qualidade Final"
     }
+  },
+  "footer": {
+    "nav": "Explorar"
   }
 }

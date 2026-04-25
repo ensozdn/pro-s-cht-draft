@@ -186,5 +186,10 @@
       "glass": "Glas",
       "finalQuality": "Eindkwaliteitscontrole"
     }
+  },
+  "footer": {
+    "tagline": "Nul-defect productie met AI-aangedreven visuele kwaliteitscontrolesystemen.",
+    "rights": "Alle rechten voorbehouden.",
+    "nav": "Navigatie"
   }
 }
