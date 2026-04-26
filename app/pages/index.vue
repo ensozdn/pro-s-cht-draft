@@ -163,7 +163,7 @@ onMounted(async () => {
   gsap.ticker.lagSmoothing(0)
 
   threeScene = useThreeScene(canvasRef)
-  threeScene.initScene()
+  await threeScene.initScene()
   threeScene.fadeInMeshes(gsap)
 
   const section1 = heroSectionRef.value?.section1El ?? null

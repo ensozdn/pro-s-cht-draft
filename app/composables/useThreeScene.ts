@@ -40,7 +40,7 @@ export function useThreeScene(canvasRef: Ref<HTMLCanvasElement | null>) {
     targetRotation.y = mouse.x * 0.15
   }
 
-  const initScene = () => {
+  const initScene = async () => {
     if (!canvasRef.value) return
 
     scene = new THREE.Scene()
@@ -71,120 +71,53 @@ export function useThreeScene(canvasRef: Ref<HTMLCanvasElement | null>) {
     accentLight.angle = Math.PI / 4
     scene.add(accentLight)
 
-    // Materials
-    const titaniumMaterial = new THREE.MeshStandardMaterial({ color: 0xaaaaaa, metalness: 0.85, roughness: 0.25, transparent: true, opacity: 0 })
-    const matBlackMaterial = new THREE.MeshStandardMaterial({ color: 0x1a1a1a, metalness: 0.3, roughness: 0.8, transparent: true, opacity: 0 })
-    const neonTurquoiseMaterial = new THREE.MeshStandardMaterial({ color: 0x3DBAA2, emissive: 0x3DBAA2, emissiveIntensity: 1.5, metalness: 0.4, roughness: 0.3, transparent: true, opacity: 0 })
+    // Environment map — stüdyo ışığı yansıması (harici HDRI gerekmez)
+    const { RoomEnvironment } = await import('three/examples/jsm/environments/RoomEnvironment.js')
+    const pmremGenerator = new THREE.PMREMGenerator(renderer)
+    scene.environment = pmremGenerator.fromScene(new RoomEnvironment()).texture
+    pmremGenerator.dispose()
 
     conveyorGroup = new THREE.Group()
 
-    // Main body
-    const mainBody = new THREE.Mesh(new THREE.CylinderGeometry(0.4, 0.4, 1.2, 8), titaniumMaterial)
-    mainBody.rotation.z = Math.PI / 2
-    conveyorGroup.add(mainBody)
-
-    // Front ring
-    const frontRing = new THREE.Mesh(new THREE.CylinderGeometry(0.45, 0.4, 0.15, 8), matBlackMaterial)
-    frontRing.rotation.z = Math.PI / 2
-    frontRing.position.set(0.7, 0, 0)
-    conveyorGroup.add(frontRing)
-
-    // Back segment
-    const backSegment = new THREE.Mesh(new THREE.CylinderGeometry(0.38, 0.38, 0.4, 8), titaniumMaterial)
-    backSegment.rotation.z = Math.PI / 2
-    backSegment.position.set(-0.7, 0, 0)
-    conveyorGroup.add(backSegment)
-
-    // Heat sinks (bottom only)
-    const heatSinkGeo = new THREE.BoxGeometry(0.12, 0.5, 0.03)
-    ;[-0.3, -0.15, 0, 0.15, 0.3].forEach(xPos => {
-      const fin = new THREE.Mesh(heatSinkGeo, matBlackMaterial)
-      fin.position.set(xPos, -0.43, 0)
-      conveyorGroup.add(fin)
+    // GLB model yükle + materyal uygula
+    const { GLTFLoader } = await import('three/examples/jsm/loaders/GLTFLoader.js')
+    await new Promise<void>((resolve) => {
+      new GLTFLoader().load(
+        '/basler-camera.glb',
+        (gltf) => {
+          gltf.scene.traverse((child) => {
+            if (!(child as THREE.Mesh).isMesh) return
+            const mesh = child as THREE.Mesh
+            const n = mesh.name.toLowerCase()
+            const isLens = n.includes('lens') || n.includes('glass') || n.includes('crystal') || n.includes('sensor') || n.includes('cam')
+            mesh.material = isLens
+              ? new THREE.MeshPhysicalMaterial({
+                  color: 0x111827,
+                  transmission: 1,
+                  ior: 1.52,
+                  roughness: 0.02,
+                  metalness: 0,
+                  thickness: 0.5,
+                  transparent: true,
+                  opacity: 0,
+                  envMapIntensity: 2
+                })
+              : new THREE.MeshStandardMaterial({
+                  color: 0x2c2f33,
+                  roughness: 0.72,
+                  metalness: 0.65,
+                  transparent: true,
+                  opacity: 0,
+                  envMapIntensity: 1.5
+                })
+          })
+          conveyorGroup.add(gltf.scene)
+          resolve()
+        },
+        undefined,
+        () => resolve()
+      )
     })
-
-    const bottomPanel = new THREE.Mesh(new THREE.BoxGeometry(0.8, 0.06, 0.48), matBlackMaterial)
-    bottomPanel.position.set(0, -0.46, 0)
-    conveyorGroup.add(bottomPanel)
-
-    // Lens housing
-    const lensHood1 = new THREE.Mesh(new THREE.CylinderGeometry(0.45, 0.42, 0.2, 16), titaniumMaterial)
-    lensHood1.rotation.z = Math.PI / 2
-    lensHood1.position.set(0.9, 0, 0)
-    conveyorGroup.add(lensHood1)
-
-    const lensHood2 = new THREE.Mesh(new THREE.CylinderGeometry(0.40, 0.38, 0.15, 16), matBlackMaterial)
-    lensHood2.rotation.z = Math.PI / 2
-    lensHood2.position.set(1.05, 0, 0)
-    conveyorGroup.add(lensHood2)
-
-    const neonRing = new THREE.Mesh(new THREE.TorusGeometry(0.35, 0.04, 16, 32), neonTurquoiseMaterial)
-    neonRing.rotation.y = Math.PI / 2
-    neonRing.position.set(1.13, 0, 0)
-    conveyorGroup.add(neonRing)
-
-    const lensGlass = new THREE.Mesh(new THREE.CylinderGeometry(0.32, 0.32, 0.05, 32), new THREE.MeshPhysicalMaterial({ color: 0x334455, metalness: 0, roughness: 0.1, transmission: 0.7, thickness: 0.3, transparent: true, opacity: 0 }))
-    lensGlass.rotation.z = Math.PI / 2
-    lensGlass.position.set(1.15, 0, 0)
-    conveyorGroup.add(lensGlass)
-
-    const sensor = new THREE.Mesh(new THREE.CircleGeometry(0.12, 32), matBlackMaterial)
-    sensor.rotation.y = Math.PI / 2
-    sensor.position.set(1.16, 0, 0)
-    conveyorGroup.add(sensor)
-
-    // Mount bracket
-    const bracketVertical = new THREE.Mesh(new THREE.BoxGeometry(0.2, 0.6, 0.2), matBlackMaterial)
-    bracketVertical.position.set(0, -0.6, 0)
-    conveyorGroup.add(bracketVertical)
-
-    const bracketHorizontal = new THREE.Mesh(new THREE.BoxGeometry(0.7, 0.12, 0.3), titaniumMaterial)
-    bracketHorizontal.position.set(0, -0.9, 0)
-    conveyorGroup.add(bracketHorizontal)
-
-    const supportWingGeo = new THREE.BoxGeometry(0.15, 0.25, 0.08)
-    const leftWing = new THREE.Mesh(supportWingGeo, matBlackMaterial)
-    leftWing.rotation.z = Math.PI / 6
-    leftWing.position.set(-0.15, -0.7, -0.12)
-    conveyorGroup.add(leftWing)
-    const rightWing = new THREE.Mesh(supportWingGeo, matBlackMaterial)
-    rightWing.rotation.z = -Math.PI / 6
-    rightWing.position.set(-0.15, -0.7, 0.12)
-    conveyorGroup.add(rightWing)
-
-    // Bolts
-    const boltGeo = new THREE.CylinderGeometry(0.02, 0.02, 0.05, 6)
-    const boltHeadGeo = new THREE.CylinderGeometry(0.03, 0.02, 0.01, 6)
-    for (let i = 0; i < 8; i++) {
-      const angle = (i / 8) * Math.PI * 2
-      const bolt = new THREE.Mesh(boltGeo, matBlackMaterial)
-      bolt.rotation.z = Math.PI / 2
-      bolt.position.set(0.88, Math.cos(angle) * 0.42, Math.sin(angle) * 0.42)
-      conveyorGroup.add(bolt)
-      const boltHead = new THREE.Mesh(boltHeadGeo, matBlackMaterial)
-      boltHead.rotation.z = Math.PI / 2
-      boltHead.position.set(0.9, Math.cos(angle) * 0.42, Math.sin(angle) * 0.42)
-      conveyorGroup.add(boltHead)
-    }
-    for (let i = 0; i < 8; i++) {
-      const angle = (i / 8) * Math.PI * 2
-      const bolt = new THREE.Mesh(boltGeo, matBlackMaterial)
-      bolt.rotation.z = Math.PI / 2
-      bolt.position.set(-0.7, Math.cos(angle) * 0.36, Math.sin(angle) * 0.36)
-      conveyorGroup.add(bolt)
-    }
-
-    // Logo planes
-    const textureLoader = new THREE.TextureLoader()
-    const logoTexture = textureLoader.load('/images/logo.png')
-    const logoMat = new THREE.MeshBasicMaterial({ map: logoTexture, transparent: true, opacity: 0.5, side: THREE.DoubleSide })
-    const logoPlane = new THREE.Mesh(new THREE.PlaneGeometry(0.7, 0.5), logoMat)
-    logoPlane.position.set(-0.2, 0, 0.43)
-    conveyorGroup.add(logoPlane)
-    const logoPlaneBack = new THREE.Mesh(new THREE.PlaneGeometry(0.7, 0.5), logoMat.clone())
-    logoPlaneBack.position.set(-0.2, 0, -0.43)
-    logoPlaneBack.rotation.y = Math.PI
-    conveyorGroup.add(logoPlaneBack)
 
     // Scan beam
     const beamLength = 15
@@ -217,8 +150,8 @@ export function useThreeScene(canvasRef: Ref<HTMLCanvasElement | null>) {
     scene.add(conveyorGroup)
     conveyorGroup.rotation.y = -Math.PI
 
-    beltMaterial = neonTurquoiseMaterial
-    rollerMaterial = titaniumMaterial
+    beltMaterial = new THREE.MeshStandardMaterial({ transparent: true, opacity: 0 })
+    rollerMaterial = new THREE.MeshStandardMaterial({ transparent: true, opacity: 0 })
 
     // Start animation loop
     animate = () => {
