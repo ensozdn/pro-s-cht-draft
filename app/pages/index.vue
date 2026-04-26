@@ -1,5 +1,5 @@
 <template>
-  <div :class="isDark ? 'bg-slate-900' : 'bg-slate-50'" class="overflow-x-hidden w-full">
+  <div :class="isDark ? 'bg-slate-900' : 'bg-slate-50'" class="main-content overflow-x-hidden w-full">
     <Preloader ref="preloaderComponent" />
 
     <div class="scroll-progress-bar" :style="{ width: scrollProgress + '%' }"></div>

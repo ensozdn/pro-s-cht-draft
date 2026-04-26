@@ -19,6 +19,10 @@ export default defineNuxtConfig({
     'nuxt-studio'
   ],
 
+  components: [
+    { path: '~/components', pathPrefix: false }
+  ],
+
   studio: {
     enabled: true
   },
