@@ -51,7 +51,7 @@ export function useThreeScene(canvasRef: Ref<HTMLCanvasElement | null>) {
 
     renderer = new THREE.WebGLRenderer({ canvas: canvasRef.value, antialias: true, alpha: true })
     renderer.setSize(window.innerWidth, window.innerHeight)
-    renderer.setPixelRatio(window.devicePixelRatio)
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
 
     // Lighting
     scene.add(new THREE.AmbientLight(0xffffff, 0.4))

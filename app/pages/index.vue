@@ -34,24 +34,14 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, provide, watch, nextTick } from 'vue'
-import AppHeader from '../components/layout/AppHeader.vue'
-import MobileDrawer from '../components/layout/MobileDrawer.vue'
-import Preloader from '../components/layout/Preloader.vue'
-import AppFooter from '../components/layout/AppFooter.vue'
-import HeroSection from '../components/sections/HeroSection.vue'
-import VideoScrollSection from '../components/sections/VideoScrollSection.vue'
-import WhyUsSection from '../components/sections/WhyUsSection.vue'
-import ApplicationsSection from '../components/sections/ApplicationsSection.vue'
-import ContributionsSection from '../components/sections/ContributionsSection.vue'
-import PartnersSection from '../components/sections/PartnersSection.vue'
-import BlogSection from '../components/sections/BlogSection.vue'
-import ContactSection from '../components/sections/ContactSection.vue'
-import ContactFormSection from '../components/sections/ContactFormSection.vue'
+import type Preloader from '../components/layout/Preloader.vue'
+import type HeroSection from '../components/sections/HeroSection.vue'
+import type VideoScrollSection from '../components/sections/VideoScrollSection.vue'
+import type ApplicationsSection from '../components/sections/ApplicationsSection.vue'
+import type ContactSection from '../components/sections/ContactSection.vue'
 import { useTheme } from '../composables/useTheme'
 import { useThreeScene } from '../composables/useThreeScene'
 import { useScrollAnimations } from '../composables/useScrollAnimations'
-import { useCursorTrail } from '../composables/useCursorTrail'
 
 const { isDark, toggleTheme, initTheme } = useTheme()
 
@@ -140,6 +130,7 @@ const partners = ref([
 ])
 
 let lenis: any
+let threeScene: ReturnType<typeof useThreeScene>
 
 const updateScrollProgress = () => {
   const scrollTop = window.scrollY
@@ -171,7 +162,7 @@ onMounted(async () => {
   gsap.ticker.add((time) => { lenis.raf(time * 1000) })
   gsap.ticker.lagSmoothing(0)
 
-  const threeScene = useThreeScene(canvasRef)
+  threeScene = useThreeScene(canvasRef)
   threeScene.initScene()
   threeScene.fadeInMeshes(gsap)
 
@@ -202,6 +193,7 @@ onUnmounted(async () => {
   window.removeEventListener('scroll', updateScrollProgress)
   window.removeEventListener('resize', updateScrollProgress)
   if (lenis) lenis.destroy()
+  threeScene.destroy()
   try {
     const { ScrollTrigger } = await import('gsap/ScrollTrigger')
     ScrollTrigger.getAll().forEach((trigger: any) => trigger.kill())
