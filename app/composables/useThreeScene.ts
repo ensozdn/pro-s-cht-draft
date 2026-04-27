@@ -188,7 +188,7 @@ export function useThreeScene(canvasRef: Ref<HTMLCanvasElement | null>) {
           beamMaterial = new THREE.ShaderMaterial({
             uniforms: {
               uTime:    { value: 0 },
-              uColor:   { value: new THREE.Color(0x00CFFF) },
+              uColor:   { value: new THREE.Color(0x3DBAA2) },
               uOpacity: { value: 0.35 },
               uBeamLen: { value: beamLen }
             },
