@@ -1,5 +1,5 @@
 <template>
-  <footer class="footer">
+  <footer :class="['footer', isDark && 'footer--dark']">
     <div class="footer-top">
       <div class="footer-grid">
 
@@ -104,6 +104,7 @@ interface BlogPost {
 }
 
 const { locale } = useI18n()
+const { isDark } = useTheme()
 
 const { data: recentPosts } = await useFetch<BlogPost[]>('/api/content/blogs', {
   query: computed(() => ({ locale: locale.value, limit: 2 })),
@@ -118,8 +119,13 @@ const currentYear = new Date().getFullYear()
 .footer {
   position: relative;
   z-index: 10;
-  background: linear-gradient(180deg, #0f172a 0%, #0a0f1e 100%);
+  background: linear-gradient(180deg, #f1f5f9 0%, #ffffff 100%);
   border-top: 1px solid rgba(61, 186, 162, 0.15);
+  color: #1e293b;
+}
+
+.footer--dark {
+  background: linear-gradient(180deg, #0f172a 0%, #0a0f1e 100%);
   color: #e2e8f0;
 }
 
@@ -143,15 +149,18 @@ const currentYear = new Date().getFullYear()
 .footer-logo-img {
   height: 44px;
   width: auto;
-  filter: brightness(1.1);
 }
 
 .footer-tagline {
   font-size: 0.875rem;
   line-height: 1.7;
-  color: rgba(226, 232, 240, 0.55);
+  color: rgba(30, 41, 59, 0.55);
   max-width: 260px;
   margin-bottom: 1.5rem;
+}
+
+.footer--dark .footer-tagline {
+  color: rgba(226, 232, 240, 0.55);
 }
 
 .footer-socials {
@@ -164,12 +173,16 @@ const currentYear = new Date().getFullYear()
   height: 36px;
   border-radius: 8px;
   background: rgba(61, 186, 162, 0.08);
-  border: 1px solid rgba(61, 186, 162, 0.15);
+  border: 1px solid rgba(61, 186, 162, 0.2);
   display: flex;
   align-items: center;
   justify-content: center;
-  color: rgba(226, 232, 240, 0.6);
+  color: rgba(30, 41, 59, 0.6);
   transition: all 0.2s ease;
+}
+
+.footer--dark .footer-social-link {
+  color: rgba(226, 232, 240, 0.6);
 }
 
 .footer-social-link:hover {
@@ -204,10 +217,14 @@ const currentYear = new Date().getFullYear()
 
 .footer-nav-link {
   font-size: 0.9rem;
-  color: rgba(226, 232, 240, 0.6);
+  color: rgba(30, 41, 59, 0.6);
   text-decoration: none;
   transition: color 0.2s ease;
   display: inline-block;
+}
+
+.footer--dark .footer-nav-link {
+  color: rgba(226, 232, 240, 0.6);
 }
 
 .footer-nav-link:hover {
@@ -223,8 +240,12 @@ const currentYear = new Date().getFullYear()
   align-items: flex-start;
   gap: 0.6rem;
   font-size: 0.85rem;
-  color: rgba(226, 232, 240, 0.6);
+  color: rgba(30, 41, 59, 0.6);
   line-height: 1.5;
+}
+
+.footer--dark .footer-contact-item {
+  color: rgba(226, 232, 240, 0.6);
 }
 
 .contact-icon {
@@ -257,7 +278,7 @@ const currentYear = new Date().getFullYear()
 
 .footer-blog-title {
   font-size: 0.85rem;
-  color: rgba(226, 232, 240, 0.75);
+  color: rgba(30, 41, 59, 0.75);
   line-height: 1.4;
   display: -webkit-box;
   -webkit-line-clamp: 2;
@@ -267,16 +288,28 @@ const currentYear = new Date().getFullYear()
   transition: color 0.2s ease;
 }
 
+.footer--dark .footer-blog-title {
+  color: rgba(226, 232, 240, 0.75);
+}
+
 .footer-blog-link:hover .footer-blog-title {
   color: #3DBAA2;
 }
 
 .footer-blog-date {
   font-size: 0.75rem;
+  color: rgba(30, 41, 59, 0.35);
+}
+
+.footer--dark .footer-blog-date {
   color: rgba(226, 232, 240, 0.35);
 }
 
 .footer-bottom {
+  border-top: 1px solid rgba(30, 41, 59, 0.08);
+}
+
+.footer--dark .footer-bottom {
   border-top: 1px solid rgba(255, 255, 255, 0.06);
 }
 
@@ -292,23 +325,11 @@ const currentYear = new Date().getFullYear()
 
 .footer-copyright {
   font-size: 0.8rem;
+  color: rgba(30, 41, 59, 0.4);
+}
+
+.footer--dark .footer-copyright {
   color: rgba(226, 232, 240, 0.35);
-}
-
-.footer-legal {
-  display: flex;
-  gap: 1.5rem;
-}
-
-.footer-legal-link {
-  font-size: 0.8rem;
-  color: rgba(226, 232, 240, 0.35);
-  text-decoration: none;
-  transition: color 0.2s ease;
-}
-
-.footer-legal-link:hover {
-  color: #3DBAA2;
 }
 
 @media (max-width: 1024px) {

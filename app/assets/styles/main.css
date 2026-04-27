@@ -1075,6 +1075,10 @@ canvas {
   line-height: 1.2;
 }
 
+.dark .contributions-title {
+  color: #ffffff;
+}
+
 .contributions-grid {
   display: grid;
   grid-template-columns: repeat(1, 1fr);
