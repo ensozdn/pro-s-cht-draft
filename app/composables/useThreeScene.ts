@@ -8,6 +8,8 @@ export function useThreeScene(canvasRef: Ref<HTMLCanvasElement | null>) {
   let animationId: number
   let beltMaterial: THREE.MeshStandardMaterial
   let rollerMaterial: THREE.MeshStandardMaterial
+  let beamMaterial: THREE.ShaderMaterial | null = null
+  let beamMesh: THREE.Mesh | null = null
   let isPageVisible = true
 
   const mouse = { x: 0, y: 0 }
@@ -177,6 +179,50 @@ export function useThreeScene(canvasRef: Ref<HTMLCanvasElement | null>) {
           gltf.scene.add(logoLeft)
           gltf.scene.add(logoRight)
 
+          const lensX = globalBbox.min.x
+          const beamLen = 3.5
+          const beamRad = 0.6
+          const beamGeo = new THREE.ConeGeometry(beamRad, beamLen, 64, 12, true)
+          beamGeo.translate(0, -beamLen / 2, 0)
+          beamGeo.applyMatrix4(new THREE.Matrix4().makeRotationZ(-Math.PI / 2))
+          beamMaterial = new THREE.ShaderMaterial({
+            uniforms: {
+              uTime:    { value: 0 },
+              uColor:   { value: new THREE.Color(0x00CFFF) },
+              uOpacity: { value: 0.35 },
+              uBeamLen: { value: beamLen }
+            },
+            vertexShader: `
+              varying float vAxisDist;
+              void main() {
+                vAxisDist   = -position.x;
+                gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+              }
+            `,
+            fragmentShader: `
+              uniform vec3  uColor;
+              uniform float uOpacity;
+              uniform float uTime;
+              uniform float uBeamLen;
+              varying float vAxisDist;
+              void main() {
+                float axial     = clamp(vAxisDist / uBeamLen, 0.0, 1.0);
+                float axialFade = smoothstep(0.0, 0.08, axial) * (1.0 - smoothstep(0.5, 1.0, axial));
+                float pulse     = sin(uTime * 2.5) * 0.12 + 0.88;
+                float alpha     = axialFade * uOpacity * pulse;
+                gl_FragColor    = vec4(uColor, alpha);
+              }
+            `,
+            transparent: true,
+            depthWrite:  false,
+            side:        THREE.DoubleSide,
+            blending:    THREE.AdditiveBlending
+          })
+          const beam = new THREE.Mesh(beamGeo, beamMaterial)
+          beam.position.set(lensX, 0, 0)
+          beamMesh = beam
+          conveyorGroup.add(beam)
+
           conveyorGroup.add(gltf.scene)
           resolve()
         },
@@ -201,6 +247,12 @@ export function useThreeScene(canvasRef: Ref<HTMLCanvasElement | null>) {
       currentRotation.x += (targetRotation.x - currentRotation.x) * lerpFactor
       currentRotation.y += (targetRotation.y - currentRotation.y) * lerpFactor
       conveyorGroup.rotation.x = currentRotation.x - 0.2
+      if (beamMaterial) beamMaterial.uniforms.uTime.value = performance.now() * 0.001
+      if (beamMesh) {
+        const t = performance.now() * 0.001
+        beamMesh.rotation.z = Math.sin(t * 1.4) * 0.30
+        beamMesh.rotation.y = Math.cos(t * 0.7) * 0.08
+      }
       renderer.render(scene, camera)
     }
     animate()
