@@ -17,6 +17,7 @@ export function useThreeScene(canvasRef: Ref<HTMLCanvasElement | null>) {
   const currentRotation = { x: 0, y: 0 }
 
   let animate: () => void
+  let animateFrame: () => void
 
   const handleResize = () => {
     if (!camera || !renderer) return
@@ -25,12 +26,16 @@ export function useThreeScene(canvasRef: Ref<HTMLCanvasElement | null>) {
     renderer.setSize(window.innerWidth, window.innerHeight)
   }
 
+  let useGSAPTicker = false
+
   const handleVisibilityChange = () => {
     isPageVisible = !document.hidden
-    if (!isPageVisible && animationId) {
-      cancelAnimationFrame(animationId)
-    } else if (isPageVisible) {
-      animate()
+    if (!useGSAPTicker) {
+      if (!isPageVisible && animationId) {
+        cancelAnimationFrame(animationId)
+      } else if (isPageVisible) {
+        animate()
+      }
     }
   }
 
@@ -240,9 +245,7 @@ export function useThreeScene(canvasRef: Ref<HTMLCanvasElement | null>) {
     conveyorGroup.rotation.x = -0.2
 
     // Start animation loop
-    animate = () => {
-      if (!isPageVisible) return
-      animationId = requestAnimationFrame(animate)
+    animateFrame = () => {
       const lerpFactor = 0.05
       currentRotation.x += (targetRotation.x - currentRotation.x) * lerpFactor
       currentRotation.y += (targetRotation.y - currentRotation.y) * lerpFactor
@@ -254,6 +257,12 @@ export function useThreeScene(canvasRef: Ref<HTMLCanvasElement | null>) {
         beamMesh.rotation.y = Math.cos(t * 0.7) * 0.08
       }
       renderer.render(scene, camera)
+    }
+
+    animate = () => {
+      if (!isPageVisible) return
+      animationId = requestAnimationFrame(animate)
+      animateFrame()
     }
     animate()
 
@@ -267,6 +276,14 @@ export function useThreeScene(canvasRef: Ref<HTMLCanvasElement | null>) {
     // Doğrudan opacity 1 ve transparent false olarak ayarlandı, böylece performans artacak ve x-ray sorunu yaşanmayacak
   }
 
+  const stopAnimate = () => {
+    if (animationId) {
+      cancelAnimationFrame(animationId)
+      animationId = 0
+    }
+    useGSAPTicker = true
+  }
+
   const destroy = () => {
     if (animationId) cancelAnimationFrame(animationId)
     window.removeEventListener('resize', handleResize)
@@ -278,10 +295,12 @@ export function useThreeScene(canvasRef: Ref<HTMLCanvasElement | null>) {
     initScene,
     fadeInMeshes,
     destroy,
+    stopAnimate,
     getConveyorGroup: () => conveyorGroup,
     getBeltMaterial: () => beltMaterial,
     getRollerMaterial: () => rollerMaterial,
     getAnimate: () => animate,
+    getAnimateFrame: () => animateFrame,
     getRenderer: () => renderer
   }
 }

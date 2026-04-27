@@ -166,6 +166,9 @@ onMounted(async () => {
   await threeScene.initScene()
   threeScene.fadeInMeshes(gsap)
 
+  threeScene.stopAnimate()
+  gsap.ticker.add(threeScene.getAnimateFrame())
+
   if (import.meta.dev) {
     const g = threeScene.getConveyorGroup() as any
     ;(window as any).__g = g
@@ -179,6 +182,7 @@ onMounted(async () => {
   const section3 = heroSectionRef.value?.section3El ?? null
   const statsSection = heroSectionRef.value?.statsSectionEl ?? null
   const ipadVideo = videoSectionRef.value?.ipadVideoEl ?? null
+  const ipadContainer = videoSectionRef.value?.ipadContainerEl ?? null
   const horizontalSection = appSectionRef.value?.horizontalSectionEl ?? null
   const horizontalTrack = appSectionRef.value?.horizontalTrackEl ?? null
   const contactSection = contactSectionRef.value?.contactSectionEl ?? null
@@ -188,8 +192,9 @@ onMounted(async () => {
     gsap,
     ScrollTrigger,
     conveyorGroup: threeScene.getConveyorGroup(),
+    canvas: canvasRef.value,
     section1, section2, section3, statsSection,
-    ipadVideo, horizontalSection, horizontalTrack, contactSection,
+    ipadVideo, ipadContainer, horizontalSection, horizontalTrack, contactSection,
     categoryCount: categories.value.length,
     preloaderComponent: preloaderComponent.value,
     beltMaterial: threeScene.getBeltMaterial(),
@@ -201,6 +206,7 @@ onUnmounted(async () => {
   window.removeEventListener('scroll', updateScrollProgress)
   window.removeEventListener('resize', updateScrollProgress)
   if (lenis) lenis.destroy()
+  gsap.ticker.remove(threeScene.getAnimateFrame())
   threeScene.destroy()
   try {
     const { ScrollTrigger } = await import('gsap/ScrollTrigger')

@@ -1,6 +1,6 @@
 <template>
   <section class="video-scroll-section">
-    <div class="ipad-container">
+    <div ref="ipadContainerEl" class="ipad-container">
       <div class="ipad-frame">
         <video ref="ipadVideoEl" src="/ipad_scroll.mp4" class="ipad-video" muted playsinline preload="auto"></video>
       </div>
@@ -12,6 +12,7 @@
 import { ref } from 'vue'
 
 const ipadVideoEl = ref<HTMLVideoElement | null>(null)
+const ipadContainerEl = ref<HTMLDivElement | null>(null)
 
-defineExpose({ ipadVideoEl })
+defineExpose({ ipadVideoEl, ipadContainerEl })
 </script>
