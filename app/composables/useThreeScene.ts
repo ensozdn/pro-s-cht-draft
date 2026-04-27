@@ -8,7 +8,6 @@ export function useThreeScene(canvasRef: Ref<HTMLCanvasElement | null>) {
   let animationId: number
   let beltMaterial: THREE.MeshStandardMaterial
   let rollerMaterial: THREE.MeshStandardMaterial
-  let scanBeam: THREE.Mesh
   let isPageVisible = true
 
   const mouse = { x: 0, y: 0 }
@@ -86,20 +85,16 @@ export function useThreeScene(canvasRef: Ref<HTMLCanvasElement | null>) {
       new GLTFLoader().load(
         '/basler-camera.glb',
         (gltf) => {
-          // Modeli merkeze ortala
           const box = new THREE.Box3().setFromObject(gltf.scene)
           const center = box.getCenter(new THREE.Vector3())
           const size = box.getSize(new THREE.Vector3())
-          gltf.scene.position.sub(center) // Merkeze taşı
 
-          // KILIF (WRAPPER) TEKNİĞİ: Modelin iç eksenini sabit döndürüyoruz.
-          // Model doğal olarak -X'e bakıyordu. Dış grup -180'den başladığı için, 
-          // lensin "sola" bakması için modeli içerde +X'e (sağa) bakacak şekilde tam tersine çeviriyoruz (180 derece = Math.PI).
-          gltf.scene.rotation.y = Math.PI
-          
-          // Seçenek A: Devasa modeli eski sistemdeki gibi küçültüyoruz.
           const scaleFactor = 2.5 / Math.max(size.x, size.y, size.z)
           gltf.scene.scale.set(scaleFactor, scaleFactor, scaleFactor)
+
+          const scaledBox = new THREE.Box3().setFromObject(gltf.scene)
+          const scaledCenter = scaledBox.getCenter(new THREE.Vector3())
+          gltf.scene.position.sub(scaledCenter)
 
           // Kamerayı da eski orijinal konumuna (çok daha yakına) alıyoruz
           camera.position.set(0, 2, 5)
@@ -160,7 +155,27 @@ export function useThreeScene(canvasRef: Ref<HTMLCanvasElement | null>) {
             mesh.material = mat
           })
 
+          const logoTexture = new THREE.TextureLoader().load('/images/logo.png')
+          logoTexture.colorSpace = THREE.SRGBColorSpace
+          const logoMat = new THREE.MeshBasicMaterial({
+            map: logoTexture, transparent: true, side: THREE.DoubleSide,
+            depthWrite: false, alphaTest: 0.05
+          })
+          const logoW = size.z * 0.95
+          const logoH = size.y * 0.50
+          const logoGeo = new THREE.PlaneGeometry(logoW, logoH)
 
+          const logoLeft = new THREE.Mesh(logoGeo, logoMat)
+          logoLeft.position.set(center.x + size.x * 0.10, center.y, center.z + size.z / 2 + 0.01)
+          logoLeft.renderOrder = 1
+
+          const logoRight = new THREE.Mesh(logoGeo, logoMat)
+          logoRight.position.set(center.x + size.x * 0.10, center.y, center.z - size.z / 2 - 0.01)
+          logoRight.rotation.y = Math.PI
+          logoRight.renderOrder = 1
+
+          gltf.scene.add(logoLeft)
+          gltf.scene.add(logoRight)
 
           conveyorGroup.add(gltf.scene)
           resolve()
@@ -174,38 +189,9 @@ export function useThreeScene(canvasRef: Ref<HTMLCanvasElement | null>) {
     beltMaterial = new THREE.MeshStandardMaterial({ transparent: true, opacity: 0 })
     rollerMaterial = new THREE.MeshStandardMaterial({ transparent: true, opacity: 0 })
 
-    // Scan beam (Yeni boyuta uyumlu şekilde geri küçültüldü ve pozisyonlandı)
-    const beamLength = 15
-    const beamGeometry = new THREE.ConeGeometry(4.5, beamLength, 64, 1, true)
-    beamGeometry.translate(0, -beamLength / 2, 0)
-    const beamMaterial = new THREE.ShaderMaterial({
-      uniforms: { time: { value: 0 }, color: { value: new THREE.Color(0x5FE3C0) }, opacity: { value: 0.45 } },
-      vertexShader: `uniform float time; varying vec2 vUv; varying float vWave;
-        void main() { vUv = uv; vec3 pos = position;
-          float wave = sin(pos.y * 3.0 + time * 2.0) * 0.15;
-          float pulse = sin(time * 3.0) * 0.1 + 1.0;
-          pos.x += wave * pulse; pos.z += wave * pulse * 0.5; vWave = wave;
-          gl_Position = projectionMatrix * modelViewMatrix * vec4(pos, 1.0); }`,
-      fragmentShader: `uniform vec3 color; uniform float opacity; uniform float time; varying vec2 vUv; varying float vWave;
-        void main() { float edgeGlow = 1.0 - abs(vWave) * 2.0; float pulse = sin(time * 3.0) * 0.2 + 0.8;
-          float alpha = opacity * edgeGlow * pulse; gl_FragColor = vec4(color, alpha); }`,
-      transparent: true, side: THREE.DoubleSide, blending: THREE.AdditiveBlending, depthWrite: false
-    })
-    scanBeam = new THREE.Mesh(beamGeometry, beamMaterial)
-    scanBeam.position.set(1.0, 0, 0) // İç model +X'e döndürüldüğü için lazer de +X tarafına konuldu
-    scanBeam.rotation.z = -Math.PI / 2 // Lazerin +X yönüne bakması için
-    conveyorGroup.add(scanBeam)
-
-    const scanLight = new THREE.SpotLight(0x5FE3C0, 5, 30, Math.PI / 6, 0.5, 2)
-    scanLight.position.copy(scanBeam.position)
-    scanLight.target.position.set(scanBeam.position.x + beamLength, 0, 0) // Işık hedefi +X yönünde
-    conveyorGroup.add(scanLight)
-    conveyorGroup.add(scanLight.target)
-
     scene.add(conveyorGroup)
-    // WRAPPER GRUBU: Orijinal `useScrollAnimations.ts` ile %100 uyumlu olması için dış kılıfı orijinal başlangıç açısına alıyoruz.
-    // Bu sayede GSAP timeline'ı bozulmadan saat gibi çalışacak!
-    conveyorGroup.rotation.y = -Math.PI
+    conveyorGroup.rotation.y = Math.PI * 0.15
+    conveyorGroup.rotation.x = -0.2
 
     // Start animation loop
     animate = () => {
@@ -214,10 +200,7 @@ export function useThreeScene(canvasRef: Ref<HTMLCanvasElement | null>) {
       const lerpFactor = 0.05
       currentRotation.x += (targetRotation.x - currentRotation.x) * lerpFactor
       currentRotation.y += (targetRotation.y - currentRotation.y) * lerpFactor
-      conveyorGroup.rotation.x = currentRotation.x
-      if (scanBeam?.material && (scanBeam.material as any).uniforms) {
-        ;(scanBeam.material as any).uniforms.time.value = performance.now() * 0.001
-      }
+      conveyorGroup.rotation.x = currentRotation.x - 0.2
       renderer.render(scene, camera)
     }
     animate()

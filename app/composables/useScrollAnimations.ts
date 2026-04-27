@@ -60,34 +60,29 @@ export function useScrollAnimations() {
     }
 
     // ── 3D Model position/scale ───────────────────────────────────
-    conveyorGroup.scale.set(1.8, 1.8, 1.8)
-    gsap.set(conveyorGroup.position, { x: isMobile ? 0 : 4.5, y: isMobile ? 1 : 0, z: isMobile ? -2 : 0 })
-
-    // Camera timeline (scroll-driven rotation)
-    gsap.timeline({
-      scrollTrigger: { trigger: '.main-content', start: 'top top', end: 'bottom bottom', scrub: 1 }
-    })
-      .to(conveyorGroup.rotation, { y: Math.PI, duration: 0.5 }, 0)
-      .to(conveyorGroup.rotation, { y: 0, duration: 0.5 }, 1)
+    conveyorGroup.scale.set(1.0, 1.0, 1.0)
+    gsap.set(conveyorGroup.position, { x: isMobile ? 0 : 2.0, y: isMobile ? 1 : 1.8, z: isMobile ? -2 : 0 })
 
     // ── Hero sections ─────────────────────────────────────────────
     if (section1 && section2) {
       gsap.set(section1, { opacity: 1, x: isMobile ? 0 : -280, rotateY: isMobile ? 0 : 2, transformPerspective: 1200, transformStyle: 'preserve-3d' })
       gsap.set(section2, { opacity: 0, x: isMobile ? 0 : 280, rotateY: isMobile ? 0 : 2 })
 
-      const tl1 = gsap.timeline({ scrollTrigger: { trigger: section1, start: 'top top', end: '+=70%', scrub: 1.2 } })
-      tl1.to(conveyorGroup.position, { x: isMobile ? 0 : -4, y: isMobile ? 1 : 0, z: isMobile ? -2 : 0, ease: 'power2.inOut' }, 0)
-      tl1.to(section1, { opacity: 0, x: isMobile ? 0 : -120, y: isMobile ? -50 : 0, rotateY: isMobile ? 0 : 4, ease: 'power2.inOut' }, 0)
-      tl1.to(section2, { opacity: 1, x: isMobile ? 0 : 280, y: 0, rotateY: isMobile ? 0 : -3, ease: 'power2.inOut' }, 0)
+      const tl1 = gsap.timeline({ scrollTrigger: { trigger: section1, start: 'top top', end: '+=110%', scrub: 1.2 } })
+      tl1.to(conveyorGroup.position, { x: isMobile ? 0 : -2.0, y: isMobile ? 1 : 1.5, z: isMobile ? -2 : 0, ease: 'power3.inOut' }, 0)
+      tl1.to(conveyorGroup.rotation, { y: Math.PI * 0.85, ease: 'power3.inOut' }, 0)
+      tl1.to(section1, { opacity: 0, x: isMobile ? 0 : -120, y: isMobile ? -50 : 0, rotateY: isMobile ? 0 : 4, ease: 'power3.inOut' }, 0)
+      tl1.to(section2, { opacity: 1, x: isMobile ? 0 : 280, y: 0, rotateY: isMobile ? 0 : -3, ease: 'power3.inOut' }, 0)
     }
 
     if (section2 && section3) {
       gsap.set(section3, { opacity: 0, x: isMobile ? 0 : -280, rotateY: isMobile ? 0 : 2 })
 
-      const tl2 = gsap.timeline({ scrollTrigger: { trigger: section2, start: 'top top', end: '+=70%', scrub: 1.2 } })
-      tl2.to(conveyorGroup.position, { x: isMobile ? 0 : 4, y: isMobile ? 1 : 0, z: isMobile ? -2 : 0, ease: 'power2.inOut' }, 0)
-      tl2.to(section2, { opacity: 0, x: isMobile ? 0 : 320, y: isMobile ? -50 : 0, rotateY: isMobile ? 0 : 4, ease: 'power2.inOut' }, 0)
-      tl2.to(section3, { opacity: 1, x: isMobile ? 0 : -280, y: 0, rotateY: isMobile ? 0 : 2, ease: 'power2.inOut' }, 0)
+      const tl2 = gsap.timeline({ scrollTrigger: { trigger: section2, start: 'top top', end: '+=110%', scrub: 1.2 } })
+      tl2.to(conveyorGroup.position, { x: isMobile ? 0 : 2.0, y: isMobile ? 1 : 1.5, z: isMobile ? -2 : 0, ease: 'power3.inOut' }, 0)
+      tl2.to(conveyorGroup.rotation, { y: Math.PI * 2.15, ease: 'power3.inOut' }, 0)
+      tl2.to(section2, { opacity: 0, x: isMobile ? 0 : 320, y: isMobile ? -50 : 0, rotateY: isMobile ? 0 : 4, ease: 'power3.inOut' }, 0)
+      tl2.to(section3, { opacity: 1, x: isMobile ? 0 : -280, y: 0, rotateY: isMobile ? 0 : 2, ease: 'power3.inOut' }, 0)
     }
 
     // ── Stats ─────────────────────────────────────────────────────

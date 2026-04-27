@@ -1,12 +1,15 @@
 ---
-title: "Otomotiv Üretiminde AI Destekli Kalite Kontrol Çağı"
-description: "Toyota ve Ford gibi devlerin üretim hatlarında yapay zeka tabanlı görüntü işlemenin getirdiği dönüşümü inceliyoruz."
-date: "2026-02-24"
-author: "İdil Karabaş"
-tags: ["AI", "Endüstri 4.0", "Otomotiv"]
-image: "/images/blog/blog2.jpg"
-locale: "tr"
+title: Otomotiv Üretiminde AI Destekli Kalite Kontrol Çağı
+author: İdil Karabaş
+date: 2026-02-24
+description: Toyota ve Ford gibi devlerin üretim hatlarında yapay zeka tabanlı görüntü işlemenin getirdiği dönüşümü inceliyoruz.
 featured: false
+image: /images/mermer.png
+locale: tr
+tags:
+  - AI
+  - Endüstri 4.0
+  - Otomotiv
 ---
 
 Otomotiv sektörü, kalite kontrol süreçlerinde en yüksek tolerans standartlarına sahip endüstrilerden biridir. Bir araç gövdesindeki 0.1mm'lik bir çizik, müşteri memnuniyetsizliğinden geri çağırma kampanyasına uzanan maliyetli bir süreci başlatabilir.

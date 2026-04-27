@@ -23,9 +23,7 @@ export default defineNuxtConfig({
     { path: '~/components', pathPrefix: false }
   ],
 
-  studio: {
-    enabled: true
-  },
+  studio: {} as any,
 
   typescript: {
     typeCheck: false,

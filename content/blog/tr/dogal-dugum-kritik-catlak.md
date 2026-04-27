@@ -4,7 +4,7 @@ author: İdil Karabaş
 date: 2026-02-24
 description: Ahşap yüzeylerinde yapay zeka ile mikro çatlak ve düğüm ayrımını nasıl yapıyoruz? ProSicht'in derin öğrenme modeli bu soruyu saniyeler içinde yanıtlıyor.
 featured: true
-image: /images/blog/blog1.jpg
+image: ""
 locale: tr
 tags:
   - AI

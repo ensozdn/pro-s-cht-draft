@@ -166,6 +166,14 @@ onMounted(async () => {
   await threeScene.initScene()
   threeScene.fadeInMeshes(gsap)
 
+  if (import.meta.dev) {
+    const g = threeScene.getConveyorGroup() as any
+    ;(window as any).__g = g
+    ;(window as any).__setRY = (v: number) => { g.rotation.y = v }
+    ;(window as any).__setPX = (v: number) => { g.position.x = v }
+    ;(window as any).__setScale = (v: number) => { g.scale.set(v, v, v) }
+  }
+
   const section1 = heroSectionRef.value?.section1El ?? null
   const section2 = heroSectionRef.value?.section2El ?? null
   const section3 = heroSectionRef.value?.section3El ?? null
