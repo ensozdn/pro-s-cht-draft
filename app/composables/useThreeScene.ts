@@ -92,13 +92,19 @@ export function useThreeScene(canvasRef: Ref<HTMLCanvasElement | null>) {
           const size = box.getSize(new THREE.Vector3())
           gltf.scene.position.sub(center) // Merkeze taşı
 
-          // Kamerayı modelin boyutuna göre otomatik ayarla
-          const maxDim = Math.max(size.x, size.y, size.z)
-          const fov = camera.fov * (Math.PI / 180)
-          const cameraZ = Math.abs(maxDim / 2 / Math.tan(fov / 2)) * 2.2
-          camera.position.set(0, 0, cameraZ)
-          camera.near = maxDim * 0.001
-          camera.far = maxDim * 100
+          // KILIF (WRAPPER) TEKNİĞİ: Modelin iç eksenini sabit döndürüyoruz.
+          // Model doğal olarak -X'e bakıyordu. Dış grup -180'den başladığı için, 
+          // lensin "sola" bakması için modeli içerde +X'e (sağa) bakacak şekilde tam tersine çeviriyoruz (180 derece = Math.PI).
+          gltf.scene.rotation.y = Math.PI
+          
+          // Seçenek A: Devasa modeli eski sistemdeki gibi küçültüyoruz.
+          const scaleFactor = 2.5 / Math.max(size.x, size.y, size.z)
+          gltf.scene.scale.set(scaleFactor, scaleFactor, scaleFactor)
+
+          // Kamerayı da eski orijinal konumuna (çok daha yakına) alıyoruz
+          camera.position.set(0, 2, 5)
+          camera.near = 0.1
+          camera.far = 1000
           camera.updateProjectionMatrix()
 
           // Orijinal materyaller düzgün olmadığı için özel endüstriyel koyu gri bir materyal kullanıyoruz
@@ -168,9 +174,9 @@ export function useThreeScene(canvasRef: Ref<HTMLCanvasElement | null>) {
     beltMaterial = new THREE.MeshStandardMaterial({ transparent: true, opacity: 0 })
     rollerMaterial = new THREE.MeshStandardMaterial({ transparent: true, opacity: 0 })
 
-    // Scan beam (Kamera boyutuna göre pozisyonunu ayarlıyoruz, dışarı çıksın)
-    const beamLength = 40
-    const beamGeometry = new THREE.ConeGeometry(12, beamLength, 64, 1, true)
+    // Scan beam (Yeni boyuta uyumlu şekilde geri küçültüldü ve pozisyonlandı)
+    const beamLength = 15
+    const beamGeometry = new THREE.ConeGeometry(4.5, beamLength, 64, 1, true)
     beamGeometry.translate(0, -beamLength / 2, 0)
     const beamMaterial = new THREE.ShaderMaterial({
       uniforms: { time: { value: 0 }, color: { value: new THREE.Color(0x5FE3C0) }, opacity: { value: 0.45 } },
@@ -186,17 +192,19 @@ export function useThreeScene(canvasRef: Ref<HTMLCanvasElement | null>) {
       transparent: true, side: THREE.DoubleSide, blending: THREE.AdditiveBlending, depthWrite: false
     })
     scanBeam = new THREE.Mesh(beamGeometry, beamMaterial)
-    scanBeam.position.set(25, 0, 0) // Kamera boyutu büyük olduğu için X ekseninde 25 birim ileri alındı
-    scanBeam.rotation.z = -Math.PI / 2 // Doğru yöne bakması için döndürüldü
+    scanBeam.position.set(1.0, 0, 0) // İç model +X'e döndürüldüğü için lazer de +X tarafına konuldu
+    scanBeam.rotation.z = -Math.PI / 2 // Lazerin +X yönüne bakması için
     conveyorGroup.add(scanBeam)
 
-    const scanLight = new THREE.SpotLight(0x5FE3C0, 5, 100, Math.PI / 6, 0.5, 2)
+    const scanLight = new THREE.SpotLight(0x5FE3C0, 5, 30, Math.PI / 6, 0.5, 2)
     scanLight.position.copy(scanBeam.position)
-    scanLight.target.position.set(scanBeam.position.x + beamLength, 0, 0)
+    scanLight.target.position.set(scanBeam.position.x + beamLength, 0, 0) // Işık hedefi +X yönünde
     conveyorGroup.add(scanLight)
     conveyorGroup.add(scanLight.target)
 
     scene.add(conveyorGroup)
+    // WRAPPER GRUBU: Orijinal `useScrollAnimations.ts` ile %100 uyumlu olması için dış kılıfı orijinal başlangıç açısına alıyoruz.
+    // Bu sayede GSAP timeline'ı bozulmadan saat gibi çalışacak!
     conveyorGroup.rotation.y = -Math.PI
 
     // Start animation loop
