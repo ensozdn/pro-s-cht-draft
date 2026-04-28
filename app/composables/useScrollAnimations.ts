@@ -96,6 +96,8 @@ export function useScrollAnimations() {
       gsap.set(ipadContainer, { scale: 0.55, opacity: 0 })
 
       const videoSection = document.querySelector('.video-scroll-section') as HTMLElement
+      const header = document.querySelector('.header-bar') as HTMLElement | null
+
       if (videoSection) {
         const introTl = gsap.timeline({
           scrollTrigger: {
@@ -107,6 +109,18 @@ export function useScrollAnimations() {
         })
         introTl.to(ipadContainer, { scale: 1.0, opacity: 1, ease: 'power2.out' }, 0)
         if (canvas) introTl.to(canvas, { opacity: 0, ease: 'none' }, 0)
+
+        if (header) {
+          ScrollTrigger.create({
+            trigger: videoSection,
+            start: 'top top',
+            end: 'bottom bottom',
+            onEnter: () => gsap.to(header, { opacity: 0, y: -80, duration: 0.4, ease: 'power2.in', pointerEvents: 'none' }),
+            onLeave: () => gsap.to(header, { opacity: 1, y: 0, duration: 0.4, ease: 'power2.out', pointerEvents: 'auto' }),
+            onEnterBack: () => gsap.to(header, { opacity: 0, y: -80, duration: 0.4, ease: 'power2.in', pointerEvents: 'none' }),
+            onLeaveBack: () => gsap.to(header, { opacity: 1, y: 0, duration: 0.4, ease: 'power2.out', pointerEvents: 'auto' })
+          })
+        }
       }
 
       const setup = () => {
