@@ -71,25 +71,21 @@ export function useScrollAnimations() {
       gsap.set(section1, { opacity: 1, x: isMobile ? 0 : -280 })
       gsap.set(section2, { opacity: 0, x: isMobile ? 0 : 280 })
 
-      const tl1cam = gsap.timeline({ scrollTrigger: { trigger: section1, start: 'top top', end: '+=100%', scrub: true } })
-      tl1cam.to(conveyorGroup.position, { x: isMobile ? 0 : -3.2, y: isMobile ? 1 : 1.5, z: isMobile ? -2 : 0, ease: 'none' }, 0)
-      tl1cam.to(conveyorGroup.rotation, { y: Math.PI * 0.85, ease: 'none' }, 0)
-
-      const tl1dom = gsap.timeline({ scrollTrigger: { trigger: section1, start: 'top top', end: '+=100%', scrub: 0.3 } })
-      tl1dom.to(section1, { opacity: 0, x: isMobile ? 0 : -120, y: isMobile ? -50 : 0, ease: 'power2.inOut' }, 0)
-      tl1dom.to(section2, { opacity: 1, x: isMobile ? 0 : 280, y: 0, ease: 'power2.inOut' }, 0)
+      const tl1 = gsap.timeline({ scrollTrigger: { trigger: section1, start: 'top top', end: '+=110%', scrub: 0.8 } })
+      tl1.to(conveyorGroup.position, { x: isMobile ? 0 : -3.2, y: isMobile ? 1 : 1.5, z: isMobile ? -2 : 0, ease: 'none' }, 0)
+      tl1.to(conveyorGroup.rotation, { y: Math.PI * 0.85, ease: 'none' }, 0)
+      tl1.to(section1, { opacity: 0, x: isMobile ? 0 : -120, y: isMobile ? -50 : 0, ease: 'power2.inOut' }, 0)
+      tl1.to(section2, { opacity: 1, x: isMobile ? 0 : 280, y: 0, ease: 'power2.inOut' }, 0)
     }
 
     if (section2 && section3) {
       gsap.set(section3, { opacity: 0, x: isMobile ? 0 : -280 })
 
-      const tl2cam = gsap.timeline({ scrollTrigger: { trigger: section2, start: 'top top', end: '+=110%', scrub: true } })
-      tl2cam.to(conveyorGroup.position, { x: isMobile ? 0 : 3.2, y: isMobile ? 1 : 1.5, z: isMobile ? -2 : 0, ease: 'none' }, 0)
-      tl2cam.to(conveyorGroup.rotation, { y: Math.PI * 2.15, ease: 'none' }, 0)
-
-      const tl2dom = gsap.timeline({ scrollTrigger: { trigger: section2, start: 'top top', end: '+=110%', scrub: 0.3 } })
-      tl2dom.to(section2, { opacity: 0, x: isMobile ? 0 : 320, y: isMobile ? -50 : 0, ease: 'power2.inOut' }, 0)
-      tl2dom.to(section3, { opacity: 1, x: isMobile ? 0 : -280, y: 0, ease: 'power2.inOut' }, 0)
+      const tl2 = gsap.timeline({ scrollTrigger: { trigger: section2, start: 'top top', end: '+=110%', scrub: 0.8 } })
+      tl2.to(conveyorGroup.position, { x: isMobile ? 0 : 3.2, y: isMobile ? 1 : 1.5, z: isMobile ? -2 : 0, ease: 'none' }, 0)
+      tl2.to(conveyorGroup.rotation, { y: Math.PI * 2.15, ease: 'none' }, 0)
+      tl2.to(section2, { opacity: 0, x: isMobile ? 0 : 320, y: isMobile ? -50 : 0, ease: 'power2.inOut' }, 0)
+      tl2.to(section3, { opacity: 1, x: isMobile ? 0 : -280, y: 0, ease: 'power2.inOut' }, 0)
     }
 
     // ── Stats ─────────────────────────────────────────────────────
@@ -121,10 +117,7 @@ export function useScrollAnimations() {
 
     // ── iPad video ────────────────────────────────────────────────
     if (ipadVideo && ipadContainer) {
-      const ipadFrame = ipadContainer.querySelector('.ipad-frame') as HTMLElement
-      const fullScale = () => Math.max(window.innerWidth / 820, window.innerHeight / 620) + 0.05
-
-      gsap.set(ipadFrame, { scale: 0.45, borderRadius: 32 })
+      gsap.set(ipadContainer, { scale: 0.55, opacity: 0 })
 
       const videoSection = document.querySelector('.video-scroll-section') as HTMLElement
       if (videoSection) {
@@ -133,11 +126,11 @@ export function useScrollAnimations() {
             trigger: videoSection,
             start: 'top bottom',
             end: 'top top',
-            scrub: 0.8,
-            invalidateOnRefresh: true
+            scrub: 0.8
           }
         })
-        introTl.to(ipadFrame, { scale: fullScale, borderRadius: 0, ease: 'power2.inOut' }, 0)
+        introTl.to(ipadContainer, { scale: 1.0, opacity: 1, ease: 'power2.out' }, 0)
+        if (canvas) introTl.to(canvas, { opacity: 0, ease: 'none' }, 0)
       }
 
       const setup = () => {
@@ -148,16 +141,12 @@ export function useScrollAnimations() {
             pin: '.ipad-container',
             onUpdate: (self: any) => { ipadVideo.currentTime = ipadVideo.duration * self.progress },
             onLeave: () => {
-              if (canvas) gsap.to(canvas, { opacity: 1, duration: 0.8, ease: 'power2.out' })
-              if (ipadFrame) gsap.to(ipadFrame, { scale: 0.45, borderRadius: 32, duration: 0.8, ease: 'power2.inOut' })
+              if (canvas) gsap.to(canvas, { opacity: 1, duration: 0.6, ease: 'power2.out' })
+              if (ipadContainer) gsap.to(ipadContainer, { scale: 0.55, opacity: 0, duration: 0.6, ease: 'power2.in' })
               if (conveyorGroup) {
-                gsap.to(conveyorGroup.scale, { x: 1, y: 1, z: 1, duration: 0.8, ease: 'power2.out' })
-                gsap.to(conveyorGroup.position, { x: 0, y: 0, z: 0, duration: 0.8, ease: 'power2.out' })
+                gsap.to(conveyorGroup.scale, { x: 1, y: 1, z: 1, duration: 0.6, ease: 'power2.out' })
+                gsap.to(conveyorGroup.position, { x: 0, y: 0, z: 0, duration: 0.6, ease: 'power2.out' })
               }
-            },
-            onEnterBack: () => {
-              if (canvas) gsap.to(canvas, { opacity: 0, duration: 0.4, ease: 'power2.in' })
-              if (ipadFrame) gsap.to(ipadFrame, { scale: fullScale(), borderRadius: 0, duration: 0.4, ease: 'power2.out' })
             }
           }
         })
