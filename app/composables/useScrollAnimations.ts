@@ -16,13 +16,14 @@ export function useScrollAnimations() {
     categoryCount: number
     beltMaterial: any
     rollerMaterial: any
+    lensVideo: HTMLVideoElement | null
   }) => {
     const {
       gsap, ScrollTrigger, conveyorGroup, canvas,
       section1, section2, section3, statsSection,
       ipadVideo, ipadContainer, horizontalSection, horizontalTrack,
       contactSection, categoryCount,
-      beltMaterial, rollerMaterial
+      beltMaterial, rollerMaterial, lensVideo
     } = opts
 
     const isMobile = window.innerWidth < 768
@@ -78,6 +79,10 @@ export function useScrollAnimations() {
       zoomTl.to(conveyorGroup.rotation, { y: Math.PI * 2.5, ease: 'none' }, 0)
       zoomTl.to(conveyorGroup.scale, { x: 3.5, y: 3.5, z: 3.5, ease: 'power2.in' }, 0)
       if (canvas) zoomTl.to(canvas, { opacity: 0, duration: 0.15, ease: 'none' }, 0.85)
+      if (lensVideo) {
+        gsap.set(lensVideo, { clipPath: 'circle(0% at 50% 50%)' })
+        zoomTl.to(lensVideo, { clipPath: 'circle(150% at 50% 50%)', ease: 'power2.in' }, 0.7)
+      }
 
       const statNumbers = statsSection.querySelectorAll('.stat-number')
       statNumbers.forEach(stat => {
@@ -89,6 +94,32 @@ export function useScrollAnimations() {
           onUpdate: () => { stat.textContent = Math.round(counter.value).toString() }
         })
       })
+    }
+
+    // ── Lens video scrub ──────────────────────────────────────────
+    if (lensVideo) {
+      const lensSetup = () => {
+        if (!lensVideo.duration || isNaN(lensVideo.duration)) return
+        const videoSection = document.querySelector('.video-scroll-section') as HTMLElement
+        if (!videoSection) return
+        ScrollTrigger.create({
+          trigger: videoSection,
+          start: 'top top',
+          end: 'bottom bottom',
+          scrub: 1,
+          onUpdate: (self: any) => { lensVideo.currentTime = lensVideo.duration * self.progress },
+          onLeave: () => {
+            gsap.to(lensVideo, { clipPath: 'circle(0% at 50% 50%)', duration: 0.8, ease: 'power2.inOut' })
+            if (canvas) gsap.to(canvas, { opacity: 1, duration: 0.6, ease: 'power2.out' })
+          },
+          onLeaveBack: () => {
+            gsap.to(lensVideo, { clipPath: 'circle(150% at 50% 50%)', duration: 0.6, ease: 'power2.out' })
+            if (canvas) gsap.to(canvas, { opacity: 0 })
+          }
+        })
+      }
+      if (lensVideo.readyState >= 1) lensSetup()
+      else lensVideo.addEventListener('loadedmetadata', lensSetup)
     }
 
     // ── iPad video ────────────────────────────────────────────────

@@ -2764,4 +2764,15 @@ canvas {
   object-fit: cover;
 }
 
+.lens-video {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  object-fit: cover;
+  clip-path: circle(0% at 50% 50%);
+  z-index: 20;
+  pointer-events: none;
+}
+
 /* Force refresh */

@@ -10,6 +10,7 @@
     <div class="scene-container">
       <canvas ref="canvasRef" />
     </div>
+    <video ref="lensVideoRef" src="/ipad_scroll.mp4" class="lens-video" muted playsinline preload="auto" />
 
     <HeroSection ref="heroSectionRef" />
     <VideoScrollSection ref="videoSectionRef" />
@@ -55,6 +56,7 @@ const scrollProgress = ref(0)
 const showBackToTop = ref(false)
 
 const canvasRef = ref<HTMLCanvasElement | null>(null)
+const lensVideoRef = ref<HTMLVideoElement | null>(null)
 const scrollAreaRef = ref<HTMLDivElement | null>(null)
 const preloaderComponent = ref<InstanceType<typeof Preloader>>()
 const heroSectionRef = ref<InstanceType<typeof HeroSection>>()
@@ -217,7 +219,8 @@ onMounted(async () => {
     ipadVideo, ipadContainer, horizontalSection, horizontalTrack, contactSection,
     categoryCount: categories.value.length,
     beltMaterial: threeScene.getBeltMaterial(),
-    rollerMaterial: threeScene.getRollerMaterial()
+    rollerMaterial: threeScene.getRollerMaterial(),
+    lensVideo: lensVideoRef.value
   })
 })
 
