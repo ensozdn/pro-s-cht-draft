@@ -1,12 +1,15 @@
 ---
 title: "Pro Sicht ve BIOS Ortaklığı: Kalite Kontrolde Uçtan Uca Otonom Dönem"
-description: "ProSicht ile BIOS'un stratejik ortaklığı, üretim hatlarında tamamen otonom kalite kontrolün önünü açıyor."
-date: "2026-02-24"
-author: "İdil Karabaş"
-tags: ["AI", "Teknoloji", "Ortaklık"]
-image: "/images/blog/blog3.jpg"
-locale: "tr"
+author: İdil Karabaş
+date: 2026-02-24
+description: ProSicht ile BIOS'un stratejik ortaklığı, üretim hatlarında tamamen otonom kalite kontrolün önünü açıyor.
 featured: false
+image: /images/son-kalite.png
+locale: tr
+tags:
+  - AI
+  - Teknoloji
+  - Ortaklık
 ---
 
 ProSicht olarak BIOS ile kurduğumuz stratejik iş birliği, endüstriyel kalite kontrolde yeni bir dönemin başlangıcını simgeliyor. Bu ortaklık, uçtan uca otonom denetim altyapısının fabrika seviyesinde hayata geçirilmesini mümkün kılıyor.
