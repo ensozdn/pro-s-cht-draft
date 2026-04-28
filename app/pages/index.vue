@@ -162,6 +162,26 @@ onMounted(async () => {
   gsap.ticker.add((time) => { lenis.raf(time * 1000) })
   gsap.ticker.lagSmoothing(0)
 
+  // ── Preloader: GLB yüklenmesini beklemiyor, hemen başlıyor ──────
+  const pc = preloaderComponent.value
+  if (pc?.preloaderEl) {
+    const prog = { value: 0 }
+    gsap.to(prog, {
+      value: 100, duration: 2, ease: 'power2.inOut',
+      onUpdate: () => {
+        const p = Math.round(prog.value)
+        if (pc.preloaderBarEl) pc.preloaderBarEl.style.width = `${p}%`
+        if (pc.preloaderTextEl) pc.preloaderTextEl.textContent = `${p}%`
+      },
+      onComplete: () => {
+        gsap.to(pc.preloaderEl, {
+          y: '-100%', duration: 0.8, ease: 'power3.inOut',
+          onComplete: () => { pc.preloaderEl!.style.display = 'none' }
+        })
+      }
+    })
+  }
+
   threeScene = useThreeScene(canvasRef)
   await threeScene.initScene()
   threeScene.fadeInMeshes(gsap)
@@ -196,7 +216,6 @@ onMounted(async () => {
     section1, section2, section3, statsSection,
     ipadVideo, ipadContainer, horizontalSection, horizontalTrack, contactSection,
     categoryCount: categories.value.length,
-    preloaderComponent: preloaderComponent.value,
     beltMaterial: threeScene.getBeltMaterial(),
     rollerMaterial: threeScene.getRollerMaterial()
   })

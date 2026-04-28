@@ -289,6 +289,10 @@ export function useThreeScene(canvasRef: Ref<HTMLCanvasElement | null>) {
     window.removeEventListener('resize', handleResize)
     window.removeEventListener('mousemove', handleMouseMove)
     document.removeEventListener('visibilitychange', handleVisibilityChange)
+    if (renderer) {
+      renderer.dispose()
+      renderer.forceContextLoss()
+    }
   }
 
   return {
