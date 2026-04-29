@@ -142,6 +142,8 @@ const updateScrollProgress = () => {
 }
 
 const scrollToTop = () => {
+  if (lensVideoRef.value) lensVideoRef.value.style.clipPath = 'circle(0% at 50% 50%)'
+  if (canvasRef.value) canvasRef.value.style.opacity = '1'
   if (lenis) lenis.scrollTo(0, { duration: 1.5, easing: (t: number) => 1 - Math.pow(1 - t, 3) })
   else window.scrollTo({ top: 0, behavior: 'smooth' })
 }

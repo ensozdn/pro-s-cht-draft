@@ -109,12 +109,9 @@ export function useScrollAnimations() {
           scrub: 1,
           onUpdate: (self: any) => { lensVideo.currentTime = lensVideo.duration * self.progress },
           onLeave: () => {
+            gsap.killTweensOf(lensVideo)
             gsap.to(lensVideo, { clipPath: 'circle(0% at 50% 50%)', duration: 0.8, ease: 'power2.inOut' })
             if (canvas) gsap.to(canvas, { opacity: 1, duration: 0.6, ease: 'power2.out' })
-          },
-          onLeaveBack: () => {
-            gsap.to(lensVideo, { clipPath: 'circle(150% at 50% 50%)', duration: 0.6, ease: 'power2.out' })
-            if (canvas) gsap.to(canvas, { opacity: 0 })
           }
         })
       }
@@ -123,58 +120,20 @@ export function useScrollAnimations() {
     }
 
     // ── iPad video ────────────────────────────────────────────────
-    if (ipadVideo && ipadContainer) {
-      gsap.set(ipadContainer, { scale: 0.55, opacity: 0 })
-
-      const videoSection = document.querySelector('.video-scroll-section') as HTMLElement
-      const header = document.querySelector('.header-bar') as HTMLElement | null
-
-      if (videoSection) {
-        const introTl = gsap.timeline({
-          scrollTrigger: {
-            trigger: videoSection,
-            start: 'top bottom',
-            end: 'top top',
-            scrub: 0.8
-          }
-        })
-        introTl.to(ipadContainer, { scale: 1.0, opacity: 1, ease: 'power2.out' }, 0)
-        if (canvas) introTl.to(canvas, { opacity: 0, ease: 'none' }, 0)
-
-        if (header) {
-          ScrollTrigger.create({
-            trigger: videoSection,
-            start: 'top top',
-            end: 'bottom bottom',
-            onEnter: () => gsap.to(header, { opacity: 0, y: -80, duration: 0.4, ease: 'power2.in', pointerEvents: 'none' }),
-            onLeave: () => gsap.to(header, { opacity: 1, y: 0, duration: 0.4, ease: 'power2.out', pointerEvents: 'auto' }),
-            onEnterBack: () => gsap.to(header, { opacity: 0, y: -80, duration: 0.4, ease: 'power2.in', pointerEvents: 'none' }),
-            onLeaveBack: () => gsap.to(header, { opacity: 1, y: 0, duration: 0.4, ease: 'power2.out', pointerEvents: 'auto' })
-          })
-        }
-      }
-
-      const setup = () => {
-        if (!ipadVideo.duration || isNaN(ipadVideo.duration)) return
-        gsap.timeline({
-          scrollTrigger: {
-            trigger: '.video-scroll-section', start: 'top top', end: 'bottom bottom', scrub: 1,
-            pin: '.ipad-container',
-            onUpdate: (self: any) => { ipadVideo.currentTime = ipadVideo.duration * self.progress },
-            onLeave: () => {
-              if (canvas) gsap.to(canvas, { opacity: 1, duration: 0.6, ease: 'power2.out' })
-              if (ipadContainer) gsap.to(ipadContainer, { scale: 0.55, opacity: 0, duration: 0.6, ease: 'power2.in' })
-              if (conveyorGroup) {
-                gsap.to(conveyorGroup.scale, { x: 1, y: 1, z: 1, duration: 0.6, ease: 'power2.out' })
-                gsap.to(conveyorGroup.position, { x: 0, y: 0, z: 0, duration: 0.6, ease: 'power2.out' })
-              }
-            }
-          }
-        })
-      }
-      if (ipadVideo.readyState >= 1) setup()
-      else ipadVideo.addEventListener('loadedmetadata', setup)
+    const videoSection = document.querySelector('.video-scroll-section') as HTMLElement
+    const header = document.querySelector('.header-bar') as HTMLElement | null
+    if (videoSection && header) {
+      ScrollTrigger.create({
+        trigger: videoSection,
+        start: 'top top',
+        end: 'bottom bottom',
+        onEnter: () => gsap.to(header, { opacity: 0, y: -80, duration: 0.4, ease: 'power2.in', pointerEvents: 'none' }),
+        onLeave: () => gsap.to(header, { opacity: 1, y: 0, duration: 0.4, ease: 'power2.out', pointerEvents: 'auto' }),
+        onEnterBack: () => gsap.to(header, { opacity: 0, y: -80, duration: 0.4, ease: 'power2.in', pointerEvents: 'none' }),
+        onLeaveBack: () => gsap.to(header, { opacity: 1, y: 0, duration: 0.4, ease: 'power2.out', pointerEvents: 'auto' })
+      })
     }
+    if (ipadContainer) gsap.set(ipadContainer, { opacity: 0, pointerEvents: 'none' })
 
     // ── Horizontal scroll ─────────────────────────────────────────
     if (horizontalSection && horizontalTrack) {
