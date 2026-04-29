@@ -129,12 +129,14 @@ defineExpose({
   background: linear-gradient(
     90deg,
     transparent 0%,
-    rgba(93, 212, 191, 0.4) 30%,
-    rgba(93, 212, 191, 0.8) 50%,
-    rgba(93, 212, 191, 0.4) 70%,
+    rgba(255, 255, 255, 0.15) 30%,
+    rgba(255, 255, 255, 0.45) 50%,
+    rgba(255, 255, 255, 0.15) 70%,
     transparent 100%
   );
-  box-shadow: 0 0 30px rgba(93, 212, 191, 0.5);
+  mix-blend-mode: overlay;
+  filter: blur(6px);
+  box-shadow: none;
 }
 
 @keyframes beamFadeIn {

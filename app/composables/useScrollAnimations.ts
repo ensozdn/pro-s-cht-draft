@@ -45,7 +45,7 @@ export function useScrollAnimations() {
       gsap.set(section2, { opacity: 0, x: isMobile ? 0 : 280 })
 
       const tl1cam = gsap.timeline({ scrollTrigger: { trigger: section1, start: 'top top', end: '+=100%', scrub: true } })
-      tl1cam.to(conveyorGroup.position, { x: isMobile ? 0 : -3.2, y: isMobile ? 1 : 1.5, z: isMobile ? -2 : 0, ease: 'none' }, 0)
+      tl1cam.to(conveyorGroup.position, { x: isMobile ? 0 : -2.2, y: isMobile ? 1 : 1.2, z: isMobile ? -2 : 0, ease: 'none' }, 0)
       tl1cam.to(conveyorGroup.rotation, { y: Math.PI * 0.85, ease: 'none' }, 0)
 
       const tl1dom = gsap.timeline({ scrollTrigger: { trigger: section1, start: 'top top', end: '+=100%', scrub: 0.8 } })
@@ -57,8 +57,8 @@ export function useScrollAnimations() {
       gsap.set(section3, { opacity: 0, x: isMobile ? 0 : -280 })
 
       const tl2cam = gsap.timeline({ scrollTrigger: { trigger: section2, start: 'top top', end: '+=100%', scrub: true } })
-      tl2cam.to(conveyorGroup.position, { x: isMobile ? 0 : 3.2, y: isMobile ? 1 : 1.5, z: isMobile ? -2 : 0, ease: 'none' }, 0)
-      tl2cam.to(conveyorGroup.rotation, { y: Math.PI * 2.15, ease: 'none' }, 0)
+      tl2cam.to(conveyorGroup.position, { x: isMobile ? 0 : 2.2, y: isMobile ? 1 : 1.2, z: isMobile ? -2 : 0, ease: 'none' }, 0)
+      tl2cam.to(conveyorGroup.rotation, { y: Math.PI * 1.95, ease: 'none' }, 0)
 
       const tl2dom = gsap.timeline({ scrollTrigger: { trigger: section2, start: 'top top', end: '+=100%', scrub: 0.8 } })
       tl2dom.to(section2, { opacity: 0, x: isMobile ? 0 : 320, y: isMobile ? -50 : 0, ease: 'power2.inOut' }, 0)
